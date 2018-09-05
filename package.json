@@ -5,13 +5,14 @@
   "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib"
+    "start": "babel src -d lib && node lib/App.js "
   },
   "author": "viktorija",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^6.0.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "node-cache": "^4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
