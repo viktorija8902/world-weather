@@ -7,6 +7,7 @@ export function generateWindData(citiesWeatherData) {
     console.log("Winds in cities (km/h): ",  cityWindList)
     const windsStatistics = getWindsStatictics(cityWindList);
     console.log("Wind statictics based on speed: ", windsStatistics)
+    return windsStatistics;
 }
 
 function sortByWind(citiesWeatherData) {

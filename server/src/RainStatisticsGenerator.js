@@ -5,6 +5,7 @@ export function generateRainData(citiesWeatherData) {
 
     console.log("Rain in the last 3 hours: ", cityRainList)
     console.log(`Right now it is raining in ${rainPercentage} % of the selected cities`)
+    return rainPercentage;
 }
 
 function getCityRainList(data) {
