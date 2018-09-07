@@ -1,5 +1,6 @@
 require('dotenv').config();
 import fetch from "isomorphic-fetch";
+
 import { generateWindData } from "./WindStatisticsGenerator.js";
 import { generateCloudData } from "./CloudStatistics.js";
 import { generateRainData } from "./RainStatisticsGenerator.js";
@@ -19,10 +20,10 @@ export function dataGetter() {
             .catch(error => reject(error))
     }).then(data => {
         const citiesWeatherData = data.list;
-        // return { windData: generateWindData(citiesWeatherData)};
-        // return { cloudData: generateCloudData(citiesWeatherData) };
+        generateWindData(citiesWeatherData);
+        generateCloudData(citiesWeatherData);
         // return generateCloudData(citiesWeatherData);
-        return  generateRainData(citiesWeatherData);
+        return generateRainData(citiesWeatherData);
     }).catch(error => console.log(error));
 
     // const citiesWeatherData = outputFromAPI.list;
@@ -30,5 +31,3 @@ export function dataGetter() {
     // generateCloudData(citiesWeatherData);
     // generateRainData(citiesWeatherData);
 }
-
-// dataGetter()
