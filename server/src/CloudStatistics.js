@@ -5,6 +5,7 @@ export function generateCloudData(citiesWeatherData) {
 
     console.log("Cities with highest cloud coverage (%): ", cityCloudList)
     console.log(`Right now it is cloudy in ${cloudPercentage} percent of the selected cities`)
+    return cloudPercentage;
 }
 
 function sortByCloudCoverage(citiesWeatherData) {
