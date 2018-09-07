@@ -4,6 +4,7 @@ Shows wind, cloud coverage and rain statistics in Europe. In progress. Currently
 To run, clone the repository. 
 
 In terminal navigate to 'server' directory and run:
+
 ```yarn dev```
 
 In another terminal navigate to 'client' directory and run:
