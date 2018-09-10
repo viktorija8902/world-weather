@@ -1,40 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Loadable from 'react-loadable';
 
-import './App.css';
-
-class App extends Component {
-  state = {
-    response: ''
-  };
-
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
-
-  callApi = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-    console.log(body)
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.response}</p>
-      </div>
-    );
-  }
+const Loading = () => {
+  console.log("loading")
+  return <div>Loading...</div>;
 }
 
-export default App;
+const Wind = Loadable({
+  loader: () => import('./Wind'),
+  loading: Loading,
+});
+
+export const App = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Wind}/>
+    </Switch>
+  </Router>
+);
