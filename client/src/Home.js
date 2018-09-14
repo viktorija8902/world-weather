@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { regionList } from "./data/Regions";
-import RegionFilters from "./RegionFilters";
+import RegionFilters from "./RegionFilter/RegionFilters";
 
 class Home extends Component {
   state = {
@@ -26,6 +26,7 @@ class Home extends Component {
     return (
       <div className="home">
         <React.StrictMode><RegionFilters regionList={regionList}/></React.StrictMode>
+        {/* <div className="App-intro">{this.state.response}</div> */}
         {/* <p className="App-intro">{this.state.response}</p> */}
       </div>
     );
