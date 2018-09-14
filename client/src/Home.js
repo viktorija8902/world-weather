@@ -25,7 +25,7 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        <RegionFilters regionList={regionList}/>
+        <React.StrictMode><RegionFilters regionList={regionList}/></React.StrictMode>
         {/* <p className="App-intro">{this.state.response}</p> */}
       </div>
     );
