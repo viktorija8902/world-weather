@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import WindSpeedSummary from "./WindSpeedSummary";
+import WindCity from "./WindCity";
 
 class Wind extends Component {
   render() {
-    const cityWinds = this.props.windData.windCityList.map(city => <div>{city.name}:{city.windSpeed}km/h</div>)
     return (
       <div >
-        {cityWinds}
+        <WindCity windCityList={this.props.windData.windCityList}/>
         {/* {citiesGroupedByWind} */}
         <WindSpeedSummary summary={this.props.windData.windSummary}/>
       </div>
