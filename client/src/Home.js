@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { regionList } from "./data/Regions";
-import RegionFilters from "./RegionFilter/RegionFilters";
+import RegionFilters from "./regionFilter/RegionFilters";
+import ResultsPage from "./resultsPage/ResultsPage";
 
 class Home extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class Home extends Component {
     return (
       <div className="home">
         <React.StrictMode><RegionFilters onPlaceSelection={this.handlePlaceSelection} regionList={regionList}/></React.StrictMode>
-        <p className="App-intro">{this.state.response}</p>
+        <React.StrictMode><ResultsPage results={this.state.response}/></React.StrictMode>
       </div>
     );
   }
