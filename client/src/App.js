@@ -9,6 +9,11 @@ const Loading = () => {
   return <div>Loading...</div>;
 };
 
+const Home = Loadable({
+  loader: () => import('./Home'),
+  loading: Loading,
+});
+
 const Wind = Loadable({
   loader: () => import('./Wind'),
   loading: Loading,
@@ -17,7 +22,8 @@ const Wind = Loadable({
 export const App = () => (
     <Router>
       <Switch>
-        <ErrorBoundary><Route exact path="/" component={Wind} /></ErrorBoundary>
+        <ErrorBoundary><Route exact path="/" component={Home} /></ErrorBoundary>
+        {/* <ErrorBoundary><Route exact path="/" component={Wind} /></ErrorBoundary> */}
       </Switch>
     </Router>
 );
