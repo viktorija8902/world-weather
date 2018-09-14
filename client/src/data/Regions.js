@@ -1,13 +1,13 @@
 export const regionList = [
-    { main: { 
-        name: "usa", coord: { lonTopLeft: -132.179046, latTopRight: 44.692088, lonBottomRight: -75.250822, latBottomLeft: 35.003003 }
+    { main: {
+        name: "usa", coord: { lonTopLeft: -128.895079, latTopRight: 41.469486, lonBottomRight: -79.873553, latBottomLeft: 32.946454 }
       },
       parts: [
-        { name: "usa east part", coord: { lonTopLeft: -132.179046, latTopRight: 48.085419, lonBottomRight: -98.795211, latBottomLeft: 35.003003 } },
-        { name: "usa west part", coord: { lonTopLeft: -97.038167, latTopRight: 44.692088, lonBottomRight: -75.250822, latBottomLeft: 26.873081 } },
+        { name: "usa east part", coord: { lonTopLeft: -99.722424, latTopRight: 41.469486, lonBottomRight: -79.873553, latBottomLeft: 25.911115 } },
+        { name: "usa west part", coord: { lonTopLeft: -128.895079, latTopRight: 49.003646, lonBottomRight: -97.438881, latBottomLeft: 32.946454 } },
       ]
     },
-    { main: { 
+    { main: {
         name: "europe", coord: { lonTopLeft: -13.280284, latTopRight: 64.953791, lonBottomRight: 41.532033, latBottomLeft: 34.366111 }
       },
       parts: [
