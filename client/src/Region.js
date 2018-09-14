@@ -5,11 +5,11 @@ class Region extends Component {
   constructor(props) {
     super(props);
     this.state = { clickedRegionPart: "" };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleRegionClick = this.handleRegionClick.bind(this);
     this.handleRegionPartClick = this.handleRegionPartClick.bind(this);
   }
 
-  handleClick(e) {
+  handleRegionClick(e) {
     this.props.onRegionClick(e.target.id)
   }
 
@@ -27,7 +27,7 @@ class Region extends Component {
     
     return (
       <div>
-        <div className={`region ${cssSelectedClass}`} id={this.props.region.name} onClick={this.handleClick}>
+        <div className={`region ${cssSelectedClass}`} id={this.props.region.name} onClick={this.handleRegionClick}>
           {this.props.region.name}
         </div>
         {this.props.isClicked && <div>{subregions}</div>}
