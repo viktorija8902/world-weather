@@ -5,9 +5,15 @@ export function generateWindData(citiesWeatherData) {
     const cityWindList = getCityWindList(sortedByWind);
 
     console.log("Winds in cities (km/h): ",  cityWindList)
-    const windsStatistics = getWindsStatictics(cityWindList);
-    console.log("Wind statictics based on speed: ", windsStatistics)
-    return windsStatistics;
+    const citiesGoupedByWind = getCitiesGroupedByWind(cityWindList);
+    console.log("citiesGoupedByWind", citiesGoupedByWind)
+    const windSummary = getWindSummary(citiesGoupedByWind, cityWindList)
+    console.log("Wind statictics based on speed: ", windSummary)
+    return {
+        windCityList: cityWindList,
+        citiesGoupedByWind: citiesGoupedByWind,
+        windSummary: windSummary
+    };
 }
 
 function sortByWind(citiesWeatherData) {
@@ -29,7 +35,7 @@ const knotsToKmPerHour = (speed) => speed * 1.852;
 
 
 
-function getWindsStatictics(cityWindList) {
+function getCitiesGroupedByWind(cityWindList) {
     let citiesGoupedByWind = new Map();
     
     let winds = Object.keys(WIND_SPEED);
@@ -69,10 +75,13 @@ function getWindsStatictics(cityWindList) {
                 console.log("Error: ", city);
         }
     })
-    console.log("citiesGoupedByWind", citiesGoupedByWind)
-    let windStatictics = []
+    return citiesGoupedByWind;
+}
+
+function getWindSummary(citiesGoupedByWind, cityWindList) {
+    let windStatictics = {};
     citiesGoupedByWind.forEach((value, key) => {
-        windStatictics = windStatictics.concat({[key]: (value.length*100/cityWindList.length).toFixed(2)})
+        windStatictics[key] = (value.length*100/cityWindList.length).toFixed(2)
     })
     return windStatictics;
 }

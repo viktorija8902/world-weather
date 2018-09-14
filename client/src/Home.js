@@ -7,8 +7,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: '',
-      selectedPlace: '',
+      response: null,
+      selectedPlace: null,
     }
     this.handlePlaceSelection = this.handlePlaceSelection.bind(this)
   }
@@ -18,7 +18,10 @@ class Home extends Component {
       selectedPlace: place
     })
     this.callApi(this.coordinates(place))
-      .then(res => this.setState({ response: res }))
+      .then(res => {
+        console.log("res", res)
+        this.setState({ response: res })
+      })
       .catch(err => console.log(err));
   }
 
@@ -46,7 +49,7 @@ class Home extends Component {
     return (
       <div className="home">
         <React.StrictMode><RegionFilters onPlaceSelection={this.handlePlaceSelection} regionList={regionList}/></React.StrictMode>
-        <React.StrictMode><ResultsPage results={this.state.response}/></React.StrictMode>
+        {this.state.response && <React.StrictMode><ResultsPage results={this.state.response}/></React.StrictMode>}
       </div>
     );
   }

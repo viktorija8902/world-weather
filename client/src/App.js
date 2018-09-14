@@ -14,16 +14,10 @@ const Home = Loadable({
   loading: Loading,
 });
 
-const Wind = Loadable({
-  loader: () => import('./Wind'),
-  loading: Loading,
-});
-
 export const App = () => (
     <Router>
       <Switch>
         <ErrorBoundary><Route exact path="/" component={Home} /></ErrorBoundary>
-        {/* <ErrorBoundary><Route exact path="/" component={Wind} /></ErrorBoundary> */}
       </Switch>
     </Router>
 );

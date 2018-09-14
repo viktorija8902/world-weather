@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Wind from "./Wind";
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class ResultsPage extends Component {
   render() {
     return (
       <div>
-        {this.props.results}
+        <Wind windData={this.props.results.windData}/>
       </div>
     );
   }
