@@ -13,18 +13,22 @@ class Home extends Component {
   }
 
   handlePlaceSelection(place) {
-    console.log("selectedPlace", place)
     this.setState({
       selectedPlace: place
     })
-    console.log(this.coordinates(place))
     this.callApi(this.coordinates(place))
       .then(res => this.setState({ response: res }))
       .catch(err => console.log(err));
   }
 
   coordinates = (place) => {
-    const region = regionList.find(region => region.name === place);
+    const list = regionList.map(region => {
+      return region.parts.concat(region.main);
+    });
+    const preparedList = [].concat(...list);
+    const region = preparedList.find(region => {
+      return region.name === place;
+    })
     return region.coord;
   }
 
@@ -40,8 +44,7 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        <React.StrictMode><RegionFilters selectedPlace={this.handlePlaceSelection} regionList={regionList}/></React.StrictMode>
-        {/* <div className="App-intro">{this.state.response}</div> */}
+        <React.StrictMode><RegionFilters onPlaceSelection={this.handlePlaceSelection} regionList={regionList}/></React.StrictMode>
         <p className="App-intro">{this.state.response}</p>
       </div>
     );
