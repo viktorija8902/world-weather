@@ -10,6 +10,9 @@ class Region extends Component {
   }
 
   handleRegionClick(e) {
+    this.setState({
+      clickedRegionPart: "" 
+    });
     this.props.onRegionClick(e.target.id)
   }
 
@@ -22,7 +25,11 @@ class Region extends Component {
 
   render() {
     const subregions = this.props.region.parts.map(part => {
-      return <RegionPart key={part.name} regionPart={part} onRegionPartClick={this.handleRegionPartClick} isClicked={this.state.clickedRegionPart === part.name }/> 
+      return <RegionPart 
+                key={part.name}
+                regionPart={part}
+                onRegionPartClick={this.handleRegionPartClick}
+                isClicked={this.state.clickedRegionPart === part.name }/> 
     });
     const cssSelectedClass = this.props.isClicked ? "selected-region" : "";
     
