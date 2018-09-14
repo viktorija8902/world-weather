@@ -10,8 +10,9 @@ class RegionFilters extends Component {
 
   handleClick(name) {
     this.setState({
-      selectedRegion: name 
+      selectedRegion: name
     });
+    this.props.selectedPlace(name)
   }
 
   render() {
