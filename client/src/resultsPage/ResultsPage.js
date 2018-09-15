@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Wind from "./Wind";
+import Wind from "./wind/Wind";
 
 class ResultsPage extends Component {
   constructor(props) {
