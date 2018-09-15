@@ -15,10 +15,9 @@ export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRig
             .catch(error => reject(error))
     }).then(data => {
         const citiesWeatherData = data.list;
+        generateCloudData(citiesWeatherData);
+        generateRainData(citiesWeatherData);
         return { windData: generateWindData(citiesWeatherData) };
-        // generateCloudData(citiesWeatherData);
-        // generateRainData(citiesWeatherData);
-        // return generateRainData(citiesWeatherData);
     }).catch(error => console.log(error));
 
     // const citiesWeatherData = outputFromAPI.list;
