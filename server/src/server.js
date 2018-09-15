@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const port = process.env.PORT || 5000;
-import {dataGetter} from "./App.js";
+import { dataGetter } from "./DataGetter.js";
 
 
 app.get('/api/weather/:lonTopLeft,:latBottomLeft,:lonBottomRight,:latTopRight', (req, res) => {
