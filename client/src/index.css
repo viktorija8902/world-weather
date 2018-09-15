@@ -1,19 +1,35 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 15px;
   font-family: sans-serif;
 }
 
-/* TODO style and move to different file */
+/* TODO style and move to different files */
+.home {
+  display: flex;
+}
+.region-filters {
+  width: 20%;
+}
+.results {
+  width: 70%;
+}
+
+/* filters */
 .region {
   font-size: 1.3rem;
 }
-
 .region-part {
   font-size: 1.2rem;
-
 }
-
 .selected-region, .selected-region-part {
   font-weight: bold;
+}
+.region-part {
+  padding-left: 15px;
+}
+
+/* results */
+.wind-cities, .wind-city-groups, .wind-summary {
+  padding: 30px;
 }
