@@ -6,7 +6,7 @@ import WindCityGroups from './WindCityGroups';
 class Wind extends Component {
   render() {
     return (
-      <div>
+      <div className="wind-block">
         <WindCity windCityList={this.props.windData.windCityList}/>
         <WindCityGroups citiesGroupedByWind={this.props.windData.citiesGroupedByWind}/>
         <WindSpeedSummary summary={this.props.windData.windSummary}/>

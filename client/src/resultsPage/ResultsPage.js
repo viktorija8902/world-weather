@@ -11,7 +11,7 @@ class ResultsPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="results">
         <Wind windData={this.props.results.windData}/>
       </div>
     );
