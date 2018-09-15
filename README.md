@@ -1,5 +1,5 @@
 # world-weather
-Shows wind, cloud coverage and rain statistics in Europe. In progress. Currently, output is in the console.
+Shows wind, cloud coverage and rain statistics in Europe. In progress. Currently, most of the output is in the console.
 
 To run, clone the repository. 
 
