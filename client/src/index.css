@@ -3,3 +3,17 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* TODO style and move to different file */
+.region {
+  font-size: 1.3rem;
+}
+
+.region-part {
+  font-size: 1.2rem;
+
+}
+
+.selected-region, .selected-region-part {
+  font-weight: bold;
+}

@@ -9,15 +9,15 @@ const Loading = () => {
   return <div>Loading...</div>;
 };
 
-const Wind = Loadable({
-  loader: () => import('./Wind'),
+const Home = Loadable({
+  loader: () => import('./Home'),
   loading: Loading,
 });
 
 export const App = () => (
     <Router>
       <Switch>
-        <ErrorBoundary><Route exact path="/" component={Wind} /></ErrorBoundary>
+        <ErrorBoundary><Route exact path="/" component={Home} /></ErrorBoundary>
       </Switch>
     </Router>
 );
