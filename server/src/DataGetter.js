@@ -17,8 +17,10 @@ export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRig
         const citiesWeatherData = data.list;
         if (citiesWeatherData && citiesWeatherData.length > 0) {
             generateCloudData(citiesWeatherData);
-            generateRainData(citiesWeatherData);
-            return { windData: generateWindData(citiesWeatherData) }
+            return { 
+                windData: generateWindData(citiesWeatherData),
+                rainData: generateRainData(citiesWeatherData),
+            }
         } else {
             return { message: "no data" }
         }

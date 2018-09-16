@@ -1,11 +1,14 @@
 export function generateRainData(citiesWeatherData) {
     const sortedByRain = sortByRain(citiesWeatherData);
-    const cityRainList = getCityRainList(sortedByRain);
-    const rainPercentage = getRainPercentage(cityRainList);
+    const rainCityList = getCityRainList(sortedByRain);
+    const rainPercentage = getRainPercentage(rainCityList);
 
-    console.log("Rain in the last 3 hours: ", cityRainList)
-    console.log(`Right now it is raining in ${rainPercentage} % of the selected cities`)
-    return rainPercentage;
+    console.log("RainCityList: ", rainCityList)
+    console.log(`In the last 3 hours it was raining in ${rainPercentage} % of the selected cities`)
+    return {
+        rainCityList: rainCityList,
+        rainSummary: `In the last 3 hours it was raining in ${rainPercentage} % of the selected cities.` 
+    };
 }
 
 function getCityRainList(data) {

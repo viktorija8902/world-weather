@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NoData from "./NoData";
 import Wind from "./wind/Wind";
+import Rain from "./rain/Rain";
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -14,7 +15,14 @@ class ResultsPage extends Component {
     const noData = this.props.results.message === "no data";
     return (
       <div className="results">
-        { noData ? <NoData/> : <Wind windData={this.props.results.windData}/> }
+        {noData ?
+          <NoData />
+          :
+          <div>
+            <Wind windData={this.props.results.windData} />
+            <Rain rainData={this.props.results.rainData} />
+          </div>
+        }
       </div>
     );
   }
