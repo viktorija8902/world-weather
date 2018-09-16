@@ -30,6 +30,6 @@ body {
 }
 
 /* results */
-.wind-cities, .wind-city-groups, .wind-summary {
-  padding: 30px;
+.rain-block > *, .wind-block > * {
+  padding: 15px;
 }
