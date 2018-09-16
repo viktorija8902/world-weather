@@ -1,11 +1,14 @@
 export function generateCloudData(citiesWeatherData) {
     const sortedByCloudCoverage = sortByCloudCoverage(citiesWeatherData);
-    const cityCloudList = getCityCloudList(sortedByCloudCoverage)
-    const cloudPercentage = getCloudPercentage(cityCloudList);
+    const cloudCityList = getCityCloudList(sortedByCloudCoverage)
+    const cloudPercentage = getCloudPercentage(cloudCityList);
 
-    console.log("Cities with highest cloud coverage (%): ", cityCloudList)
+    console.log("Cities with highest cloud coverage (%): ", cloudCityList)
     console.log(`Right now it is cloudy in ${cloudPercentage} percent of the selected cities`)
-    return cloudPercentage;
+    return {
+        cloudCityList: cloudCityList,
+        cloudSummary: `Right now it is cloudy in ${cloudPercentage} percent of the selected cities.` 
+    };
 }
 
 function sortByCloudCoverage(citiesWeatherData) {
