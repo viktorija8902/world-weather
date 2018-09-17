@@ -33,3 +33,11 @@ body {
 .rain-block > *, .wind-block > * {
   padding: 15px;
 }
+
+.wind-city {
+  font-size: 1rem;
+  padding: 5px;
+  margin: 10px;
+  background-color: whitesmoke;
+  box-shadow: 5px 5px grey;
+}

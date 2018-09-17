@@ -6,7 +6,6 @@ import Rain from "./rain/Rain";
 class ResultsPage extends Component {
   constructor(props) {
     super(props);
-    // this.handleClick = this.handleClick.bind(this);
   }
 
 
