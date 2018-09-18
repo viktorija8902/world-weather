@@ -4,7 +4,7 @@ class WindCity extends Component {
   render() {
     return (
       <div className="wind-city" style={{backgroundColor: this.props.highlightColor}} >
-        {this.props.cityName}:{this.props.windSpeed}km/h
+        {this.props.cityName}: {this.props.windSpeed.toFixed(2)}km/h
       </div>
     );
   }
