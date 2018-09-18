@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import WindSpeedSummary from "./WindSpeedSummary";
 import WindCity from "./WindCity";
-import WindCityGroups from './WindCityGroups';
 import Button from "./Button";
 
 class Wind extends Component {
@@ -67,7 +66,6 @@ class Wind extends Component {
         <div className="wind-cities">
           {windCities}
         </div>
-        <WindCityGroups citiesGroupedByWind={this.props.windData.citiesGroupedByWind}/>
         <WindSpeedSummary summary={this.props.windData.windSummary}/>
       </div>
     );

@@ -13,8 +13,8 @@ class RegionFilters extends Component {
     this.setState({
       selectedRegion: name
     });
-    this.props.selectRegion(name)
-    this.props.getWeatherData(name)
+    this.props.selectRegion(name);
+    this.props.getWeatherData(name);
   }
 
   handlePlaceSelection(name) {
