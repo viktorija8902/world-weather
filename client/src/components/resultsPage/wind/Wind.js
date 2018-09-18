@@ -34,7 +34,7 @@ class Wind extends Component {
       const windType = group[0];
       const cities = group[1];
       if (cities.length !== 0) {
-        return <Button windType={windType} onWindSelection={this.handleWindSelection}/>
+        return <Button key={windType} windType={windType} onWindSelection={this.handleWindSelection}/>
       };
     });
     const windCities = this.props.windData.windCityList.map(city => {

@@ -23,7 +23,6 @@ class RegionFilters extends Component {
   }
 
   render() {
-    console.log("from props", this.props.selectedRegion)
     const regions = this.props.regionList.map(region => {
       return <Region 
           key={region.main.name} 

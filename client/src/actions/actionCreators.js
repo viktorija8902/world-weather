@@ -32,7 +32,6 @@ const getCoordinates = (place) => {
 async function fetchData(url) {
   const response = await fetch(url);
   const body = await response.json();
-  console.log("body", body)
   if (response.status !== 200) throw Error(body.message);
 
   return body;
