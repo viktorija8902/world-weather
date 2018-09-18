@@ -5,8 +5,10 @@ class WindSpeedSummary extends Component {
     return (
       <div className="wind-summary">
         <h3>Summary</h3>
-        {Object.entries(this.props.summary).map(info => {
-          return <div key={info[0]}>{info[0]} in {info[1]}% cities</div>
+        {Object.entries(this.props.summary).filter(data => data[1] !== "0.00").map(info => {
+          const windType = info[0];
+          const xPercent = info[1];
+          return <div key={windType}>{windType} in {xPercent}% cities</div>
         })}
       </div>
     );
