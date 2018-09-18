@@ -36,7 +36,7 @@ class Region extends Component {
     return (
       <div>
         <div className={`region ${cssSelectedClass}`} id={this.props.region.main.name} onClick={this.handleRegionClick}>
-          {this.props.region.main.name}
+          {this.props.region.main.name.toUpperCase()}
         </div>
         {this.props.isClicked && <div>{subregions}</div>}
       </div>
