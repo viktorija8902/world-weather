@@ -30,7 +30,7 @@ body {
 }
 
 /* results */
-.rain-block > *, .wind-block > * {
+.rain-block > *, .wind-block > *, .cloud-block > * {
   padding: 15px;
 }
 
