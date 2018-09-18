@@ -25,3 +25,16 @@ export const WIND_SPEED = {
         max: null
     }
 }
+
+//temperature in celsius
+export const HEAT = {
+    FRIGID: { min: -9999, max: -9 },
+    FREEZING: { min: -9, max: 0 },
+    VERY_COLD: { min: 0, max: 7 },
+    COLD: { min: 7, max: 13 },
+    COOL: { min: 13, max: 18 },
+    COMFORTABLE: { min: 18, max: 24 },
+    WARM: { min: 24, max: 29 },
+    HOT: { min: 29, max: 35 },
+    SWELTERING: { min: 35, max: 9999 }
+}
