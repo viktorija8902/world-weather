@@ -13,7 +13,7 @@ class Button extends Component {
   
   render() {
     return (
-      <div className="wind-button" id={this.props.windType} onClick={this.handleClick}>
+      <div className="wind-button" id={this.props.windType} style={{backgroundColor: this.props.highlightColor}} onClick={this.handleClick}>
         {this.props.windType}
       </div>
     );
