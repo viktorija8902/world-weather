@@ -8,19 +8,22 @@ class RegionFilters extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
   }
-
+ 
   handleClick(name) {
     this.setState({
       selectedRegion: name
     });
-    this.props.onPlaceSelection(name);
+    this.props.selectRegion(name)
+    this.props.getWeatherData(name)
   }
 
   handlePlaceSelection(name) {
-    this.props.onPlaceSelection(name);
+    this.props.selectRegion(name);
+    this.props.getWeatherData(name)
   }
 
   render() {
+    console.log("from props", this.props.selectedRegion)
     const regions = this.props.regionList.map(region => {
       return <Region 
           key={region.main.name} 

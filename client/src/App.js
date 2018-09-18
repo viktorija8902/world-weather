@@ -10,14 +10,14 @@ const Loading = () => {
 };
 
 const Home = Loadable({
-  loader: () => import('./Home'),
+  loader: () => import('./containers/HomeContainer.js'),
   loading: Loading,
 });
 
 export const App = () => (
-    <Router>
-      <Switch>
-        <ErrorBoundary><Route exact path="/" component={Home} /></ErrorBoundary>
-      </Switch>
-    </Router>
+  <Router>
+    <Switch>
+      <ErrorBoundary><Route exact path="/" component={Home} /></ErrorBoundary>
+    </Switch>
+  </Router>
 );
