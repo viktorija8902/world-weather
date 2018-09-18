@@ -4,8 +4,8 @@ import fetch from "isomorphic-fetch";
 import { generateWindData } from "./WindStatisticsGenerator.js";
 import { generateCloudData } from "./CloudStatistics.js";
 import { generateRainData } from "./RainStatisticsGenerator.js";
+import { generateTemperatureData } from "./TemperatureStatisticsGenerator.js";
 
-// import { outputFromAPI } from "./exampleOutput.js";
 
 
 export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRight}) {
@@ -15,19 +15,16 @@ export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRig
             .catch(error => reject(error))
     }).then(data => {
         const citiesWeatherData = data.list;
+        generateTemperatureData(citiesWeatherData)
         if (citiesWeatherData && citiesWeatherData.length > 0) {
             return { 
                 windData: generateWindData(citiesWeatherData),
                 rainData: generateRainData(citiesWeatherData),
                 cloudData: generateCloudData(citiesWeatherData),
+                temperatureData: generateTemperatureData(citiesWeatherData),
             }
         } else {
             return { message: "no data" }
         }
     }).catch(error => console.log(error));
-
-    // const citiesWeatherData = outputFromAPI.list;
-    // return generateWindData(citiesWeatherData);
-    // generateCloudData(citiesWeatherData);
-    // generateRainData(citiesWeatherData);
 }
