@@ -8,16 +8,18 @@ class RegionFilters extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
   }
-
+ 
   handleClick(name) {
     this.setState({
       selectedRegion: name
     });
-    this.props.onPlaceSelection(name);
+    this.props.selectRegion(name);
+    this.props.getWeatherData(name);
   }
 
   handlePlaceSelection(name) {
-    this.props.onPlaceSelection(name);
+    this.props.selectRegion(name);
+    this.props.getWeatherData(name)
   }
 
   render() {
