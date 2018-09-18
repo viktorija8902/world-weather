@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { regionList } from "./data/Regions";
-import RegionFilterContainer from "./containers/RegionFilterContainer";
+import { regionList } from "../data/Regions";
+import RegionFilterContainer from "./../containers/RegionFilterContainer";
 import ResultsPage from "./resultsPage/ResultsPage";
 
 class Home extends Component {

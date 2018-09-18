@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { selectRegion, getWeatherData } from '../actions/actionCreators'
-import RegionFilter from '../regionFilter/RegionFilters'
+import RegionFilter from '../components/regionFilter/RegionFilters'
 
 
 const mapDispatchToProps = dispatch => ({
