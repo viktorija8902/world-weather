@@ -10,6 +10,7 @@ class Wind extends Component {
     this.state = { 
       highlightedCities: [],
       highlightColor: "",
+      windType: null,
     }
     this.colors = {
       LIGHT_WINDS: "#41d3f4",
@@ -24,9 +25,22 @@ class Wind extends Component {
 
   handleWindSelection(windType) {
     this.setState({
-      highlightedCities: this.props.windData.citiesGroupedByWind.find(arr => arr[0] === windType)[1],
+      highlightedCities: this.getHighlightedCities(this.props.windData.citiesGroupedByWind, windType),
       highlightColor: this.colors[windType],
+      windType: windType
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.windType && prevProps !== this.props) {
+      this.setState({
+        highlightedCities: this.getHighlightedCities(this.props.windData.citiesGroupedByWind, this.state.windType),
+      });
+    }
+  }
+
+  getHighlightedCities(citiesGroupedByWind, windType) {
+    return citiesGroupedByWind.find(arr => arr[0] === windType)[1];
   }
 
   render() {
