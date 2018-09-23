@@ -43,17 +43,17 @@ class Wind extends Component {
   }
 
   render() {
-    const buttons = this.props.windData.citiesGroupedByWind.map(group => {
-      const windType = group[0];
+    const buttons = this.props.windData.citiesGroupedByWind.filter(group => {
       const cities = group[1];
-      if (cities.length !== 0) {
-        return <Button 
-          key={windType} 
-          windType={windType} 
-          highlightColor={windType === this.state.windType ? this.state.highlightColor : ""} 
-          onWindSelection={this.handleWindSelection}
-        />
-      };
+      return cities.length !== 0;
+    }).map(group => {
+      const windType = group[0];
+      return <Button 
+        key={windType} 
+        windType={windType} 
+        highlightColor={windType === this.state.windType ? this.state.highlightColor : ""} 
+        onWindSelection={this.handleWindSelection}
+      />
     });
     const windCities = this.props.windData.windCityList.map(city => {
       return <WindCity 
