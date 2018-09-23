@@ -2,21 +2,21 @@
   "name": "world-weather",
   "version": "1.0.0",
   "description": "",
-  "main": "App.js",
+  "main": "lib/server.js",
   "scripts": {
     "build": "babel src -d lib",
-    "start": "nodemon lib/server.js",
-    "dev": "yarn build && yarn start"
+    "start": "babel src -d lib && node lib/server.js",
+    "postinstall": "babel src -d lib",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
+  "proxy": "http://localhost:5000",
   "author": "viktorija",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^6.0.0",
     "isomorphic-fetch": "^2.2.1",
     "node-cache": "^4.2.0",
-    "express": "^4.16.2"
-  },
-  "devDependencies": {
+    "express": "^4.16.2",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0"

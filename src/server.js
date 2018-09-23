@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,6 +13,12 @@ app.get('/api/weather/:lonTopLeft,:latBottomLeft,:lonBottomRight,:latTopRight', 
       console.log("error", error)
       res.send("error")
     });
+});
+
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

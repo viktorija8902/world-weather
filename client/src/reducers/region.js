@@ -10,6 +10,7 @@ const region = (state = initialState, action) => {
         selectedRegion: action.selectedRegion
       })
     case 'LOAD_DATA':
+      console.log("action.region", action.regionData)
       return Object.assign({}, state, {
         regionData: action.regionData
       })
