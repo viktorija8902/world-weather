@@ -15,7 +15,6 @@ export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRig
             .catch(error => reject(error))
     }).then(data => {
         const citiesWeatherData = data.list;
-        generateTemperatureData(citiesWeatherData)
         if (citiesWeatherData && citiesWeatherData.length > 0) {
             return { 
                 windData: generateWindData(citiesWeatherData),
