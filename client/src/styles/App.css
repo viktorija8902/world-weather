@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 15px;
+  font-family: sans-serif;
+}
+
+.home {
+  display: flex;
+}
+.region-filters {
+  width: 20%;
+}
+.results {
+  width: 75%;
+}
+
+/* TODO style and move to separate files */
+
+/* results */
+.rain-block > *, .wind-block > *, .cloud-block > * {
+  padding: 15px;
+}
