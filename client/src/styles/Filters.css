@@ -1,0 +1,12 @@
+.region {
+  font-size: 1.3rem;
+}
+.region-part {
+  font-size: 1.2rem;
+}
+.selected-region, .selected-region-part {
+  font-weight: bold;
+}
+.region-part {
+  padding-left: 15px;
+}
