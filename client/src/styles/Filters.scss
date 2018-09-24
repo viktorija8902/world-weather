@@ -1,12 +1,14 @@
 .region {
   font-size: 1.3rem;
+  padding: 5px;
 }
 .region-part {
   font-size: 1.2rem;
   padding-left: 15px;
 }
 .region, .region-part {
-  height: 30px;
+  height: 100%;
+  min-height: 30px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out,
               font-size 0.2s ease;

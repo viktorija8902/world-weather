@@ -21,3 +21,12 @@ body {
 .rain-block > *, .wind-block > *, .cloud-block > * {
   padding: 15px;
 }
+
+@media (max-width: 550px) {
+  .home {
+    display: block;
+    .region-filters {
+      display: inline;
+    }
+  }
+}

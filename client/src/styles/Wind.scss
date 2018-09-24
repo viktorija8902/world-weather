@@ -51,6 +51,9 @@
   }
 }
 @media (max-width: 550px) {
+  .wind-button {
+    min-width: 300px;
+  }
   .wind-cities {
     columns: 1 10px;
   }
