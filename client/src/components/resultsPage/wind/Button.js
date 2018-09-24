@@ -12,9 +12,10 @@ class Button extends Component {
   }
   
   render() {
+    const regex = /_/gi;
     return (
       <div className="wind-button" id={this.props.windType} style={{backgroundColor: this.props.highlightColor}} onClick={this.handleClick}>
-        {this.props.windType}
+        {this.props.windType.replace(regex, " ")}
       </div>
     );
   }
