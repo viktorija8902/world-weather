@@ -7,7 +7,7 @@ export function generateCloudData(citiesWeatherData) {
     console.log(`Right now it is cloudy in ${cloudPercentage} percent of the selected cities`)
     return {
         cloudCityList: cloudCityList,
-        cloudSummary: `Right now it is cloudy in ${cloudPercentage} percent of the selected cities.` 
+        cloudSummary: `Right now it is cloudy in ${cloudPercentage}% of the selected cities.` 
     };
 }
 
