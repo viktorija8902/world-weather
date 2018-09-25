@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class NoData extends Component {
-  render() {
-    return (
-      <div className="results">
-        No data.
-      </div>
-    );
-  }
+function NoData() {
+  return (
+    <div className="results">
+      No data.
+    </div>
+  );
 }
 
 export default NoData;

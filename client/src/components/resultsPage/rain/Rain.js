@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import RainSummary from "./RainSummary";
-import RainCity from "./RainCity";
+import City from "../../generalComponents/City";
 
 class Rain extends Component {
   render() {
+    const rainCities = this.props.rainData.rainCityList.map(city => 
+      <City key={city.name} cityName={city.name} param={city.rain ? city.rain : "-"}/>
+    );
+    
     return (
       <div className="rain-block">
         <h1>Rain information</h1>
-        <RainCity rainCityList={this.props.rainData.rainCityList}/>
+        <div className="rain-cities">{rainCities}</div>
         <RainSummary summary={this.props.rainData.rainSummary}/>
       </div>
     );

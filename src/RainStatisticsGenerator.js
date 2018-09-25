@@ -5,7 +5,7 @@ export function generateRainData(citiesWeatherData) {
   const rainPercentage = getRainPercentage(rainCityList);
   return {
     rainCityList: rainCityList,
-    rainSummary: `It is raining in ${rainPercentage} % of the selected cities.`
+    rainSummary: `It is raining in ${rainPercentage}% of the selected cities.`
   };
 }
 
