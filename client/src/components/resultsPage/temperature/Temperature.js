@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import TemperatureCity from "./TemperatureCity";
+import City from "../../generalComponents/City";
 
 class Temperature extends Component {
   render() {
     const cityList = this.props.temperatureData.temperatureCityList.map(city => {
-      return <TemperatureCity key={city.name} cityName={city.name} temperature={city.temperature} unit="&#8451;"/>
+      return <City key={city.name} cityName={city.name} param={city.temperature} unit="&#8451;"/>
     });
     return (
       <div className="temperature-block">

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import CloudSummary from "./CloudSummary";
-import CloudCity from "./CloudCity";
+import City from "../../generalComponents/City";
 
 class Cloud extends Component {
   render() {
     const cloudCities = this.props.cloudData.cloudCityList.map(city =>
-      <CloudCity key={city.name} cityName={city.name} cloudCoverage={city.cloudCoverage} unit="%"/>
+      <City key={city.name} cityName={city.name} param={city.cloudCoverage} unit="%"/>
     );
     return (
       <div className="cloud-block">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WindSpeedSummary from "./WindSpeedSummary";
-import WindCity from "./WindCity";
+import City from "../../generalComponents/City";
 import Button from "./Button";
 
 class Wind extends Component {
@@ -55,12 +55,13 @@ class Wind extends Component {
       />
     });
     const windCities = this.props.windData.windCityList.map(city => {
-      return <WindCity 
-        key={city.name} 
+      return <City 
+        key={city.name}
         cityName={city.name}
-        windSpeed={city.windSpeed.toFixed(2)} 
+        param={city.windSpeed.toFixed(2)}
         unit="km/h"
-        highlightColor={this.state.highlightedCities.includes(city.name) ? highlightColor : ""}
+        cssClass="wind-city"
+        specialStyle={{backgroundColor: this.state.highlightedCities.includes(city.name) ? highlightColor : ""}}
       />
     })
   
