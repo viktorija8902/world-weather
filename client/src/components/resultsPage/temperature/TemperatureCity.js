@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TemperatureCity extends Component {
-  render() {
-    return (
-      <div className="wind-city" style={{backgroundColor: this.props.highlightColor}} >
-        {this.props.cityName}: {this.props.temperature}&#8451;
-      </div>
-    );
-  }
+function TemperatureCity(props) {
+  return (
+    <div>
+      {props.cityName}: {props.temperature}{props.unit}
+    </div>
+  );
 }
 
 export default TemperatureCity;

@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class CloudCity extends Component {
-  render() {
-    return (
-      <div className="cloud-cities">
-        <h3>Cloud coverage</h3>
-        {this.props.cloudCityList.map(city =>
-          <div key={city.name} >
-            {city.name}: {city.cloudCoverage}%
-          </div>)}
-      </div>
-    );
-  }
+function CloudCity(props) {
+  return (
+    <div>
+      {props.cityName}: {props.cloudCoverage}{props.unit}
+    </div>
+  );
 }
 
 export default CloudCity;

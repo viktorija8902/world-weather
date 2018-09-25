@@ -4,10 +4,16 @@ import CloudCity from "./CloudCity";
 
 class Cloud extends Component {
   render() {
+    const cloudCities = this.props.cloudData.cloudCityList.map(city =>
+      <CloudCity key={city.name} cityName={city.name} cloudCoverage={city.cloudCoverage} unit="%"/>
+    );
     return (
       <div className="cloud-block">
         <h1>Cloud information</h1>
-        <CloudCity cloudCityList={this.props.cloudData.cloudCityList}/>
+        <div className="cloud-cities">
+          <h3>Cloud coverage</h3>
+          {cloudCities}
+        </div>
         <CloudSummary summary={this.props.cloudData.cloudSummary}/>
       </div>
     );
