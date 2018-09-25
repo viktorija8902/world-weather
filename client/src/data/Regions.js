@@ -19,9 +19,9 @@ export const regionList = [
       name: "canada", coord: { lonTopLeft: -140.993778, latTopRight: 83.939953, lonBottomRight: -54.487557, latBottomLeft: 47.960502}
       },
       parts: [
-        { name: "canada east part", coord: { lonTopLeft: -97.026577, latTopRight: 60.737686, lonBottomRight: -53.430933, latBottomLeft: 48.443778 }},
+        { name: "canada east part", coord: { lonTopLeft: -89.478497, latTopRight: 43.546755, lonBottomRight: -65.758404, latBottomLeft: 49.294710 } },
         { name: "canada west part", coord: { lonTopLeft: -140.993778, latTopRight: 83.189686, lonBottomRight: -96.677583, latBottomLeft: 47.960502 } },
-        { name: "southern ontario", coord: { lonTopLeft: -81.836645, latTopRight: 45.472651, lonBottomRight: -78.015075, latBottomLeft: 42.274260 } },
+        { name: "nova scotia", coord: { lonTopLeft: -66.841627, latTopRight: 47.136023, lonBottomRight: -59.066708, latBottomLeft: 43.235699 } },
       ]
     },
     { main: {
