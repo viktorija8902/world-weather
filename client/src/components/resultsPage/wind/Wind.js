@@ -8,7 +8,6 @@ class Wind extends Component {
     super(props);
     this.state = { 
       highlightedCities: [],
-      highlightColor: "",
       windType: null,
     }
     this.colors = {
@@ -19,13 +18,12 @@ class Wind extends Component {
       STORM_WARNING:  "#9e3a06",
       HURRICANE_FORCE_WIND_WARNING: "#9241f4",
     }
-    this.handleWindSelection = this.handleWindSelection.bind(this)
+    this.handleWindSelection = this.handleWindSelection.bind(this);
   }
 
   handleWindSelection(windType) {
     this.setState({
       highlightedCities: this.getHighlightedCities(this.props.windData.citiesGroupedByWind, windType),
-      highlightColor: this.colors[windType],
       windType: windType
     });
   }
@@ -43,6 +41,7 @@ class Wind extends Component {
   }
 
   render() {
+    const highlightColor = this.colors[this.state.windType];
     const buttons = this.props.windData.citiesGroupedByWind.filter(group => {
       const cities = group[1];
       return cities.length !== 0;
@@ -51,7 +50,7 @@ class Wind extends Component {
       return <Button 
         key={windType} 
         windType={windType} 
-        highlightColor={windType === this.state.windType ? this.state.highlightColor : ""} 
+        highlightColor={windType === this.state.windType ? highlightColor : ""} 
         onWindSelection={this.handleWindSelection}
       />
     });
@@ -60,7 +59,7 @@ class Wind extends Component {
         key={city.name} 
         cityName={city.name} 
         windSpeed={city.windSpeed} 
-        highlightColor={this.state.highlightedCities.includes(city.name) ? this.state.highlightColor : ""}
+        highlightColor={this.state.highlightedCities.includes(city.name) ? highlightColor : ""}
       />
     })
   
