@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RainSummary from "./RainSummary";
+import OneLineSummary from "../../generalComponents/OneLineSummary";
 import City from "../../generalComponents/City";
 
 class Rain extends Component {
@@ -12,7 +12,7 @@ class Rain extends Component {
       <div className="rain-block">
         <h1>Rain information</h1>
         <div className="rain-cities">{rainCities}</div>
-        <RainSummary summary={this.props.rainData.rainSummary}/>
+        <OneLineSummary summary={this.props.rainData.rainSummary}/>
       </div>
     );
   }
