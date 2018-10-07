@@ -10,13 +10,17 @@ import { GoogleMapWrapper } from "./GoogleMapWrapper";
 class ResultsPage extends Component {
   render() {
     const noData = this.props.results.message === "no data";
+    const reducer = (a, b) => a + b;
+    const cities = this.props.results.cities;
+    const averageLat = cities.map(city => city.coord.Lat).reduce(reducer)/cities.length;
+    const averageLon = cities.map(city => city.coord.Lon).reduce(reducer)/cities.length;
     return (
       <div className="results">
         {noData ?
           <NoData />
           :
           <div>
-            <GoogleMapWrapper isMarkerShown={false}/>
+            <GoogleMapWrapper isMarkerShown markers={cities} averageLat={averageLat} averageLon={averageLon}/>
             <Wind windData={this.props.results.windData} />
             <Rain rainData={this.props.results.rainData} />
             <Clouds cloudData={this.props.results.cloudData}></Clouds>

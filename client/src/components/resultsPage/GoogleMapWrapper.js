@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { compose, withProps } from "recompose";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
@@ -15,10 +14,9 @@ export const GoogleMapWrapper = compose(
   withGoogleMap
 )((props) =>
   <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    defaultZoom={4}
+    defaultCenter={{ lat: props.averageLat, lng: props.averageLon }}
   >
-  
-    {props.isMarkerShown && props.markers && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+    {props.isMarkerShown && props.markers.map(marker => <Marker key={marker.name} position={{ lat: marker.coord.Lat, lng: marker.coord.Lon}} />)}
   </GoogleMap>
 )
