@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
  
-const Marker = ({ text }) => <div>{text}</div>;
+const Marker = ({ text }) => <div className="city-marker-wrapper">
+  <div className="city-marker"></div>
+  <div className="city-name">{text}</div>
+</div>;
  
 class GoogleMapWrapper extends Component {
   render() {
     return (
-      <div style={{ height: '400px', width: '100%' }}>
+      <div style={{ height: '500px', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
           center={{ lat: this.props.averageLat, lng: this.props.averageLon }}
