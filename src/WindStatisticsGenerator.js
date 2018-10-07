@@ -4,11 +4,8 @@ export function generateWindData(citiesWeatherData) {
     const sortedByWind = sortByWind(citiesWeatherData);
     const cityWindList = getCityWindList(sortedByWind);
 
-    console.log("Winds in cities (km/h): ",  cityWindList)
     const citiesGroupedByWind = getCitiesGroupedByWind(cityWindList);
-    console.log("citiesGroupedByWind", [...citiesGroupedByWind.entries()])
-    const windSummary = getWindSummary(citiesGroupedByWind, cityWindList)
-    console.log("Wind statictics based on speed: ", windSummary)
+    const windSummary = getWindSummary(citiesGroupedByWind, cityWindList);
     return {
         windCityList: cityWindList,
         citiesGroupedByWind: [...citiesGroupedByWind.entries()],

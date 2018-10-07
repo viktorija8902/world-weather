@@ -17,6 +17,7 @@ export function dataGetter({lonTopLeft, latBottomLeft, lonBottomRight, latTopRig
         const citiesWeatherData = data.list;
         if (citiesWeatherData && citiesWeatherData.length > 0) {
             return {
+                cities: data.list.map(city=> ({name: city.name, coord: city.coord})),
                 windData: generateWindData(citiesWeatherData),
                 rainData: generateRainData(citiesWeatherData),
                 cloudData: generateCloudData(citiesWeatherData),
