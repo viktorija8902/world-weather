@@ -4,7 +4,7 @@ import Wind from "./wind/Wind";
 import Rain from "./rain/Rain";
 import Clouds from "./clouds/Clouds";
 import Temperature from './temperature/Temperature';
-import { GoogleMapWrapper } from "./GoogleMapWrapper";
+import GoogleMapWrapper from "./GoogleMapWrapper";
 
 //TODO refactor similar code
 class ResultsPage extends Component {

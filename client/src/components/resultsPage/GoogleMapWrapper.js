@@ -1,22 +1,22 @@
-import React from 'react';
-import { compose, withProps } from "recompose";
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-
-
-export const GoogleMapWrapper = compose(
-  withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`,
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withScriptjs,
-  withGoogleMap
-)((props) =>
-  <GoogleMap
-    defaultZoom={4}
-    defaultCenter={{ lat: props.averageLat, lng: props.averageLon }}
-  >
-    {props.isMarkerShown && props.markers.map(marker => <Marker key={marker.name} position={{ lat: marker.coord.Lat, lng: marker.coord.Lon}} />)}
-  </GoogleMap>
-)
+import React, { Component } from 'react';
+import GoogleMapReact from 'google-map-react';
+ 
+const Marker = ({ text }) => <div>{text}</div>;
+ 
+class GoogleMapWrapper extends Component {
+  render() {
+    return (
+      <div style={{ height: '400px', width: '100%' }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
+          center={{ lat: this.props.averageLat, lng: this.props.averageLon }}
+          defaultZoom={4}
+        >
+          {this.props.markers.map(marker => <Marker key={marker.name} lat={marker.coord.Lat} lng={marker.coord.Lon} text={marker.name} />)}
+        </GoogleMapReact>
+      </div>
+    );
+  }
+}
+ 
+export default GoogleMapWrapper;
