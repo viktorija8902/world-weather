@@ -1,6 +1,6 @@
 import React from 'react';
 
-function NoData() {
+function NoDataPage() {
   return (
     <div className="results">
       No data.
@@ -8,4 +8,4 @@ function NoData() {
   );
 }
 
-export default NoData;
+export default NoDataPage;
