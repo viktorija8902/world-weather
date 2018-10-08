@@ -8,7 +8,6 @@ export function generateTemperatureData(citiesWeatherData) {
     citiesWithTemperature.forEach(city => {
         addToHeatMap(city, heatMap);
     });
-    console.log("Cites sorted by temperature: ", sortedByTemperature);
     console.log("Cities grouped by temperature: ", heatMap);
     return {
         temperatureCityList: sortedByTemperature,
