@@ -1,25 +1,46 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
- 
-const Marker = ({ text }) => <div className="city-marker-wrapper">
+import ReactMapGL, { Marker } from 'react-map-gl';
+
+const CityMarker = ({ text }) => <div className="city-marker-wrapper">
   <div className="city-marker"></div>
   <div className="city-name">{text}</div>
 </div>;
- 
+
 class GoogleMapWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewport: {
+        width: 1000,
+        height: 500,
+      }
+    }
+    this.handleViewPortChange = this.handleViewPortChange.bind(this);
+  }
+
+  handleViewPortChange(viewport) {
+    this.props.onMapCenterChange(viewport.latitude, viewport.longitude, viewport.zoom)
+  }
+
   render() {
+    const markers = this.props.markers.map(marker => {
+      return <Marker key={marker.name} latitude={marker.coord.Lat} longitude={marker.coord.Lon}>
+              <CityMarker text={marker.name}/>
+            </Marker>
+    });
     return (
-      <div style={{ height: '500px', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
-          center={{ lat: this.props.averageLat, lng: this.props.averageLon }}
-          defaultZoom={4}
-        >
-          {this.props.markers.map(marker => <Marker key={marker.name} lat={marker.coord.Lat} lng={marker.coord.Lon} text={marker.name} />)}
-        </GoogleMapReact>
-      </div>
+      <ReactMapGL
+        {...this.state.viewport}
+        latitude={this.props.averageLat}
+        longitude={this.props.averageLon}
+        zoom={this.props.zoom}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        onViewportChange={this.handleViewPortChange}
+      >
+        {markers}
+      </ReactMapGL>
     );
   }
 }
- 
+
 export default GoogleMapWrapper;
