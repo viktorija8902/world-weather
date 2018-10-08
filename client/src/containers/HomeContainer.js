@@ -4,6 +4,7 @@ import Home from '../components/Home'
 
 const mapStateToProps = state => ({
     regionData: state.region.regionData,
+    noResults: state.region.noResults,
 })
 
 export default connect(

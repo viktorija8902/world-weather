@@ -1,6 +1,7 @@
 let initialState = {
   selectedRegion: "",
   regionData: null,
+  noResults: false,
 }
 
 const region = (state = initialState, action) => {
@@ -10,9 +11,14 @@ const region = (state = initialState, action) => {
         selectedRegion: action.selectedRegion
       })
     case 'LOAD_DATA':
-      console.log("action.region", action.regionData)
       return Object.assign({}, state, {
-        regionData: action.regionData
+        regionData: action.regionData,
+        noResults: false,
+      })
+    case 'LOAD_NO_RESULTS':
+      return Object.assign({}, state, {
+        regionData: null,
+        noResults: true,
       })
     default:
       return state

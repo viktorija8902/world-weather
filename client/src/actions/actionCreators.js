@@ -1,7 +1,7 @@
 import { regionList } from "../data/Regions";
 
 
-export function selectRegion(selectedRegion) {
+export const selectRegion = (selectedRegion) => {
   return {
     type: 'SELECT_REGION',
     selectedRegion: selectedRegion
@@ -13,7 +13,11 @@ export const getWeatherData = selectedRegion => dispatch => {
   const url = `/api/weather/${coordinates.lonTopLeft},${coordinates.latBottomLeft},${coordinates.lonBottomRight},${coordinates.latTopRight}`;
   fetchData(url)
     .then(resp => {
-      dispatch(loadData(resp))
+      if (resp.message && resp.message === "no data") {
+        dispatch(loadNoResults());
+      } else {
+        dispatch(loadData(resp));
+      }
     })
     .catch(error => console.log(error));
 }
@@ -37,9 +41,5 @@ async function fetchData(url) {
   return body;
 };
 
-function loadData(data) {
-  return {
-    type: 'LOAD_DATA',
-    regionData: data
-  }
-}
+const loadData = (data) => ({ type: 'LOAD_DATA', regionData: data });
+const loadNoResults = () => ({ type: 'LOAD_NO_RESULTS' });
