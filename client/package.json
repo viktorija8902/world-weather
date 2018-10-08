@@ -55,7 +55,7 @@
   },
   "scripts": {
     "dev": "cp .env.development .env && BROWSER=none node scripts/start.js",
-    "start": "cp .env.production .env && BROWSER=none node scripts/start.js",
+    "start": "BROWSER=none node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
