@@ -6,7 +6,7 @@ const CityMarker = ({ text }) => <div className="city-marker-wrapper">
   <div className="city-name">{text}</div>
 </div>;
 
-class GoogleMapWrapper extends Component {
+class MapWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,4 +43,4 @@ class GoogleMapWrapper extends Component {
   }
 }
 
-export default GoogleMapWrapper;
+export default MapWrapper;

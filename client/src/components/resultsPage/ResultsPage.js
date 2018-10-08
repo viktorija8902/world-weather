@@ -4,7 +4,7 @@ import Wind from "./wind/Wind";
 import Rain from "./rain/Rain";
 import Clouds from "./clouds/Clouds";
 import Temperature from './temperature/Temperature';
-import GoogleMapWrapper from "./GoogleMapWrapper";
+import MapWrapper from "./MapWrapper";
 
 
 const sumReducer = (a, b) => a + b;
@@ -53,7 +53,7 @@ class ResultsPage extends Component {
           <NoData />
           :
           <div>
-            <GoogleMapWrapper 
+            <MapWrapper 
               onMapCenterChange={this.handleMapCenterChange}
               isMarkerShown markers={this.props.results.cities}
               averageLat={this.state.averageLat}
