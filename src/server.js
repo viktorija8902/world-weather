@@ -1,7 +1,8 @@
+const compression = require('compression');
 const express = require('express');
-const path = require('path');
-
 const app = express();
+app.use(compression());
+const path = require('path');
 const port = process.env.PORT || 5000;
 import { dataGetter } from "./DataGetter.js";
 
