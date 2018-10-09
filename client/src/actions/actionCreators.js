@@ -1,6 +1,3 @@
-import { regionList } from "../data/Regions";
-
-
 export const selectRegion = (selectedRegion) => {
   return {
     type: 'SELECT_REGION',
@@ -9,28 +6,16 @@ export const selectRegion = (selectedRegion) => {
 }
 
 export const getWeatherData = selectedRegion => dispatch => {
-  const coordinates = getCoordinates(selectedRegion);
-  const url = `/api/weather/${coordinates.lonTopLeft},${coordinates.latBottomLeft},${coordinates.lonBottomRight},${coordinates.latTopRight}`;
-  fetchData(url)
+  fetchData(`/api/weather/${selectedRegion}`)
     .then(resp => {
-      if (resp.message && resp.message === "no data") {
+      console.log(resp);
+      if (resp.message === "no data" || resp.output && Object.keys(resp.output).length === 0) {
         dispatch(loadNoResults());
       } else {
-        dispatch(loadData(resp));
+        dispatch(loadData(resp.output));
       }
     })
     .catch(error => console.log(error));
-}
-
-const getCoordinates = (place) => {
-  const list = regionList.map(region => {
-    return region.parts.concat(region.main);
-  });
-  const preparedList = [].concat(...list);
-  const region = preparedList.find(region => {
-    return region.name === place;
-  })
-  return region.coord;
 }
 
 async function fetchData(url) {
