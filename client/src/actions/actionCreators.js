@@ -9,7 +9,7 @@ export const getWeatherData = selectedRegion => dispatch => {
   fetchData(`/api/weather/${selectedRegion}`)
     .then(resp => {
       console.log(resp);
-      if (resp.message === "no data" || resp.output && Object.keys(resp.output).length === 0) {
+      if (resp.message === "no data" || (resp.output && Object.keys(resp.output).length === 0)) {
         dispatch(loadNoResults());
       } else {
         dispatch(loadData(resp.output));
