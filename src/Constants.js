@@ -38,3 +38,7 @@ export const HEAT = {
     HOT: { min: 29, max: 35 },
     SWELTERING: { min: 35, max: 9999 }
 }
+
+export const MESSAGES = {
+    NO_DATA: "no data",
+}
