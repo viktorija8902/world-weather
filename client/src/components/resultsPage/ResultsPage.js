@@ -53,6 +53,7 @@ class ResultsPage extends Component {
           averageLat={this.state.averageLat}
           averageLon={this.state.averageLon}
           zoom={this.state.zoom}
+          users
         />
         <Wind windData={this.props.results.windData} />
         <Rain rainData={this.props.results.rainData} />
