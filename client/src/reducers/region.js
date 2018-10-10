@@ -15,6 +15,7 @@ const region = (state = initialState, action) => {
       return Object.assign({}, state, {
         regionData: action.regionData,
         noResults: false,
+        noDataCustomSearch: false,
       })
     case 'LOAD_NO_RESULTS':
       return Object.assign({}, state, {
