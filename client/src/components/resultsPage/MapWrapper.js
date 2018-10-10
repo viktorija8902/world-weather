@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const CityMarker = ({ text }) => <div className="city-marker-wrapper">
   <div className="city-marker"></div>
@@ -83,6 +84,7 @@ class MapWrapper extends Component {
           zoom={this.props.zoom}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.handleViewPortChange}
+          mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
           onClick={this.handleClick}
           clickRadius={5}
         >
