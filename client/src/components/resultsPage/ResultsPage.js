@@ -7,43 +7,11 @@ import Temperature from './temperature/Temperature';
 import MapWrapper from "./MapWrapper";
 import { getCustomWeatherData } from '../../actions/actionCreators';
 
-const sumReducer = (a, b) => a + b;
 
 class ResultsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.handleMapCenterChange = this.handleMapCenterChange.bind(this);
     this.handleCoordSelect = this.handleCoordSelect.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateMapCenter();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.updateMapCenter();
-    }
-  }
-
-  updateMapCenter() {
-    const cities = this.props.results.cities;
-    const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
-    const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
-    this.setState({
-      averageLat: averageLat, 
-      averageLon: averageLon,
-      zoom: 3
-    })
-  }
-
-  handleMapCenterChange(latitude, longtitude, zoom) {
-    this.setState({
-        averageLat: latitude,
-        averageLon: longtitude,
-        zoom: zoom
-    })
   }
 
   handleCoordSelect(coord) {
@@ -58,7 +26,7 @@ class ResultsPage extends Component {
   render() {
     let results;
     if (this.props.noDataCustomSearch) {
-      results = <div>No data found. Try again</div>
+      results = <div>No data found. Try different points.</div>
     } else {
       results = <div>
         <Wind windData={this.props.results.windData} />
@@ -70,12 +38,7 @@ class ResultsPage extends Component {
     return (
       <div>
         <MapWrapper 
-          onMapCenterChange={this.handleMapCenterChange}
-          isMarkerShown 
-          markers={this.props.results.cities}
-          averageLat={this.state.averageLat}
-          averageLon={this.state.averageLon}
-          zoom={this.state.zoom}
+          cities={this.props.results.cities}
           onCustomSelect={this.handleCoordSelect}
         />
         {results}
@@ -89,7 +52,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getCustomWeatherData: coordinates => dispatch(getCustomWeatherData(coordinates))
+  getCustomWeatherData: coordinates => dispatch(getCustomWeatherData(coordinates))
 });
 
 export default connect(

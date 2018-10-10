@@ -8,6 +8,8 @@ const CityMarker = ({ text, markersCss }) => <div className="city-marker-wrapper
   <div className="city-name">{text}</div>
 </div>;
 
+const sumReducer = (a, b) => a + b;
+
 class MapWrapper extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +25,34 @@ class MapWrapper extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    this.updateMapCenter();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.updateMapCenter();
+    }
+  }
+
+  updateMapCenter() {
+    const cities = this.props.cities;
+    const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
+    const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
+    
+    this.setState({
+      averageLat: averageLat, 
+      averageLon: averageLon,
+      zoom: 3
+    })
+  }
+
   handleViewPortChange(viewport) {
-    this.props.onMapCenterChange(viewport.latitude, viewport.longitude, viewport.zoom)
+    this.setState({
+      averageLat: viewport.latitude,
+      averageLon: viewport.longitude,
+      zoom: viewport.zoom
+    })
   }
 
   handleClick(e) {
@@ -50,7 +78,7 @@ class MapWrapper extends Component {
   }
 
   render() {
-    const markers = this.props.markers.map(marker => {
+    const markers = this.props.cities.map(marker => {
       return <Marker key={marker.name} latitude={marker.coord.Lat} longitude={marker.coord.Lon}>
               <CityMarker text={marker.name} markersCss="city-marker" />
             </Marker>
@@ -75,9 +103,9 @@ class MapWrapper extends Component {
         }
         <ReactMapGL
           {...this.state.viewport}
-          latitude={this.props.averageLat}
-          longitude={this.props.averageLon}
-          zoom={this.props.zoom}
+          latitude={this.state.averageLat}
+          longitude={this.state.averageLon}
+          zoom={this.state.zoom}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.handleViewPortChange}
           mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
