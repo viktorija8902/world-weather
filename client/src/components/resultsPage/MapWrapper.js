@@ -58,7 +58,7 @@ class MapWrapper extends Component {
     let usersSelectedDots;
     if (this.state.pointsSelected > 0) {
       usersSelectedDots = this.state.coordinatesOfPoints.map(coord => {
-        return <Marker key={coord} latitude={coord.Lat} longitude={coord.Lon}>
+        return <Marker key={`${coord.Lat}-${coord.Lon}`} latitude={coord.Lat} longitude={coord.Lon}>
                  <CityMarker markersCss={"coord-marker"}/>
                </Marker>
       })
