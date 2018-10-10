@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import OneLineSummary from "../../generalComponents/OneLineSummary";
 import City from "../../generalComponents/City";
 
 class Cloud extends Component {
@@ -14,7 +13,6 @@ class Cloud extends Component {
           <h3>Cloud coverage</h3>
           {cloudCities}
         </div>
-        <OneLineSummary summary={this.props.cloudData.cloudSummary}/>
       </div>
     );
   }

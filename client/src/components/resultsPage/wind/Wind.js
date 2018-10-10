@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import WindSpeedSummary from "./WindSpeedSummary";
 import City from "../../generalComponents/City";
 import Button from "./Button";
 
@@ -74,7 +73,6 @@ class Wind extends Component {
         <div className="wind-cities">
           {windCities}
         </div>
-        <WindSpeedSummary summary={this.props.windData.windSummary}/>
       </div>
     );
   }
