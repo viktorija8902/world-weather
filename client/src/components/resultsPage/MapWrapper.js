@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import SelectedCoordinates from './SelectedCoordinates';
 
 
 const CityMarker = ({ text, markersCss }) => <div className="city-marker-wrapper">
@@ -93,13 +94,8 @@ class MapWrapper extends Component {
     }
     return (
       <div>
-        {this.state.pointsSelected <= 4 &&
-          <div className="selected-coords">
-            <div>Top left corner: {JSON.stringify(this.state.coordinatesOfPoints[0]) || "-" }</div>
-            <div>Top right corner: {JSON.stringify(this.state.coordinatesOfPoints[1]) || "-" }</div>
-            <div>Bottom right corner: {JSON.stringify(this.state.coordinatesOfPoints[2]) || "-" }</div>
-            <div>Bottom left corner: {JSON.stringify(this.state.coordinatesOfPoints[3]) || "-" }</div>
-          </div>
+        {this.state.pointsSelected <= 4 && 
+          <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
         }
         <ReactMapGL
           {...this.state.viewport}
