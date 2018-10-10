@@ -8,5 +8,3 @@ setInterval(() => {
 export const getRegionFromCache = (region) => regionCache.get(region);
 
 export const addRegionToCache = (region, data) => regionCache.set(region, data);
-
-export const extendTimeInRegionCache = (region) => regionCache.ttl(region, 60*30);

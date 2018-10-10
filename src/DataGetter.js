@@ -6,14 +6,13 @@ import { generateWindData } from "./WindStatisticsGenerator";
 import { generateCloudData } from "./CloudStatistics";
 import { generateRainData } from "./RainStatisticsGenerator";
 import { generateTemperatureData } from "./TemperatureStatisticsGenerator";
-import { getRegionFromCache, extendTimeInRegionCache, addRegionToCache } from "./RegionCache";
+import { getRegionFromCache, addRegionToCache } from "./RegionCache";
 import { regionCoordList } from "./data/Regions";
 
 
 export const predefinedDataGetter = (region) => {
   const regionDataInCache = getRegionFromCache(region);
   if (regionDataInCache) {
-    extendTimeInRegionCache(region);
     return Promise.resolve(regionDataInCache);
   } else {
     const coordinates = regionCoordList[region];
