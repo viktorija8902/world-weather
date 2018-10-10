@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getCustomWeatherData } from '../../actions/actionCreators';
 import Wind from "./wind/Wind";
 import Rain from "./rain/Rain";
 import Clouds from "./clouds/Clouds";
 import Temperature from './temperature/Temperature';
 import MapWrapper from "./MapWrapper";
-import { getCustomWeatherData } from '../../actions/actionCreators';
-
+import Summary from "./Summary";
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -29,6 +29,11 @@ class ResultsPage extends Component {
       results = <div>No data found. Try different points.</div>
     } else {
       results = <div>
+        <Summary 
+          wind={this.props.results.windData.windSummary}
+          rain={this.props.results.rainData.rainSummary}
+          cloud={this.props.results.cloudData.cloudSummary}
+        />
         <Wind windData={this.props.results.windData} />
         <Rain rainData={this.props.results.rainData} />
         <Clouds cloudData={this.props.results.cloudData} />
