@@ -2,6 +2,7 @@ let initialState = {
   selectedRegion: "",
   regionData: null,
   noResults: false,
+  noDataCustomSearch: false,
 }
 
 const region = (state = initialState, action) => {
@@ -19,6 +20,10 @@ const region = (state = initialState, action) => {
       return Object.assign({}, state, {
         regionData: null,
         noResults: true,
+      })
+    case 'NO_RESULTS_CUSTOM_SEARCH':
+      return Object.assign({}, state, {
+        noDataCustomSearch: true,
       })
     default:
       return state

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Wind from "./wind/Wind";
 import Rain from "./rain/Rain";
 import Clouds from "./clouds/Clouds";
 import Temperature from './temperature/Temperature';
 import MapWrapper from "./MapWrapper";
-
+import { getCustomWeatherData } from '../../actions/actionCreators';
 
 const sumReducer = (a, b) => a + b;
 
@@ -13,6 +14,7 @@ class ResultsPage extends Component {
     super(props);
     this.state = {};
     this.handleMapCenterChange = this.handleMapCenterChange.bind(this);
+    this.handleCoordSelect = this.handleCoordSelect.bind(this);
   }
 
   componentDidMount() {
@@ -44,24 +46,53 @@ class ResultsPage extends Component {
     })
   }
 
+  handleCoordSelect(coord) {
+    this.props.getCustomWeatherData({
+      lonTopLeft: coord[0].Lon,
+      latBottomLeft: coord[1].Lat,
+      lonBottomRight: coord[2].Lon,
+      latTopRight: coord[3].Lat
+    });
+  }
+
   render() {
+    let results;
+    if (this.props.noDataCustomSearch) {
+      results = <div>No data found. Try again</div>
+    } else {
+      results = <div>
+        <Wind windData={this.props.results.windData} />
+        <Rain rainData={this.props.results.rainData} />
+        <Clouds cloudData={this.props.results.cloudData} />
+        <Temperature temperatureData={this.props.results.temperatureData} />
+      </div>
+    }  
     return (
       <div>
         <MapWrapper 
           onMapCenterChange={this.handleMapCenterChange}
-          isMarkerShown markers={this.props.results.cities}
+          isMarkerShown 
+          markers={this.props.results.cities}
           averageLat={this.state.averageLat}
           averageLon={this.state.averageLon}
           zoom={this.state.zoom}
-          users
+          onCustomSelect={this.handleCoordSelect}
         />
-        <Wind windData={this.props.results.windData} />
-        <Rain rainData={this.props.results.rainData} />
-        <Clouds cloudData={this.props.results.cloudData}></Clouds>
-        <Temperature temperatureData={this.props.results.temperatureData}></Temperature>
+        {results}
       </div>
     );
   }
 }
 
-export default ResultsPage;
+const mapStateToProps = state => ({
+  noDataCustomSearch: state.region.noDataCustomSearch,
+})
+
+const mapDispatchToProps = dispatch => ({
+    getCustomWeatherData: coordinates => dispatch(getCustomWeatherData(coordinates))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ResultsPage);

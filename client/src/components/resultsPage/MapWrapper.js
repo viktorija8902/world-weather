@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const CityMarker = ({ text }) => <div className="city-marker-wrapper">
-  <div className="city-marker"></div>
+
+const CityMarker = ({ text, markersCss }) => <div className="city-marker-wrapper">
+  <div className={markersCss}></div>
   <div className="city-name">{text}</div>
 </div>;
 
@@ -27,55 +28,50 @@ class MapWrapper extends Component {
   }
 
   handleClick(e) {
-    console.log("e.lngLat", e.lngLat)
-    console.log()
-    if (this.state.pointsSelected < 4) {
-      const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
-      console.log(updatedCoords)
+    const pointsSelected = this.state.pointsSelected + 1;
+    const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
+    if (pointsSelected < 4) {
       this.setState({
         coordinatesOfPoints: updatedCoords,
-        pointsSelected: this.state.pointsSelected + 1,
+        pointsSelected: pointsSelected,
       });
-    } else if (this.state.pointsSelected === 4 ) {
+    } else if (pointsSelected === 4 ) {
       this.setState({
-        coordinatesOfPoints: [],
-        pointsSelected: 0,
+        coordinatesOfPoints: updatedCoords,
+        pointsSelected: pointsSelected,
       });
-      // this.props.sendRequest
+      this.props.onCustomSelect(updatedCoords);
     } else {
       this.setState({
         coordinatesOfPoints: [],
         pointsSelected: 0,
       });
     }
-    
-    console.log("e.features", e.features)
   }
 
   render() {
     const markers = this.props.markers.map(marker => {
       return <Marker key={marker.name} latitude={marker.coord.Lat} longitude={marker.coord.Lon}>
-              <CityMarker text={marker.name}/>
+              <CityMarker text={marker.name} markersCss="city-marker" />
             </Marker>
     });
     let usersSelectedDots;
     if (this.state.pointsSelected > 0) {
       usersSelectedDots = this.state.coordinatesOfPoints.map(coord => {
-        <Marker key={coord} latitude={coord.Lat} longitude={coord.Lon}>
-        <CityMarker text={"addfsda"}/>
-        </Marker>
+        return <Marker key={coord} latitude={coord.Lat} longitude={coord.Lon}>
+                 <CityMarker markersCss={"coord-marker"}/>
+               </Marker>
       })
     }
     return (
       <div>
-        {this.state.pointsSelected === 4 ?
+        {this.state.pointsSelected <= 4 &&
           <div className="selected-coords">
-            <div>Top left corner: {JSON.stringify(this.state.coordinatesOfPoints[0])}</div>
-            <div>Top right corner: {JSON.stringify(this.state.coordinatesOfPoints[1])}</div>
-            <div>Bottom right corner: {JSON.stringify(this.state.coordinatesOfPoints[2])}</div>
-            <div>Bottom left corner: {JSON.stringify(this.state.coordinatesOfPoints[3])}</div>
+            <div>Top left corner: {JSON.stringify(this.state.coordinatesOfPoints[0]) || "-" }</div>
+            <div>Top right corner: {JSON.stringify(this.state.coordinatesOfPoints[1]) || "-" }</div>
+            <div>Bottom right corner: {JSON.stringify(this.state.coordinatesOfPoints[2]) || "-" }</div>
+            <div>Bottom left corner: {JSON.stringify(this.state.coordinatesOfPoints[3]) || "-" }</div>
           </div>
-          : JSON.stringify(this.state.coordinatesOfPoints)
         }
         <ReactMapGL
           {...this.state.viewport}
@@ -86,7 +82,6 @@ class MapWrapper extends Component {
           onViewportChange={this.handleViewPortChange}
           mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
           onClick={this.handleClick}
-          clickRadius={5}
         >
           {markers}
           {usersSelectedDots}

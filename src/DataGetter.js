@@ -45,5 +45,5 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
       } else {
         return { output: {} };
       }
-    }).catch(error => console.log(error));
+    })
 }
