@@ -1,14 +1,18 @@
 $marker-width: 8px;
 
+%map-marker {
+  position: absolute;
+  border-radius: 50%;
+  width: $marker-width;
+  height: $marker-width;
+  margin-top: -$marker-width;
+  margin-left: -$marker-width;
+}
+
 .city-marker-wrapper {
   .city-marker {
-    position: absolute;
-    border-radius: 50%;
+    @extend %map-marker;
     border: $marker-width solid rgb(241, 32, 84);
-    width: $marker-width;
-    height: $marker-width;
-    margin-top: -$marker-width;
-    margin-left: -$marker-width;
     background-color: rgb(19, 88, 236);
   }
   .city-name {
@@ -18,5 +22,10 @@ $marker-width: 8px;
     font-weight: bold;
     font-size: 1rem;
     z-index: 1;
+  }
+  .coord-marker {
+    @extend %map-marker;
+    border: $marker-width solid rgb(18, 83, 24);
+    background-color: rgb(247, 210, 1);
   }
 }
