@@ -3,6 +3,7 @@ import { regionList } from "../data/Regions";
 import RegionFilterContainer from "./../containers/RegionFilterContainer";
 import ResultsPage from "./resultsPage/ResultsPage";
 import NoDataPage from "./NoDataPage";
+import Footer from './Footer';
 
 class Home extends Component {
   render() {
@@ -14,12 +15,15 @@ class Home extends Component {
     }
     return (
       <div className="home">
-        <React.StrictMode><RegionFilterContainer regionList={regionList}/></React.StrictMode>
-        <React.StrictMode>
-          <div className="results">
-            {page}
-          </div>
-        </React.StrictMode>
+        <div className="content">
+          <React.StrictMode><RegionFilterContainer regionList={regionList}/></React.StrictMode>
+          <React.StrictMode>
+            <div className="results">
+              {page}
+            </div>
+          </React.StrictMode>
+        </div>
+        <Footer />
       </div>
     );
   }

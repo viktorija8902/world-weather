@@ -8,7 +8,6 @@ export const selectRegion = (selectedRegion) => {
 export const getWeatherData = selectedRegion => dispatch => {
   fetchData(`/api/weather/${selectedRegion}`)
     .then(resp => {
-      console.log(resp);
       if (resp.message === "no data" || resp.message === "error" || (resp.output && Object.keys(resp.output).length === 0)) {
         dispatch(loadNoResults());
       } else {
