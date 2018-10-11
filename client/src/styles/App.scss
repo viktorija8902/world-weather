@@ -1,12 +1,13 @@
 body {
   margin: 0;
-  padding: 15px;
   font-family: sans-serif;
   background-color: #eee;
 }
 
-.home {
+.content {
   display: flex;
+  min-height: calc(100vh - 80px);
+  padding: 15px;
 }
 .region-filters {
   width: 20%;
@@ -23,7 +24,7 @@ body {
 }
 
 @media (max-width: 550px) {
-  .home {
+  .content {
     display: block;
     .region-filters {
       display: inline;
