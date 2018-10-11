@@ -23,7 +23,6 @@ export const getWeatherData = selectedRegion => dispatch => {
 export const getCustomWeatherData = coordinates => dispatch => {
   fetchData(`/api/weather/custom-coords/${coordinates.lonTopLeft},${coordinates.latBottomLeft},${coordinates.lonBottomRight},${coordinates.latTopRight}`)
     .then(resp => {
-      console.log(resp);
       if (resp.message === "no data" || resp.message === "error" || (resp.output && Object.keys(resp.output).length === 0)) {
         dispatch(loadNoResultsCustomSearch());
       } else {
