@@ -16,6 +16,7 @@ function sortByCloudCoverage(citiesWeatherData) {
 function getCityCloudList(data) {
     return data.map(city => {
         return {
+            id: city.id,
             name: city.name,
             cloudCoverage: city.clouds.today
         }

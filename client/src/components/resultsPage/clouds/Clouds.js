@@ -4,7 +4,7 @@ import City from "../../generalComponents/City";
 class Cloud extends Component {
   render() {
     const cloudCities = this.props.cloudData.cloudCityList.map(city =>
-      <City key={city.name} cityName={city.name} param={city.cloudCoverage} unit="%"/>
+      <City key={city.id} cityName={city.name} param={city.cloudCoverage} unit="%"/>
     );
     return (
       <div className="cloud-block">

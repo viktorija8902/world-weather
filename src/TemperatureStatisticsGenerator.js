@@ -1,7 +1,7 @@
 import { HEAT } from "./Constants.js";
 
 export function generateTemperatureData(citiesWeatherData) {
-    const citiesWithTemperature = citiesWeatherData.map(city => ({ name: city.name, temperature: city.main.temp }));
+    const citiesWithTemperature = citiesWeatherData.map(city => ({ id: city.id, name: city.name, temperature: city.main.temp }));
     const sortedByTemperature = citiesWithTemperature.sort((a, b) => b.temperature - a.temperature);
     let heatMap = new Map();
     Object.keys(HEAT).forEach(temperature => heatMap.set(temperature, []));
@@ -22,7 +22,7 @@ function addToHeatMap(city, heatMap) {
         const maxTemp = heat[1].max;
         if (city.temperature > minTemp && city.temperature <= maxTemp) {
             let cities = heatMap.get(mapsKey);
-            heatMap.set(mapsKey, cities.concat(city.name));
+            heatMap.set(mapsKey, cities.concat({id: city.id, name: city.name}));
         }
     });
     return heatMap;

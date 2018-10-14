@@ -14,11 +14,13 @@ function getCityRainList(id, allCities) {
     const rain = city.weather.find(weather => weather.id.toString().startsWith(id));
     if (rain) {
       return {
+        id: city.id,
         name: city.name,
         rain: rain.description
       }
     } else {
       return {
+        id: city.id,
         name: city.name,
         rain: null
       }

@@ -12,7 +12,6 @@ class WeatherButtons extends Component {
   }
 
   handleButtonClick(buttonId) {
-    console.log(buttonId)
     this.setState({
       clickedButton: buttonId,
     })
