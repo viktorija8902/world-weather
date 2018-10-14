@@ -81,12 +81,12 @@ class MapWrapper extends Component {
   render() {
     let colorOfSpecialCondition;
     const markers = this.props.cities.map(city => {
-      if (this.props.citiesWithSpecialCondition.has(city.name)) {
+      if (this.props.citiesWithSpecialCondition.has(city.id)) {
         colorOfSpecialCondition = "special-condition";
       } else {
         colorOfSpecialCondition = "";
       }
-      return <Marker key={city.name} latitude={city.coord.Lat} longitude={city.coord.Lon}>
+      return <Marker key={city.id} latitude={city.coord.Lat} longitude={city.coord.Lon}>
               <CityMarker text={city.name} markersCss={`city-marker ${colorOfSpecialCondition}`} />
             </Marker>
     });

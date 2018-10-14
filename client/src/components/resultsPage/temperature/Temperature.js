@@ -4,7 +4,7 @@ import City from "../../generalComponents/City";
 class Temperature extends Component {
   render() {
     const temperatureCities = this.props.temperatureData.temperatureCityList.map(city => {
-      return <City key={city.name} cityName={city.name} param={city.temperature} unit="&#8451;"/>
+      return <City key={city.id} cityName={city.name} param={city.temperature} unit="&#8451;"/>
     });
     return (
       <div className="temperature-block">

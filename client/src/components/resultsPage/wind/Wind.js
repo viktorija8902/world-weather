@@ -54,13 +54,14 @@ class Wind extends Component {
       />
     });
     const windCities = this.props.windData.windCityList.map(city => {
+      const isHighlighted = this.state.highlightedCities.find(c => c.id === city.id);
       return <City 
-        key={city.name}
+        key={city.id}
         cityName={city.name}
         param={city.windSpeed.toFixed(2)}
         unit="km/h"
         cssClass="wind-city"
-        specialStyle={{backgroundColor: this.state.highlightedCities.includes(city.name) ? highlightColor : ""}}
+        specialStyle={{backgroundColor: isHighlighted ? highlightColor : ""}}
       />
     })
   

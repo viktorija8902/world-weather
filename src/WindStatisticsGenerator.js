@@ -21,6 +21,7 @@ function getCityWindList(data) {
     return data.map(city => {
         const speedInKmPerHour = metersPerSecondToKmPerHour(city.wind.speed)
         return {
+            id: city.id,
             name: city.name,
             windSpeed: speedInKmPerHour
         }
@@ -51,22 +52,22 @@ function getCitiesGroupedByWind(cityWindList) {
         const windSpeed = city.windSpeed;
         switch (true) {
             case (windSpeed < windsKmPerHour.get("LIGHT_WINDS").max):
-                addToWindMap(citiesGroupedByWind, "LIGHT_WINDS", city.name)
+                addToWindMap(citiesGroupedByWind, "LIGHT_WINDS", city.name, city.id)
                 break;
             case (windSpeed >= windsKmPerHour.get("MODERATE_WINDS").min && windSpeed <= windsKmPerHour.get("MODERATE_WINDS").max):
-                addToWindMap(citiesGroupedByWind, "MODERATE_WINDS", city.name)
+                addToWindMap(citiesGroupedByWind, "MODERATE_WINDS", city.name, city.id)
                 break;
             case (windSpeed >= windsKmPerHour.get("STRONG_WIND_SMALL_CRAFT_WARNING").min && windSpeed <= windsKmPerHour.get("STRONG_WIND_SMALL_CRAFT_WARNING").max):
-                addToWindMap(citiesGroupedByWind, "STRONG_WIND_SMALL_CRAFT_WARNING", city.name)   
+                addToWindMap(citiesGroupedByWind, "STRONG_WIND_SMALL_CRAFT_WARNING", city.name, city.id)   
                 break;
             case (windSpeed >= windsKmPerHour.get("GALE_WARNING").min && windSpeed <= windsKmPerHour.get("GALE_WARNING").max):
-                addToWindMap(citiesGroupedByWind, "GALE_WARNING", city.name) 
+                addToWindMap(citiesGroupedByWind, "GALE_WARNING", city.name, city.id) 
                 break;
             case (windSpeed >= windsKmPerHour.get("STORM_WARNING").min && windSpeed <= windsKmPerHour.get("STORM_WARNING").max):
-                addToWindMap(citiesGroupedByWind, "STORM_WARNING", city.name) 
+                addToWindMap(citiesGroupedByWind, "STORM_WARNING", city.name, city.id) 
                 break;
             case (windSpeed >= windsKmPerHour.get("HURRICANE_FORCE_WIND_WARNING").min):
-                addToWindMap(citiesGroupedByWind, "HURRICANE_FORCE_WIND_WARNING", city.name) 
+                addToWindMap(citiesGroupedByWind, "HURRICANE_FORCE_WIND_WARNING", city.name, city.id) 
                 break;
             default:
                 console.log("Error: ", city);
@@ -83,11 +84,11 @@ function getWindSummary(citiesGroupedByWind, cityWindList) {
     return windStatictics;
 }
 
-function addToWindMap(citiesGroupedByWind, windType, cityName) {
+function addToWindMap(citiesGroupedByWind, windType, cityName, cityId) {
     const cityList = citiesGroupedByWind.get(windType)
     if (cityList) {
-        citiesGroupedByWind.set(windType, cityList.concat(cityName))
+        citiesGroupedByWind.set(windType, cityList.concat({name: cityName, id: cityId}))
     } else {
-        citiesGroupedByWind.set(windType, [cityName])
+        citiesGroupedByWind.set(windType, [{name: cityName, id: cityId}])
     }
 }
