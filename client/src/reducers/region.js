@@ -3,6 +3,8 @@ let initialState = {
   regionData: null,
   noResults: false,
   noDataCustomSearch: false,
+  rainCities: [],
+  cloudCities: [],
 }
 
 const region = (state = initialState, action) => {
@@ -12,8 +14,12 @@ const region = (state = initialState, action) => {
         selectedRegion: action.selectedRegion
       })
     case 'LOAD_DATA':
+      let rainCities = new Set(action.regionData.rainData.rainCityList.filter(city => city.rain !== null).map(city => city.name));
+      let cloudCities = new Set(action.regionData.cloudData.cloudCityList.filter(city => city.cloudCoverage !== 0).map(city => city.name));
       return Object.assign({}, state, {
         regionData: action.regionData,
+        rainCities: rainCities,
+        cloudCities: cloudCities,
         noResults: false,
         noDataCustomSearch: false,
       })
