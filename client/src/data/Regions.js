@@ -26,8 +26,4 @@ export const regionList = [
     main: { name: "new zealand" },
     parts: []
   },
-  {
-    main: { name: "australia" },
-    parts: []
-  }
 ];

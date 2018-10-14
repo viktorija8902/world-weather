@@ -10,5 +10,4 @@ export const regionCoordList = {
   "canada west part": { lonTopLeft: -140.993778, latTopRight: 83.189686, lonBottomRight: -96.677583, latBottomLeft: 47.960502 },
   "nova scotia": { lonTopLeft: -66.841627, latTopRight: 47.136023, lonBottomRight: -59.066708, latBottomLeft: 43.235699 },
   "new zealand": { lonTopLeft: 165.005138, latTopRight: -32.219772, lonBottomRight: 185.386848, latBottomLeft: -53.256998 },
-  "australia": { lonTopLeft: -252.373312, latTopRight: -10.935798, lonBottomRight: -204.933125, latBottomLeft: -43.782993 },
 };
