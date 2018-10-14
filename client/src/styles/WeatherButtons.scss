@@ -1,0 +1,20 @@
+.weather-buttons {
+  display: flex;
+  .weather-button {
+    margin: 10px;
+    padding: 15px;
+    height: 20px;
+    background-color: rgb(10, 100, 10);
+    border-radius: 30px;
+    box-shadow: 5px 4px 16px -2px #777;
+    cursor: pointer;
+  }
+  .weather-button:hover {
+    background-color: azure;;
+    font-weight: bold;
+    transform: scale(1.05);
+  }
+  .weather-button.clicked-btn {
+    background-color: #5dced8;
+  }
+}

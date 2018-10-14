@@ -79,9 +79,15 @@ class MapWrapper extends Component {
   }
 
   render() {
-    const markers = this.props.cities.map(marker => {
-      return <Marker key={marker.name} latitude={marker.coord.Lat} longitude={marker.coord.Lon}>
-              <CityMarker text={marker.name} markersCss="city-marker" />
+    let colorOfSpecialCondition;
+    const markers = this.props.cities.map(city => {
+      if (this.props.citiesWithSpecialCondition.has(city.name)) {
+        colorOfSpecialCondition = "special-condition";
+      } else {
+        colorOfSpecialCondition = "";
+      }
+      return <Marker key={city.name} latitude={city.coord.Lat} longitude={city.coord.Lon}>
+              <CityMarker text={city.name} markersCss={`city-marker ${colorOfSpecialCondition}`} />
             </Marker>
     });
     let usersSelectedDots;
