@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import Chart from "./../Chart";
+import { sortBy } from "../../generalComponents/sortBy";
 
-function sortBy(data, key) {
-  let arrayCopy = [...data];
-  arrayCopy.sort((a, b) => {
-    if (a[key] > b[key]) return -1;
-    if (a[key] < b[key]) return 1;
-    return 0;
-  });
-  return arrayCopy;
-}
 
 class Temperature extends Component {
   render() {
@@ -19,7 +11,7 @@ class Temperature extends Component {
 
     return (
       <div className="temperature-block">
-        <h1>Temperature information (&#8451;)</h1>
+        <h1>Temperature (&#8451;)</h1>
         <Chart cityWeather={sorted} unit="&#8451;"/>
       </div>
     );
