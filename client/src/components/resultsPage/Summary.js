@@ -5,7 +5,7 @@ import WindSpeedSummary from "./wind/WindSpeedSummary";
 function Summary(props) {
   return (
     <div>
-      <h3>Summary</h3>
+      <h1>Summary</h1>
       <div className="summary">{props.rain}</div>
       <br></br>
       <div className="summary">{props.cloud}</div>

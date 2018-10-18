@@ -8,7 +8,7 @@ function SelectedCoordinates(props) {
   const selectedIcon = <img className="selection-icon" src={selected} alt="corner selected"></img>
   return (
     <div>
-      <div className="select-square-text">Select your weather square on the map!</div>
+      <h1 className="select-square-text">Select your weather square on the map!</h1>
       <div className="square-info">Top left corner: { props.coordinates[0] ? selectedIcon : notSelectedIcon }</div>
       <div className="square-info">Top right corner: { props.coordinates[1] ? selectedIcon : notSelectedIcon }</div>
       <div className="square-info">Bottom right corner: { props.coordinates[2] ? selectedIcon : notSelectedIcon }</div>
