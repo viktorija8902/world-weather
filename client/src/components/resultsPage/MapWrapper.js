@@ -28,6 +28,9 @@ class MapWrapper extends Component {
 
   componentDidMount() {
     this.updateMapCenter();
+    this.setState({
+      zoom: 3
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -44,7 +47,6 @@ class MapWrapper extends Component {
     this.setState({
       averageLat: averageLat, 
       averageLon: averageLon,
-      zoom: 3
     })
   }
 
