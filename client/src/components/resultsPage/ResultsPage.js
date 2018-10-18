@@ -57,11 +57,11 @@ class ResultsPage extends Component {
           cloud={this.props.results.cloudData.cloudSummary}
         />
         <Wind windData={this.props.results.windData} />
-        <Rain rainData={this.props.results.rainData} />
         <Clouds cloudData={this.props.results.cloudData} />
         <Temperature temperatureData={this.props.results.temperatureData} />
+        <Rain rainData={this.props.results.rainData} />
       </div>
-    }  
+    }
     return (
       <div>
         <MapWrapper 
