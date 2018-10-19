@@ -43,6 +43,6 @@ async function fetchData(url) {
   return body;
 };
 
-const loadData = (data) => ({ type: 'LOAD_DATA', regionData: data });
+const loadData = (data) => ({ type: 'LOAD_DATA', cityData: data });
 const loadNoResults = () => ({ type: 'LOAD_NO_RESULTS' });
 const loadNoResultsCustomSearch = () => ({ type: 'NO_RESULTS_CUSTOM_SEARCH' });
