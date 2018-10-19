@@ -18,7 +18,7 @@ const region = (state = initialState, action) => {
       console.log("action.cityData", action.cityData.cities)
       const cities = [...action.cityData.cities];
       const rainCities = new Set(cities.filter(city => city.rain !== null).map(city => city.id));
-      const cloudCities = new Set(action.cityData.cloudData.cloudCityList.filter(city => city.cloudCoverage !== 0).map(city => city.id));
+      const cloudCities = new Set(cities.filter(city => city.clouds.today > 0).map(city => city.id));
       return Object.assign({}, state, {
         regionData: action.cityData,
         rainCities: rainCities,

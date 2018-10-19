@@ -54,10 +54,10 @@ class ResultsPage extends Component {
         <Summary 
           wind={this.props.results.windData.windSummary}
           rain={`It is raining in the ${(this.props.rainCities.size*100/this.props.cities.length).toFixed(2)}% of the selected cities`}
-          cloud={this.props.results.cloudData.cloudSummary}
+          cloud={`It is cloudy in the ${(this.props.cloudCities.size*100/this.props.cities.length).toFixed(2)}% of the selected cities`}
         />
         <Wind windData={this.props.results.windData} />
-        <Clouds cloudData={this.props.results.cloudData} />
+        <Clouds cloudData={this.props.cities} />
         <Temperature temperatureData={this.props.results.temperatureData} />
         <Rain rainCities={this.props.cities} />
       </div>

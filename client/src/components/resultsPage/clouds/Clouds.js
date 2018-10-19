@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import Chart from "./../Chart";
-import { sortBy } from "../../generalComponents/sortBy";
 
 class Cloud extends Component {
   render() {
-    let dataCopy = [...this.props.cloudData.cloudCityList];
-    const preparedForChart = dataCopy.map((city) => ({city: city.name, data: city.cloudCoverage }));
-    const sorted = sortBy(preparedForChart, "city");
+    let dataCopy = [...this.props.cloudData];
+    const preparedForChart = dataCopy.map((city) => ({city: city.name, data: city.clouds.today }));
     
     return (
       <div className="cloud-block">
         <h1>Cloud coverage (%)</h1>
-        <Chart cityWeather={sorted} unit="%"/>
+        <Chart cityWeather={preparedForChart} unit="%"/>
       </div>
     );
   }
