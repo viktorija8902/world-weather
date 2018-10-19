@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { MESSAGES } from "./Constants";
 import { generateWindData } from "./WindStatisticsGenerator";
-import { generateTemperatureData } from "./TemperatureStatisticsGenerator";
 import { getRegionFromCache, addRegionToCache } from "./RegionCache";
 import { regionCoordList } from "./data/Regions";
 
@@ -44,11 +43,11 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
                 coord: city.coord,
                 wind: city.wind,
                 clouds: city.clouds,
-                rain: rainDescription
+                rain: rainDescription,
+                temperature: city.main.temp,
               }
             }),
             windData: generateWindData(citiesWeatherData),
-            temperatureData: generateTemperatureData(citiesWeatherData),
           }
         }
       } else {
