@@ -17,9 +17,37 @@ class ResultsPage extends Component {
     super(props);
     this.state = {
       citiesWithSpecialCondition: new Set(),
+      clickedWeatherButton: null,
     }
     this.handleCoordSelect = this.handleCoordSelect.bind(this);
     this.handleWeatherButtonClick = this.handleWeatherButtonClick.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.clickedWeatherButton && prevProps !== this.props) {
+      this.highlightCities(this.state.clickedWeatherButton);
+    }
+  }
+
+  handleWeatherButtonClick(button) {
+    this.highlightCities(button);
+    this.setState({
+      clickedWeatherButton: button,
+    });
+  }
+
+  highlightCities(clickedButton) {
+    let citiesWithSpecialCondition;
+    if (clickedButton === WEATHER_BUTTON.RAIN) {
+      citiesWithSpecialCondition = this.props.rainCities;
+    } else if (clickedButton === WEATHER_BUTTON.CLOUD) {
+      citiesWithSpecialCondition = this.props.cloudCities;
+    } else if (clickedButton === WEATHER_BUTTON.RESET) {
+      citiesWithSpecialCondition = new Set();
+    }
+    this.setState({
+      citiesWithSpecialCondition: citiesWithSpecialCondition,
+    });
   }
 
   handleCoordSelect(coord) {
@@ -29,20 +57,6 @@ class ResultsPage extends Component {
       lonBottomRight: coord[2].Lon,
       latTopRight: coord[3].Lat
     });
-  }
-
-  handleWeatherButtonClick(button) {
-    let citiesWithSpecialCondition;
-    if (button === WEATHER_BUTTON.RAIN) {
-      citiesWithSpecialCondition = this.props.rainCities;
-    } else if (button === WEATHER_BUTTON.CLOUD) {
-      citiesWithSpecialCondition = this.props.cloudCities;
-    } else if (button === WEATHER_BUTTON.RESET) {
-      citiesWithSpecialCondition = new Set();
-    }
-    this.setState({
-      citiesWithSpecialCondition: citiesWithSpecialCondition,
-    })
   }
 
   groupByWindType(cities) {
@@ -65,10 +79,10 @@ class ResultsPage extends Component {
       results = <div>No data found. Try different points.</div>
     } else {
       let citiesGroupedByWind = this.groupByWindType(this.props.cities);
-      let windTypes = Object.keys(citiesGroupedByWind);
+      let windTypes = Object.keys(citiesGroupedByWind).sort();
       let numberOfCities = this.props.cities.length;
       results = <div>
-        <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} />
+        <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} clickedButton={this.state.clickedWeatherButton}/>
         <Summary 
           windTypes={windTypes}
           citiesGroupedByWind={citiesGroupedByWind}
