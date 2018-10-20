@@ -44,19 +44,38 @@ class ResultsPage extends Component {
     })
   }
 
+  groupByWindType(cities) {
+    let citiesGroupedByWind = {}
+    for (let i = 0; i < cities.length; i++) {
+      const city = cities[i];
+      const windType = city.wind.type;
+      if (citiesGroupedByWind[windType]) {
+        citiesGroupedByWind[windType] = citiesGroupedByWind[windType].concat(city);
+      } else {
+        citiesGroupedByWind[windType] = [city]
+      }
+    }
+    return citiesGroupedByWind;
+  }
+
   render() {
     let results;
     if (this.props.noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
     } else {
+      let citiesGroupedByWind = this.groupByWindType(this.props.cities);
+      let windTypes = Object.keys(citiesGroupedByWind);
+      let numberOfCities = this.props.cities.length;
       results = <div>
         <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} />
         <Summary 
-          wind={this.props.results.windData.windSummary}
-          rain={`It is raining in the ${(this.props.rainCities.size*100/this.props.cities.length).toFixed(2)}% of the selected cities`}
-          cloud={`It is cloudy in the ${(this.props.cloudCities.size*100/this.props.cities.length).toFixed(2)}% of the selected cities`}
+          windTypes={windTypes}
+          citiesGroupedByWind={citiesGroupedByWind}
+          numberOfCities={numberOfCities}
+          numberOfCitiesWithRain={this.props.rainCities.size}
+          numberOfCitiesWithClouds={this.props.cloudCities.size}
         />
-        <Wind windData={this.props.results.windData} />
+        <Wind windTypes={windTypes} windData={this.props.cities} />
         <Clouds cloudData={this.props.cities} />
         <Temperature temperatureData={this.props.cities} />
         <Rain rainCities={this.props.cities} />
@@ -78,6 +97,7 @@ class ResultsPage extends Component {
 const mapStateToProps = state => ({
   noDataCustomSearch: state.region.noDataCustomSearch,
   cloudCities: state.region.cloudCities,
+  rainCities: state.region.rainCities,
 })
 
 const mapDispatchToProps = dispatch => ({

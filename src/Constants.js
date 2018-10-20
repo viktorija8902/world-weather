@@ -1,27 +1,27 @@
-//winds in knots
+//winds in km/h (converted from knots: knots * 1.852)
 export const WIND_SPEED = {
     LIGHT_WINDS: {
         min: 0,
-        max: 12
+        max: 22.224 //12 knots
     },
     MODERATE_WINDS: {
-        min: 12,
-        max: 19
+        min: 22.224,
+        max: 35.188 //19 knots
     },
     STRONG_WIND_SMALL_CRAFT_WARNING: {
-        min: 19,
-        max: 33
+        min: 35.188,
+        max: 61.116 //33 knots
     },
     GALE_WARNING: {
-        min: 33,
-        max: 47
+        min: 61.116,
+        max: 87.04400000000001 //47 knots
     },
     STORM_WARNING: {
-        min: 47,
-        max: 63
+        min: 87.04400000000001,
+        max: 116.676 //63 knots
     },
     HURRICANE_FORCE_WIND_WARNING: {
-        min: 63,
+        min: 116.676,
         max: null
     }
 }

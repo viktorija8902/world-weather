@@ -8,11 +8,7 @@ class Home extends Component {
   render() {
     let page = null;
     if (this.props.cities.length > 0) {
-      page = <ResultsPage
-              cities={this.props.cities}
-              rainCities={this.props.rainCities}
-              results={this.props.regionData}
-      />
+      page = <ResultsPage cities={this.props.cities} />
     }
     return (
       <div className="home">

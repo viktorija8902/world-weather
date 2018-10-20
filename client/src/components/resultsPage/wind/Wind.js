@@ -7,7 +7,7 @@ class Wind extends Component {
     super(props);
     this.state = { 
       highlightedCities: [],
-      windType: null,
+      clickedWindType: null,
     }
     this.colors = {
       LIGHT_WINDS: "#41d3f4",
@@ -22,43 +22,39 @@ class Wind extends Component {
 
   handleWindSelection(windType) {
     this.setState({
-      highlightedCities: this.getHighlightedCities(this.props.windData.citiesGroupedByWind, windType),
-      windType: windType
+      highlightedCities: this.getHighlightedCities(this.props.windData, windType),
+      clickedWindType: windType
     });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.windType && prevProps !== this.props) {
+    if (this.state.clickedWindType && prevProps !== this.props) {
       this.setState({
-        highlightedCities: this.getHighlightedCities(this.props.windData.citiesGroupedByWind, this.state.windType),
+        highlightedCities: this.getHighlightedCities(this.props.windData, this.state.clickedWindType),
       });
     }
   }
 
-  getHighlightedCities(citiesGroupedByWind, windType) {
-    return citiesGroupedByWind.find(arr => arr[0] === windType)[1];
+  getHighlightedCities(cities, windType) {
+    return cities.filter(city => city.wind.type === windType);
   }
 
   render() {
-    const highlightColor = this.colors[this.state.windType];
-    const buttons = this.props.windData.citiesGroupedByWind.filter(group => {
-      const cities = group[1];
-      return cities.length !== 0;
-    }).map(group => {
-      const windType = group[0];
+    const highlightColor = this.colors[this.state.clickedWindType];
+    const buttons = this.props.windTypes.map(windType => {
       return <Button 
         key={windType} 
         windType={windType} 
-        highlightColor={windType === this.state.windType ? highlightColor : ""} 
+        highlightColor={windType === this.state.clickedWindType ? highlightColor : ""} 
         onWindSelection={this.handleWindSelection}
       />
     });
-    const windCities = this.props.windData.windCityList.map(city => {
+    const windCities = this.props.windData.map(city => {
       const isHighlighted = this.state.highlightedCities.find(c => c.id === city.id);
       return <City 
         key={city.id}
         cityName={city.name}
-        param={city.windSpeed.toFixed(2)}
+        param={city.wind.speed.toFixed(2)}
         unit="km/h"
         cssClass="wind-city"
         specialStyle={{backgroundColor: isHighlighted ? highlightColor : ""}}

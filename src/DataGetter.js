@@ -2,7 +2,7 @@ require('dotenv').config();
 import axios from 'axios';
 
 import { MESSAGES } from "./Constants";
-import { generateWindData } from "./WindStatisticsGenerator";
+import { getWindType, metersPerSecondToKmPerHour } from "./WindStatisticsGenerator";
 import { getRegionFromCache, addRegionToCache } from "./RegionCache";
 import { regionCoordList } from "./data/Regions";
 
@@ -28,8 +28,6 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
   return axios.get(`https://api.openweathermap.org/data/2.5/box/city?bbox=${lonTopLeft},${latBottomLeft},${lonBottomRight},${latTopRight}&APPID=${process.env.API_KEY}`)
     .then(response => {
       const citiesWeatherData = sortBy(response.data.list, "name");
-      console.log(citiesWeatherData)
-      console.log(citiesWeatherData[0].weather)
       if (citiesWeatherData && citiesWeatherData.length > 0) {
         const rainIdsStartWith = 5;
         return {
@@ -37,17 +35,20 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
             cities: citiesWeatherData.map(city => {
               const rain = city.weather.find(condition => condition.id.toString().startsWith(rainIdsStartWith));
               const rainDescription = rain ? {description: rain.description} : null;
+              const windSpeed = metersPerSecondToKmPerHour(city.wind.speed);
               return  {
                 id: city.id,
                 name: city.name,
                 coord: city.coord,
-                wind: city.wind,
+                wind: { 
+                  speed: windSpeed,
+                  type: getWindType(windSpeed),
+                },
                 clouds: city.clouds,
                 rain: rainDescription,
                 temperature: city.main.temp,
               }
             }),
-            windData: generateWindData(citiesWeatherData),
           }
         }
       } else {
