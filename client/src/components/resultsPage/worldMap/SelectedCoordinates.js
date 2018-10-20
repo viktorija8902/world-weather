@@ -1,6 +1,6 @@
 import React from 'react';
-import notSelected from './../../images/not-selected.png';
-import selected from './../../images/selected.png';
+import notSelected from '../../../images/not-selected.png';
+import selected from '../../../images/selected.png';
 
 
 function SelectedCoordinates(props) {

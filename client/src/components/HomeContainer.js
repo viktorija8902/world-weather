@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
 import { regionList } from "../data/Regions";
-import RegionFilterContainer from "./../containers/RegionFilterContainer";
+import RegionFilter from "../components/regionFilter/RegionFilterContainer";
 import ResultsPage from "./resultsPage/ResultsPage";
 import Footer from './Footer';
 
@@ -13,7 +15,7 @@ class Home extends Component {
     return (
       <div className="home">
         <div className="content">
-          <React.StrictMode><RegionFilterContainer regionList={regionList}/></React.StrictMode>
+          <React.StrictMode><RegionFilter regionList={regionList}/></React.StrictMode>
           <React.StrictMode>
             <div className="results">
               {page}
@@ -26,4 +28,13 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    rainCities: state.region.rainCities,
+    cities: state.region.cities,
+    noResults: state.region.noResults,
+})
+
+export default connect(
+    mapStateToProps,
+    undefined
+)(Home)

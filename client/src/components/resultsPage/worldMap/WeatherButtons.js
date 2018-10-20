@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { WEATHER_BUTTON } from '../../constants/Constants';
-import Button from "./../generalComponents/Button";
+import { WEATHER_BUTTON } from '../../../constants/Constants';
+import Button from "../../generalComponents/Button";
 
 class WeatherButtons extends Component {
   constructor(props) {

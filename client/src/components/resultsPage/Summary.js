@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function Summary(props) {
   const windSummary = props.windTypes.map(windType => {
     const numberOfCitiesWithWindType = props.citiesGroupedByWind[windType].length

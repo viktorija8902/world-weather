@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Chart from "./../Chart";
-
+import Chart from "../Chart";
 
 class Temperature extends Component {
   render() {
