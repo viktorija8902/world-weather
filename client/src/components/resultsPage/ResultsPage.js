@@ -44,28 +44,47 @@ class ResultsPage extends Component {
     })
   }
 
+  groupByWindType(cities) {
+    let citiesGroupedByWind = {}
+    for (let i = 0; i < cities.length; i++) {
+      const city = cities[i];
+      const windType = city.wind.type;
+      if (citiesGroupedByWind[windType]) {
+        citiesGroupedByWind[windType] = citiesGroupedByWind[windType].concat(city);
+      } else {
+        citiesGroupedByWind[windType] = [city]
+      }
+    }
+    return citiesGroupedByWind;
+  }
+
   render() {
     let results;
     if (this.props.noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
     } else {
+      let citiesGroupedByWind = this.groupByWindType(this.props.cities);
+      let windTypes = Object.keys(citiesGroupedByWind);
+      let numberOfCities = this.props.cities.length;
       results = <div>
         <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} />
         <Summary 
-          wind={this.props.results.windData.windSummary}
-          rain={this.props.results.rainData.rainSummary}
-          cloud={this.props.results.cloudData.cloudSummary}
+          windTypes={windTypes}
+          citiesGroupedByWind={citiesGroupedByWind}
+          numberOfCities={numberOfCities}
+          numberOfCitiesWithRain={this.props.rainCities.size}
+          numberOfCitiesWithClouds={this.props.cloudCities.size}
         />
-        <Wind windData={this.props.results.windData} />
-        <Clouds cloudData={this.props.results.cloudData} />
-        <Temperature temperatureData={this.props.results.temperatureData} />
-        <Rain rainData={this.props.results.rainData} />
+        <Wind windTypes={windTypes} windData={this.props.cities} />
+        <Clouds cloudData={this.props.cities} />
+        <Temperature temperatureData={this.props.cities} />
+        <Rain rainCities={this.props.cities} />
       </div>
     }
     return (
       <div>
         <MapWrapper 
-          cities={this.props.results.cities}
+          cities={this.props.cities}
           citiesWithSpecialCondition={this.state.citiesWithSpecialCondition}
           onCustomSelect={this.handleCoordSelect}
         />
@@ -77,8 +96,8 @@ class ResultsPage extends Component {
 
 const mapStateToProps = state => ({
   noDataCustomSearch: state.region.noDataCustomSearch,
-  rainCities: state.region.rainCities,
   cloudCities: state.region.cloudCities,
+  rainCities: state.region.rainCities,
 })
 
 const mapDispatchToProps = dispatch => ({
