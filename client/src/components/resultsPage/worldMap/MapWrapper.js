@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+
 import SelectedCoordinates from './SelectedCoordinates';
 
 
@@ -15,10 +17,6 @@ class MapWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewport: {
-        width: 1000,
-        height: 500,
-      },
       coordinatesOfPoints: [],
       pointsSelected: 0,
     }
@@ -105,19 +103,26 @@ class MapWrapper extends Component {
         {this.state.pointsSelected <= 4 && 
           <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
         }
-        <ReactMapGL
-          {...this.state.viewport}
-          latitude={this.state.averageLat}
-          longitude={this.state.averageLon}
-          zoom={this.state.zoom}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          onViewportChange={this.handleViewPortChange}
-          mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
-          onClick={this.handleClick}
-        >
-          {markers}
-          {usersSelectedDots}
-        </ReactMapGL>
+        <div style={{height: 450}}>
+          <AutoSizer>
+            {({ height, width }) => (
+              <ReactMapGL
+                width={width}
+                height={height}
+                latitude={this.state.averageLat}
+                longitude={this.state.averageLon}
+                zoom={this.state.zoom}
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                onViewportChange={this.handleViewPortChange}
+                mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
+                onClick={this.handleClick}
+              >
+                {markers}
+                {usersSelectedDots}
+              </ReactMapGL>
+            )}
+          </AutoSizer>
+        </div>
       </div>
     );
   }
