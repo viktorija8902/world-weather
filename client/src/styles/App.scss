@@ -8,12 +8,12 @@ body {
   display: flex;
   min-height: calc(100vh - 80px);
   padding: 15px;
-}
-.region-filters {
-  width: 20%;
-}
-.results {
-  width: 75%;
+  .region-filters {
+    width: 20%;
+  }
+  .results {
+    width: 75%;
+  }
 }
 
 /* TODO style and move to separate files */
@@ -28,6 +28,9 @@ body {
     display: block;
     .region-filters {
       display: inline;
+    }
+    .results {
+      width: 100%;
     }
   }
 }
