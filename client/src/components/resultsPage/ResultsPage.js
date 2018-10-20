@@ -65,7 +65,7 @@ class ResultsPage extends Component {
       results = <div>No data found. Try different points.</div>
     } else {
       let citiesGroupedByWind = this.groupByWindType(this.props.cities);
-      let windTypes = Object.keys(citiesGroupedByWind);
+      let windTypes = Object.keys(citiesGroupedByWind).sort();
       let numberOfCities = this.props.cities.length;
       results = <div>
         <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} />
