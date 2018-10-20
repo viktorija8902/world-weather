@@ -10,7 +10,7 @@ const Loading = () => {
 };
 
 const Home = Loadable({
-  loader: () => import('./containers/HomeContainer.js'),
+  loader: () => import('./components/HomeContainer.js'),
   loading: Loading,
 });
 

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
+import { selectRegion, getWeatherData } from '../../actions/actionCreators'
 import Region from './Region';
 
-class RegionFilters extends Component {
+
+class RegionFilter extends Component {
   constructor(props) {
     super(props);
     this.state = { selectedRegion: "" };
@@ -41,4 +45,12 @@ class RegionFilters extends Component {
   }
 }
 
-export default RegionFilters;
+const mapDispatchToProps = dispatch => ({
+    selectRegion: selectedRegion => dispatch(selectRegion(selectedRegion)),
+    getWeatherData: selectedRegion => dispatch(getWeatherData(selectedRegion))
+});
+
+export default connect(
+    undefined,
+    mapDispatchToProps
+)(RegionFilter);

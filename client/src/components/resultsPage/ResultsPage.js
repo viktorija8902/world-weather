@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { getCustomWeatherData } from '../../actions/actionCreators';
-import { WEATHER_BUTTON } from '../../constants/Constants';
-import Wind from "./wind/Wind";
-import Rain from "./rain/Rain";
-import Clouds from "./clouds/Clouds";
-import Temperature from './temperature/Temperature';
-import MapWrapper from "./MapWrapper";
+import { WEATHER_BUTTON } from './../../constants/Constants';
+import Wind from "./weather/Wind";
+import Rain from "./weather/Rain";
+import Clouds from "./weather/Clouds";
+import Temperature from './weather/Temperature';
+import MapWrapper from "./worldMap/MapWrapper";
+import WeatherButtons from "./worldMap/WeatherButtons";
 import Summary from "./Summary";
-import WeatherButtons from "./WeatherButtons";
 
 
 class ResultsPage extends Component {
