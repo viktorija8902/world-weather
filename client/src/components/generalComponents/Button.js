@@ -1,27 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
-class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-    this.props.onButtonClick(e.target.id);
-  }
+const Button = props => {
+  const handleClick = e => props.onButtonClick(e.target.id);
   
-  render() {
-    let cssClass = "";
-    if (this.props.isClicked) {
-      cssClass = "clicked-btn";
-    }
-    return (
-      <div className={`weather-button ${cssClass}`} id={this.props.id} style={{backgroundColor: this.props.highlightColor}} onClick={this.handleClick}>
-        {this.props.name}
-      </div>
-    );
+  let cssClass = "";
+  if (props.isClicked) {
+    cssClass = "clicked-btn";
   }
+
+  return (
+    <div className={`weather-button ${cssClass}`} id={props.id} style={{backgroundColor: props.highlightColor}} onClick={handleClick}>
+      {props.name}
+    </div>
+  );
 }
 
 export default Button;
