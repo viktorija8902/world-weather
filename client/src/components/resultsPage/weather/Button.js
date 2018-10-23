@@ -1,23 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick(e) {
-    this.props.onWindSelection(e.target.id);
-  }
-  
-  render() {
-    const regex = /_/gi;
-    return (
-      <div className="wind-button" id={this.props.windType} style={{backgroundColor: this.props.highlightColor}} onClick={this.handleClick}>
-        {this.props.windType.replace(regex, " ")}
-      </div>
-    );
-  }
+const Button = props => {
+  const handleClick = e => props.onWindSelection(e.target.id);
+  const regex = /_/gi;
+  return (
+    <div className="wind-button" id={props.windType} style={{backgroundColor: props.highlightColor}} onClick={handleClick}>
+      {props.windType.replace(regex, " ")}
+    </div>
+  );
 }
 
 export default Button;
