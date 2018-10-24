@@ -1,7 +1,7 @@
 require('dotenv').config();
 import axios from 'axios';
 
-import { MESSAGES } from "./Constants";
+import { MESSAGE } from "./Constants";
 import { getWindType, metersPerSecondToKmPerHour } from "./WindStatisticsGenerator";
 import { getRegionFromCache, addRegionToCache } from "./RegionCache";
 import { regionCoordList } from "./data/Regions";
@@ -19,7 +19,7 @@ export const predefinedDataGetter = (region) => {
         return data;
       });
     } else {
-      return Promise.resolve({ message: MESSAGES.NO_DATA });
+      return Promise.resolve({ message: MESSAGE.ERROR });
     }
   }
 }
@@ -27,32 +27,31 @@ export const predefinedDataGetter = (region) => {
 export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRight }) => {
   return axios.get(`https://api.openweathermap.org/data/2.5/box/city?bbox=${lonTopLeft},${latBottomLeft},${lonBottomRight},${latTopRight}&APPID=${process.env.API_KEY}`)
     .then(response => {
-      const citiesWeatherData = sortBy(response.data.list, "name");
+      const citiesWeatherData = response.data.list;
       if (citiesWeatherData && citiesWeatherData.length > 0) {
+        const sortedWeatherData = sortBy(citiesWeatherData, "name");
         const rainIdsStartWith = 5;
         return {
-          output: {
-            cities: citiesWeatherData.map(city => {
-              const rain = city.weather.find(condition => condition.id.toString().startsWith(rainIdsStartWith));
-              const rainDescription = rain ? {description: rain.description} : null;
-              const windSpeed = metersPerSecondToKmPerHour(city.wind.speed);
-              return  {
-                id: city.id,
-                name: city.name,
-                coord: city.coord,
-                wind: { 
-                  speed: windSpeed,
-                  type: getWindType(windSpeed),
-                },
-                clouds: city.clouds,
-                rain: rainDescription,
-                temperature: city.main.temp,
-              }
-            }),
-          }
+          cities: sortedWeatherData.map(city => {
+            const rain = city.weather.find(condition => condition.id.toString().startsWith(rainIdsStartWith));
+            const rainDescription = rain ? {description: rain.description} : null;
+            const windSpeed = metersPerSecondToKmPerHour(city.wind.speed);
+            return  {
+              id: city.id,
+              name: city.name,
+              coord: city.coord,
+              wind: { 
+                speed: windSpeed,
+                type: getWindType(windSpeed),
+              },
+              clouds: city.clouds,
+              rain: rainDescription,
+              temperature: city.main.temp,
+            }
+          }),
         }
       } else {
-        return { output: {} };
+        return { cities: [] };
       }
     })
 }

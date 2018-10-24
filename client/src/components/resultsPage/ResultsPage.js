@@ -77,6 +77,8 @@ class ResultsPage extends Component {
     let results;
     if (this.props.noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
+    } else if (this.props.errorInCustomSearch) {
+      results = <div>{this.props.errorInCustomSearch}</div>
     } else {
       let citiesGroupedByWind = this.groupByWindType(this.props.cities);
       let windTypes = Object.keys(citiesGroupedByWind).sort();
@@ -111,6 +113,7 @@ class ResultsPage extends Component {
 
 const mapStateToProps = state => ({
   noDataCustomSearch: state.region.noDataCustomSearch,
+  errorInCustomSearch: state.region.errorInCustomSearch,
   cloudCities: state.region.cloudCities,
   rainCities: state.region.rainCities,
 })

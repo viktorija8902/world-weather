@@ -1,3 +1,5 @@
+import { MESSAGE } from "../constants/Constants";
+
 export const selectRegion = (selectedRegion) => {
   return {
     type: 'SELECT_REGION',
@@ -8,30 +10,32 @@ export const selectRegion = (selectedRegion) => {
 export const getWeatherData = selectedRegion => dispatch => {
   fetchData(`/api/weather/${selectedRegion}`)
     .then(resp => {
-      if (resp.message === "no data" || resp.message === "error" || (resp.output && Object.keys(resp.output).length === 0)) {
-        dispatch(loadNoResults());
+      if (resp.cities.length > 0) {
+        dispatch(loadData(resp));
       } else {
-        dispatch(loadData(resp.output));
+        dispatch(showError(MESSAGE.ERROR));
       }
     })
     .catch(error => {
       console.log(error);
-      loadNoResults();
+      dispatch(showError(MESSAGE.ERROR));
     });
 }
 
 export const getCustomWeatherData = coordinates => dispatch => {
   fetchData(`/api/weather/custom-coords/${coordinates.lonTopLeft},${coordinates.latBottomLeft},${coordinates.lonBottomRight},${coordinates.latTopRight}`)
     .then(resp => {
-      if (resp.message === "no data" || resp.message === "error" || (resp.output && Object.keys(resp.output).length === 0)) {
+      if (resp.cities.length > 0) {
+        dispatch(loadData(resp));
+      } else if (resp.cities.length === 0) {
         dispatch(loadNoResultsCustomSearch());
       } else {
-        dispatch(loadData(resp.output));
+        dispatch(errorInCustomSearch(MESSAGE.ERROR));
       }
     })
     .catch(error => {
       console.log(error);
-      loadNoResults();
+      dispatch(errorInCustomSearch(MESSAGE.ERROR));
     });
 }
 
@@ -44,5 +48,6 @@ async function fetchData(url) {
 };
 
 const loadData = (data) => ({ type: 'LOAD_DATA', cityData: data });
-const loadNoResults = () => ({ type: 'LOAD_NO_RESULTS' });
+const showError = (error) => ({type: 'SHOW_ERROR', error: error});
 const loadNoResultsCustomSearch = () => ({ type: 'NO_RESULTS_CUSTOM_SEARCH' });
+const errorInCustomSearch = (error) => ({ type: 'ERROR_IN_CUSTOM_SEARCH', error: error});
