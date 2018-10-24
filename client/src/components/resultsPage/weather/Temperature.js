@@ -2,8 +2,7 @@ import React from 'react';
 import Chart from "../Chart";
 
 const Temperature = props => {
-  let dataCopy = [...props.temperatureData];
-  const preparedForChart = dataCopy.map((city) => ({city: city.name, data: city.temperature }));
+  const preparedForChart = props.temperatureData.map((city) => ({city: city.name, data: city.temperature }));
 
   return (
     <div className="temperature-block">

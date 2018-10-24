@@ -11,6 +11,8 @@ class Home extends Component {
     let page = null;
     if (this.props.cities.length > 0) {
       page = <ResultsPage cities={this.props.cities} />
+    } else if (this.props.error) {
+      page = <div>Failed to get data.</div>
     }
     return (
       <div className="home">
@@ -31,7 +33,7 @@ class Home extends Component {
 const mapStateToProps = state => ({
     rainCities: state.region.rainCities,
     cities: state.region.cities,
-    noResults: state.region.noResults,
+    error: state.region.error,
 })
 
 export default connect(

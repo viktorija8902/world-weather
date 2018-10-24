@@ -3,3 +3,7 @@ export const WEATHER_BUTTON = {
   CLOUD: "cloud",
   RESET: "reset",
 }
+
+export const MESSAGE = {
+  ERROR: "Failed to get data.",
+}

@@ -39,6 +39,6 @@ export const HEAT = {
     SWELTERING: { min: 35, max: 9999 }
 }
 
-export const MESSAGES = {
-    NO_DATA: "no data",
+export const MESSAGE = {
+    ERROR: "error",
 }
