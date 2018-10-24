@@ -2,9 +2,9 @@ import React from 'react';
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory';
 
 //TODO fix axis label
-const Chart = props => {
-  const dataOnBar = props.cityWeather.map(city => city.data);
-  const chartHeight = props.cityWeather.length * 15;
+const Chart = ({cityWeather, unit}) => {
+  const dataOnBar = cityWeather.map(city => city.data);
+  const chartHeight = cityWeather.length * 15;
 
   return (
     <VictoryChart
@@ -13,7 +13,7 @@ const Chart = props => {
       height={chartHeight}
     >
       <VictoryAxis
-        label={props.unit}
+        label={unit}
       />
       <VictoryAxis
         dependentAxis
@@ -24,7 +24,7 @@ const Chart = props => {
       />
       <VictoryBar
         horizontal
-        data={props.cityWeather}
+        data={cityWeather}
         x="city"
         y="data"
         labels={dataOnBar}

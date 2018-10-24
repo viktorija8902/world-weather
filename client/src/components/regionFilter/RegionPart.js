@@ -1,23 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class RegionPart extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+const RegionPart = ({regionPart, isClicked, onRegionPartClick}) => {
+  const handleClick= (e) => onRegionPartClick(e.target.id);
+  const cssSelectedClass = isClicked ? "selected-region-part" : "";
 
-  handleClick(e) {
-    this.props.onRegionPartClick(e.target.id)
-  }
-
-  render() {
-    const cssSelectedClass = this.props.isClicked ? "selected-region-part" : "";
-    return (
-      <div className={`region-part ${cssSelectedClass}`} id={this.props.regionPart.name} onClick={this.handleClick}>
-        {this.props.regionPart.name}
-      </div>
-    );
-  }
+  return (
+    <div className={`region-part ${cssSelectedClass}`} id={regionPart.name} onClick={handleClick}>
+      {regionPart.name}
+    </div>
+  );
 }
 
 export default RegionPart;
