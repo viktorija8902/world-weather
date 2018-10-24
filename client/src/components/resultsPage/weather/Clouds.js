@@ -1,8 +1,8 @@
 import React from 'react';
 import Chart from "../Chart";
 
-const Cloud = props => {
-  const preparedForChart = props.cloudData.map((city) => ({city: city.name, data: city.clouds.today }));
+const Cloud = ({cloudData}) => {
+  const preparedForChart = cloudData.map((city) => ({city: city.name, data: city.clouds.today }));
   
   return (
     <div className="cloud-block">

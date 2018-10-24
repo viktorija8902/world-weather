@@ -1,8 +1,8 @@
 import React from 'react';
 
-const City = props => (
-  <div className={props.cssClass} style={props.specialStyle} >
-    {props.cityName}: {props.param}{props.unit}
+const City = ({cityName, param, unit, cssClass, specialStyle}) => (
+  <div className={cssClass} style={specialStyle} >
+    {cityName}: {param}{unit}
   </div>
 )
 

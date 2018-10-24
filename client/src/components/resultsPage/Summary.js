@@ -1,19 +1,19 @@
 import React from 'react';
 
-function Summary(props) {
-  const windSummary = props.windTypes.map(windType => {
-    const numberOfCitiesWithWindType = props.citiesGroupedByWind[windType].length
-    return <div key={windType}>{windType} in {(numberOfCitiesWithWindType*100/props.numberOfCities).toFixed(2)}% of the selected cities.</div>
+const  Summary = ({windTypes, citiesGroupedByWind, numberOfCities, numberOfCitiesWithRain, numberOfCitiesWithClouds}) => {
+  const windSummary = windTypes.map(windType => {
+    const numberOfCitiesWithWindType = citiesGroupedByWind[windType].length
+    return <div key={windType}>{windType} in {(numberOfCitiesWithWindType*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
   })
   return (
     <div>
       <h1>Summary</h1>
       <div className="summary">
-        It is raining in {(props.numberOfCitiesWithRain*100/props.numberOfCities).toFixed(2)}% of the selected cities.
+        It is raining in {(numberOfCitiesWithRain*100/numberOfCities).toFixed(2)}% of the selected cities.
       </div>
       <br></br>
       <div className="summary">
-        It is cloudy in {(props.numberOfCitiesWithClouds*100/props.numberOfCities).toFixed(2)}% of the selected cities.
+        It is cloudy in {(numberOfCitiesWithClouds*100/numberOfCities).toFixed(2)}% of the selected cities.
       </div>
       <br></br>
       <div className="wind-summary">
