@@ -30,7 +30,7 @@ class MapWrapper extends Component {
     super(props);
     this.state = {
       coordinatesOfPoints: [],
-      pointsSelected: 0,
+      numberOfPointsSelected: 0,
       clickedCityId: null,
     }
     this.handleViewPortChange = this.handleViewPortChange.bind(this);
@@ -71,23 +71,23 @@ class MapWrapper extends Component {
   }
 
   handlePointSelection(e) {
-    const pointsSelected = this.state.pointsSelected + 1;
+    const numberOfPointsSelected = this.state.numberOfPointsSelected + 1;
     const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
-    if (pointsSelected < 4) {
+    if (numberOfPointsSelected < 4) {
       this.setState({
         coordinatesOfPoints: updatedCoords,
-        pointsSelected: pointsSelected,
+        numberOfPointsSelected: numberOfPointsSelected,
       });
-    } else if (pointsSelected === 4 ) {
+    } else if (numberOfPointsSelected === 4 ) {
       this.setState({
         coordinatesOfPoints: updatedCoords,
-        pointsSelected: pointsSelected,
+        numberOfPointsSelected: numberOfPointsSelected,
       });
       this.props.onCustomSelect(updatedCoords);
     } else {
       this.setState({
         coordinatesOfPoints: [],
-        pointsSelected: 0,
+        numberOfPointsSelected: 0,
       });
     }
   }
@@ -129,8 +129,9 @@ class MapWrapper extends Component {
   }
 
   render() {
+    console.log("render", this.state)
     const markers = this.addMarkers(this.props.cities, this.props.citiesWithSpecialCondition);
-    const usersSelectedPoints = this.getUserSelectedPoints(this.state.pointsSelected, this.state.coordinatesOfPoints);
+    const usersSelectedPoints = this.getUserSelectedPoints(this.state.numberOfPointsSelected, this.state.coordinatesOfPoints);
     let popup;
     if (this.state.clickedCityId) {
       const popupAmongCities = this.props.cities.find(city => city.id === this.state.clickedCityId);
@@ -139,7 +140,7 @@ class MapWrapper extends Component {
 
     return (
       <div>
-        {this.state.pointsSelected <= 4 && 
+        {this.state.numberOfPointsSelected <= 4 && 
           <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
         }
         <div style={{height: 450}}>
