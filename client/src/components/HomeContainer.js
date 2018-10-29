@@ -10,7 +10,7 @@ const Home = (props) => {
   const {cities, error} = props;
   let page = null;
   if (cities.length === 0) {
-    page = <div>Select country.</div>
+    page = <div>Select region.</div>
   } else if (cities.length > 0) {
     page = <ResultsPage cities={cities}/>
   } else if (error) {
