@@ -67,41 +67,45 @@ class ResultsPage extends Component {
       if (citiesGroupedByWind[windType]) {
         citiesGroupedByWind[windType] = citiesGroupedByWind[windType].concat(city);
       } else {
-        citiesGroupedByWind[windType] = [city]
+        citiesGroupedByWind[windType] = [city];
       }
     }
     return citiesGroupedByWind;
   }
 
+  getWindTypes(citiesGroupedByWind) {
+    return Object.keys(citiesGroupedByWind).sort();
+  }
+
   render() {
     let results;
-    if (this.props.noDataCustomSearch) {
+    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, cloudCities} = this.props;
+    if (noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
-    } else if (this.props.errorInCustomSearch) {
-      results = <div>{this.props.errorInCustomSearch}</div>
+    } else if (errorInCustomSearch) {
+      results = <div>{errorInCustomSearch}</div>
     } else {
-      let citiesGroupedByWind = this.groupByWindType(this.props.cities);
-      let windTypes = Object.keys(citiesGroupedByWind).sort();
-      let numberOfCities = this.props.cities.length;
+      const citiesGroupedByWind = this.groupByWindType(cities);
+      const windTypes = this.getWindTypes(citiesGroupedByWind);
       results = <div>
         <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} clickedButton={this.state.clickedWeatherButton}/>
         <Summary 
           windTypes={windTypes}
           citiesGroupedByWind={citiesGroupedByWind}
-          numberOfCities={numberOfCities}
-          numberOfCitiesWithRain={this.props.rainCities.size}
-          numberOfCitiesWithClouds={this.props.cloudCities.size}
+          numberOfCities={cities.length}
+          numberOfCitiesWithRain={rainCities.size}
+          numberOfCitiesWithClouds={cloudCities.size}
         />
-        <Wind windTypes={windTypes} windData={this.props.cities} />
-        <Clouds cloudData={this.props.cities} />
-        <Temperature temperatureData={this.props.cities} />
-        <Rain rainCities={this.props.cities} />
+        <Wind windTypes={windTypes} windData={cities} />
+        <Clouds cloudData={cities} />
+        <Temperature temperatureData={cities} />
+        <Rain rainCities={cities} />
       </div>
     }
     return (
       <div>
         <MapWrapper 
-          cities={this.props.cities}
+          cities={cities}
           citiesWithSpecialCondition={this.state.citiesWithSpecialCondition}
           onCustomSelect={this.handleCoordSelect}
         />

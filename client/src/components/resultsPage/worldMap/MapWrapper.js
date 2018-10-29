@@ -1,106 +1,147 @@
 import React, { Component } from 'react';
-import ReactMapGL, { Marker } from 'react-map-gl';
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 
 import SelectedCoordinates from './SelectedCoordinates';
 
 
-const CityMarker = ({ text, markersCss }) => <div className="city-marker-wrapper">
-  <div className={markersCss}></div>
-  <div className="city-name">{text}</div>
-</div>;
+const CityMarker = ({ text, markersCss, onMarkerClick }) => (
+  <div className="city-marker-wrapper" onClick={onMarkerClick} >
+    <div className={markersCss}></div>
+    <div className="city-name">{text}</div>
+  </div>
+);
+
+const CityPopup = ({ city }) => (
+  <div className="city-popup" >
+    <div>{city.name}</div>
+    <div>temperature: {city.temperature}&#8451;</div>
+    <div>wind: {city.wind.speed}km/h</div>
+    <div>cloud coverage: {city.clouds.today}%</div>
+    {city.rain && <div>{city.rain.description}</div>}
+  </div>
+);
 
 const sumReducer = (a, b) => a + b;
 
 class MapWrapper extends Component {
   constructor(props) {
     super(props);
+    const center = this.updateMapCenter(props.cities);
     this.state = {
       coordinatesOfPoints: [],
-      pointsSelected: 0,
+      numberOfPointsSelected: 0,
+      clickedCityId: null,
+      zoom: 3.0,
+      latitude: center.averageLat,
+      longitude: center.averageLon,
+      cities: props.cities,
     }
     this.handleViewPortChange = this.handleViewPortChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePointSelection = this.handlePointSelection.bind(this);
   }
 
-  componentDidMount() {
-    this.updateMapCenter();
-    this.setState({
-      zoom: 3
-    })
+  static getDerivedStateFromProps(props, state){
+    if (JSON.stringify(props.cities)===JSON.stringify(state.cities)){
+      return null
+    } else {
+      const {cities} = props;
+      const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
+      const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
+      return {
+          cities: cities,
+          latitude: averageLat,
+          longitude: averageLon
+        }
+      }
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.updateMapCenter();
-    }
-  }
-
-  updateMapCenter() {
-    const cities = this.props.cities;
+  updateMapCenter(cities) {
     const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
     const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
     
-    this.setState({
-      averageLat: averageLat, 
-      averageLon: averageLon,
-    })
+    return { averageLat: averageLat, averageLon: averageLon }
   }
 
   handleViewPortChange(viewport) {
     this.setState({
-      averageLat: viewport.latitude,
-      averageLon: viewport.longitude,
-      zoom: viewport.zoom
+      zoom: viewport.zoom,
+      latitude: viewport.latitude,
+      longitude: viewport.longitude,
     })
   }
 
-  handleClick(e) {
-    const pointsSelected = this.state.pointsSelected + 1;
+  handlePointSelection(e) {
+    const numberOfPointsSelected = this.state.numberOfPointsSelected + 1;
     const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
-    if (pointsSelected < 4) {
+    if (numberOfPointsSelected < 4) {
       this.setState({
         coordinatesOfPoints: updatedCoords,
-        pointsSelected: pointsSelected,
+        numberOfPointsSelected: numberOfPointsSelected,
       });
-    } else if (pointsSelected === 4 ) {
+    } else if (numberOfPointsSelected === 4 ) {
       this.setState({
         coordinatesOfPoints: updatedCoords,
-        pointsSelected: pointsSelected,
+        numberOfPointsSelected: numberOfPointsSelected,
       });
       this.props.onCustomSelect(updatedCoords);
     } else {
       this.setState({
         coordinatesOfPoints: [],
-        pointsSelected: 0,
+        numberOfPointsSelected: 0,
       });
     }
   }
 
-  render() {
-    let colorOfSpecialCondition;
-    const markers = this.props.cities.map(city => {
-      if (this.props.citiesWithSpecialCondition.has(city.id)) {
-        colorOfSpecialCondition = "special-condition";
-      } else {
-        colorOfSpecialCondition = "";
-      }
-      return <Marker key={city.id} latitude={city.coord.Lat} longitude={city.coord.Lon}>
-              <CityMarker text={city.name} markersCss={`city-marker ${colorOfSpecialCondition}`} />
+  addMarkers(cities, citiesWithSpecialCondition) {
+    return cities.map(city => {
+      const colorOfSpecialCondition = citiesWithSpecialCondition.has(city.id) ? "special-condition" : "";
+      return <Marker key={city.id} id={city.id} latitude={city.coord.Lat} longitude={city.coord.Lon}>
+              <CityMarker 
+                text={city.name}
+                markersCss={`city-marker ${colorOfSpecialCondition}`}
+                onMarkerClick={() => this.setState({clickedCityId: city.id})}
+              />
             </Marker>
     });
-    let usersSelectedDots;
-    if (this.state.pointsSelected > 0) {
-      usersSelectedDots = this.state.coordinatesOfPoints.map(coord => {
+  }
+
+  getUserSelectedPoints(numberOfPoints, coordinatesOfPoints) {
+    let usersSelectedPoints;
+    if (numberOfPoints > 0) {
+      usersSelectedPoints = coordinatesOfPoints.map(coord => {
         return <Marker key={`${coord.Lat}-${coord.Lon}`} latitude={coord.Lat} longitude={coord.Lon}>
                  <CityMarker markersCss={"coord-marker"}/>
                </Marker>
       })
     }
+    return usersSelectedPoints;
+  }
+
+  createPopup(city) {
+    return <Popup 
+      latitude={city.coord.Lat}
+      longitude={city.coord.Lon}
+      closeButton={true}
+      onClose={() => this.setState({clickedCityId: null})}
+    >
+      <CityPopup city={city}/>
+    </Popup>
+  }
+
+  render() {
+    const markers = this.addMarkers(this.props.cities, this.props.citiesWithSpecialCondition);
+    const usersSelectedPoints = this.getUserSelectedPoints(this.state.numberOfPointsSelected, this.state.coordinatesOfPoints);
+    let popup;
+    if (this.state.clickedCityId) {
+      const popupAmongCities = this.props.cities.find(city => city.id === this.state.clickedCityId);
+      popup = popupAmongCities ? this.createPopup(popupAmongCities) : null;
+    }
+
     return (
       <div>
-        {this.state.pointsSelected <= 4 && 
+        {this.state.numberOfPointsSelected <= 4 && 
           <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
         }
         <div style={{height: 450}}>
@@ -109,16 +150,17 @@ class MapWrapper extends Component {
               <ReactMapGL
                 width={width}
                 height={height}
-                latitude={this.state.averageLat}
-                longitude={this.state.averageLon}
+                latitude={this.state.latitude}
+                longitude={this.state.longitude}
                 zoom={this.state.zoom}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={this.handleViewPortChange}
                 mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"
-                onClick={this.handleClick}
+                onClick={this.handlePointSelection}
               >
                 {markers}
-                {usersSelectedDots}
+                {popup}
+                {usersSelectedPoints}
               </ReactMapGL>
             )}
           </AutoSizer>
