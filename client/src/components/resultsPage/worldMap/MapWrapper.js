@@ -28,45 +28,47 @@ const sumReducer = (a, b) => a + b;
 class MapWrapper extends Component {
   constructor(props) {
     super(props);
+    const center = this.updateMapCenter(props.cities);
     this.state = {
       coordinatesOfPoints: [],
       numberOfPointsSelected: 0,
       clickedCityId: null,
+      zoom: 3.0,
+      latitude: center.averageLat,
+      longitude: center.averageLon,
+      cities: props.cities,
     }
     this.handleViewPortChange = this.handleViewPortChange.bind(this);
     this.handlePointSelection = this.handlePointSelection.bind(this);
   }
 
-  //try to move to constructor to avoid rerendering
-  componentDidMount() {
-    this.updateMapCenter();
-    this.setState({
-      zoom: 3,
-    })
+  static getDerivedStateFromProps(props, state){
+    if (JSON.stringify(props.cities)===JSON.stringify(state.cities)){
+      return null
+    } else {
+      const {cities} = props;
+      const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
+      const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
+      return {
+          cities: cities,
+          latitude: averageLat,
+          longitude: averageLon
+        }
+      }
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.updateMapCenter();
-    }
-  }
-
-  updateMapCenter() {
-    const cities = this.props.cities;
+  updateMapCenter(cities) {
     const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
     const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
     
-    this.setState({
-      averageLat: averageLat, 
-      averageLon: averageLon,
-    })
+    return { averageLat: averageLat, averageLon: averageLon }
   }
 
   handleViewPortChange(viewport) {
     this.setState({
-      averageLat: viewport.latitude,
-      averageLon: viewport.longitude,
-      zoom: viewport.zoom
+      zoom: viewport.zoom,
+      latitude: viewport.latitude,
+      longitude: viewport.longitude,
     })
   }
 
@@ -129,7 +131,6 @@ class MapWrapper extends Component {
   }
 
   render() {
-    console.log("render", this.state)
     const markers = this.addMarkers(this.props.cities, this.props.citiesWithSpecialCondition);
     const usersSelectedPoints = this.getUserSelectedPoints(this.state.numberOfPointsSelected, this.state.coordinatesOfPoints);
     let popup;
@@ -149,8 +150,8 @@ class MapWrapper extends Component {
               <ReactMapGL
                 width={width}
                 height={height}
-                latitude={this.state.averageLat}
-                longitude={this.state.averageLon}
+                latitude={this.state.latitude}
+                longitude={this.state.longitude}
                 zoom={this.state.zoom}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={this.handleViewPortChange}
