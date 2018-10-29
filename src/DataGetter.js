@@ -41,7 +41,7 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
               name: city.name,
               coord: city.coord,
               wind: { 
-                speed: windSpeed,
+                speed: windSpeed.toFixed(2),
                 type: getWindType(windSpeed),
               },
               clouds: city.clouds,

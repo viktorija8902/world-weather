@@ -54,7 +54,7 @@ class Wind extends Component {
       return <City 
         key={city.id}
         cityName={city.name}
-        param={city.wind.speed.toFixed(2)}
+        param={city.wind.speed}
         unit="km/h"
         cssClass="wind-city"
         specialStyle={{backgroundColor: isHighlighted ? highlightColor : ""}}
