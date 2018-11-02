@@ -20,17 +20,12 @@ const region = (state = initialState, action) => {
       const cities = [...action.cityData.cities];
       const rainCities = new Set(cities.filter(city => city.rain !== null).map(city => city.id));
       const cloudCities = new Set(cities.filter(city => city.clouds.today > 0).map(city => city.id));
-      let windCitiesMap = new Map();
-      for (let i = 0; i < cities.length; i++) {
-        const city = cities[i];
-        const wind = city.wind.type;
-        let citiesWithWindType = windCitiesMap.get(wind);
-        if (citiesWithWindType) {
-          windCitiesMap.set(wind, citiesWithWindType.add(city.id));
-        } else {
-          windCitiesMap.set(wind, new Set([city.id]));
-        }
-      };
+      const windCitiesMap = cities.reduce( 
+        (windMap,city) => {
+          (windMap.has(city.wind.type)) ? windMap.get(city.wind.type).add(city.id) : windMap.set(city.wind.type, new Set([city.id]));
+          return windMap;
+        }, new Map()
+      );
       return Object.assign({}, state, {
         rainCities: rainCities,
         cloudCities: cloudCities,
