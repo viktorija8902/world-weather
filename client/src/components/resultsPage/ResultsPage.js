@@ -38,11 +38,16 @@ class ResultsPage extends Component {
 
   highlightCities(clickedButton) {
     let citiesWithSpecialCondition;
-    if (clickedButton === WEATHER_BUTTON.RAIN) {
+    const windCities = this.props.windCitiesMap.get(clickedButton);
+    if (windCities) {
+      citiesWithSpecialCondition = windCities;
+    } else if (clickedButton === WEATHER_BUTTON.RAINING) {
       citiesWithSpecialCondition = this.props.rainCities;
-    } else if (clickedButton === WEATHER_BUTTON.CLOUD) {
+    } else if (clickedButton === WEATHER_BUTTON.CLOUDY) {
       citiesWithSpecialCondition = this.props.cloudCities;
     } else if (clickedButton === WEATHER_BUTTON.RESET) {
+      citiesWithSpecialCondition = new Set();
+    } else {
       citiesWithSpecialCondition = new Set();
     }
     this.setState({
@@ -59,44 +64,29 @@ class ResultsPage extends Component {
     });
   }
 
-  groupByWindType(cities) {
-    let citiesGroupedByWind = {}
-    for (let i = 0; i < cities.length; i++) {
-      const city = cities[i];
-      const windType = city.wind.type;
-      if (citiesGroupedByWind[windType]) {
-        citiesGroupedByWind[windType] = citiesGroupedByWind[windType].concat(city);
-      } else {
-        citiesGroupedByWind[windType] = [city];
-      }
-    }
-    return citiesGroupedByWind;
-  }
-
-  getWindTypes(citiesGroupedByWind) {
-    return Object.keys(citiesGroupedByWind).sort();
-  }
-
   render() {
     let results;
-    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, cloudCities} = this.props;
+    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, cloudCities, windCitiesMap} = this.props;
     if (noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
     } else if (errorInCustomSearch) {
       results = <div>{errorInCustomSearch}</div>
     } else {
-      const citiesGroupedByWind = this.groupByWindType(cities);
-      const windTypes = this.getWindTypes(citiesGroupedByWind);
+      const windTypes = [...windCitiesMap.keys()].sort();
       results = <div>
-        <WeatherButtons onWeatherButtonClick={this.handleWeatherButtonClick} clickedButton={this.state.clickedWeatherButton}/>
-        <Summary 
+        <WeatherButtons
           windTypes={windTypes}
-          citiesGroupedByWind={citiesGroupedByWind}
+          onWeatherButtonClick={this.handleWeatherButtonClick}
+          clickedButton={this.state.clickedWeatherButton}
+        />
+        <Summary
+          windTypes={windTypes}
+          citiesGroupedByWind={windCitiesMap}
           numberOfCities={cities.length}
           numberOfCitiesWithRain={rainCities.size}
           numberOfCitiesWithClouds={cloudCities.size}
         />
-        <Wind windTypes={windTypes} windData={cities} />
+        <Wind windTypes={windTypes} windData={cities} clickedWindButton={this.state.clickedWeatherButton}/>
         <Clouds cloudData={cities} />
         <Temperature temperatureData={cities} />
         <Rain rainCities={cities} />
@@ -120,6 +110,7 @@ const mapStateToProps = state => ({
   errorInCustomSearch: state.region.errorInCustomSearch,
   cloudCities: state.region.cloudCities,
   rainCities: state.region.rainCities,
+  windCitiesMap: state.region.windCitiesMap,
 })
 
 const mapDispatchToProps = dispatch => ({

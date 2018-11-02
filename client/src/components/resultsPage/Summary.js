@@ -2,9 +2,9 @@ import React from 'react';
 
 const  Summary = ({windTypes, citiesGroupedByWind, numberOfCities, numberOfCitiesWithRain, numberOfCitiesWithClouds}) => {
   const windSummary = windTypes.map(windType => {
-    const numberOfCitiesWithWindType = citiesGroupedByWind[windType].length
+    const numberOfCitiesWithWindType = citiesGroupedByWind.get(windType).size;
     return <div key={windType}>{windType} in {(numberOfCitiesWithWindType*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
-  })
+  });
   return (
     <div>
       <h1>Summary</h1>
