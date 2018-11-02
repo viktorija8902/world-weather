@@ -20,9 +20,16 @@ const region = (state = initialState, action) => {
       const cities = [...action.cityData.cities];
       const rainCities = new Set(cities.filter(city => city.rain !== null).map(city => city.id));
       const cloudCities = new Set(cities.filter(city => city.clouds.today > 0).map(city => city.id));
+      const windCitiesMap = cities.reduce( 
+        (windMap,city) => {
+          (windMap.has(city.wind.type)) ? windMap.get(city.wind.type).add(city.id) : windMap.set(city.wind.type, new Set([city.id]));
+          return windMap;
+        }, new Map()
+      );
       return Object.assign({}, state, {
         rainCities: rainCities,
         cloudCities: cloudCities,
+        windCitiesMap: windCitiesMap,
         cities: cities,
         noDataCustomSearch: false,
         error: null,
