@@ -28,15 +28,11 @@ const sumReducer = (a, b) => a + b;
 class MapWrapper extends Component {
   constructor(props) {
     super(props);
-    const center = this.updateMapCenter(props.cities);
     this.state = {
       coordinatesOfPoints: [],
       numberOfPointsSelected: 0,
       clickedCityId: null,
       zoom: 3.0,
-      latitude: center.averageLat,
-      longitude: center.averageLon,
-      cities: props.cities,
     }
     this.handleViewPortChange = this.handleViewPortChange.bind(this);
     this.handlePointSelection = this.handlePointSelection.bind(this);
@@ -44,7 +40,7 @@ class MapWrapper extends Component {
 
   static getDerivedStateFromProps(props, state){
     if (JSON.stringify(props.cities)===JSON.stringify(state.cities)){
-      return null
+      return null;
     } else {
       const {cities} = props;
       const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
@@ -55,13 +51,6 @@ class MapWrapper extends Component {
           longitude: averageLon
         }
       }
-  }
-
-  updateMapCenter(cities) {
-    const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
-    const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
-    
-    return { averageLat: averageLat, averageLon: averageLon }
   }
 
   handleViewPortChange(viewport) {
