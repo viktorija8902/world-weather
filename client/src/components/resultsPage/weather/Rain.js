@@ -7,10 +7,10 @@ const Rain = ({rainCities}) => {
   );
   
   return (
-    <div className="rain-block">
+    <React.Fragment>
       <h1>Rain information</h1>
       <div className="rain-cities">{cities}</div>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -6,20 +6,15 @@ const  Summary = ({windTypes, citiesGroupedByWind, numberOfCities, numberOfCitie
     return <div key={windType}>{windType} in {(numberOfCitiesWithWindType*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
   });
   return (
-    <div>
+    <React.Fragment>
       <h1>Summary</h1>
       <div className="summary">
-        It is raining in {(numberOfCitiesWithRain*100/numberOfCities).toFixed(2)}% of the selected cities.
-      </div>
-      <br></br>
-      <div className="summary">
-        It is cloudy in {(numberOfCitiesWithClouds*100/numberOfCities).toFixed(2)}% of the selected cities.
-      </div>
-      <br></br>
-      <div className="wind-summary">
+        <div>It is raining in {(numberOfCitiesWithRain*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
+        <div>It is cloudy in {(numberOfCitiesWithClouds*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
+        <br></br>
         {windSummary}
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

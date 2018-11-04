@@ -129,7 +129,7 @@ class MapWrapper extends Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         {this.state.numberOfPointsSelected <= 4 && 
           <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
         }
@@ -154,7 +154,7 @@ class MapWrapper extends Component {
             )}
           </AutoSizer>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -44,12 +44,12 @@ class Wind extends Component {
     })
   
     return (
-      <div className="wind-block">
+      <React.Fragment>
         <h1>Wind information</h1>
         <div className="wind-cities">
           {windCities}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

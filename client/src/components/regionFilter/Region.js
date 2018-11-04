@@ -34,7 +34,7 @@ class Region extends Component {
     const cssSelectedClass = this.props.isClicked ? "selected-region" : "";
     
     return (
-      <div>
+      <div className="region-wrapper">
         <div className={`region ${cssSelectedClass}`} id={this.props.region.main.name} onClick={this.handleRegionClick}>
           {this.props.region.main.name.toUpperCase()}
         </div>

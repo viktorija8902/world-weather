@@ -5,10 +5,10 @@ const Cloud = ({cloudData}) => {
   const preparedForChart = cloudData.map((city) => ({city: city.name, data: city.clouds.today }));
   
   return (
-    <div className="cloud-block">
+    <React.Fragment>
       <h1>Cloud coverage (%)</h1>
       <Chart cityWeather={preparedForChart} unit="%"/>
-    </div>
+    </React.Fragment>
   );
 }
 

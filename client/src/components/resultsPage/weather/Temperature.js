@@ -5,10 +5,10 @@ const Temperature = ({temperatureData}) => {
   const preparedForChart = temperatureData.map((city) => ({city: city.name, data: city.temperature }));
 
   return (
-    <div className="temperature-block">
+    <React.Fragment>
       <h1>Temperature (&#8451;)</h1>
       <Chart cityWeather={preparedForChart} unit="&#8451;"/>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -1,9 +1,9 @@
-.select-square-text {
-  padding-bottom: 5px;
-}
 .square-info {
-  display: flex;
-  align-items: center;
+  margin-bottom: 5px;
+  div {
+    display: flex;
+    align-items: center;
+  }
 }
 .selection-icon {
   width: 25px;
