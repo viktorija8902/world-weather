@@ -73,7 +73,7 @@ class ResultsPage extends Component {
       results = <div>{errorInCustomSearch}</div>
     } else {
       const windTypes = [...windCitiesMap.keys()].sort();
-      results = <div>
+      results = <React.Fragment>
         <WeatherButtons
           windTypes={windTypes}
           onWeatherButtonClick={this.handleWeatherButtonClick}
@@ -90,17 +90,17 @@ class ResultsPage extends Component {
         <Clouds cloudData={cities} />
         <Temperature temperatureData={cities} />
         <Rain rainCities={cities} />
-      </div>
+      </React.Fragment>
     }
     return (
-      <div>
+      <React.Fragment>
         <MapWrapper 
           cities={cities}
           citiesWithSpecialCondition={this.state.citiesWithSpecialCondition}
           onCustomSelect={this.handleCoordSelect}
         />
         {results}
-      </div>
+      </React.Fragment>
     );
   }
 }
