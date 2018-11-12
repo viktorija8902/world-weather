@@ -20,6 +20,7 @@ const CityPopup = ({ city }) => (
     <div>wind: {city.wind.speed}km/h</div>
     <div>cloud coverage: {city.clouds.today}%</div>
     {city.rain && <div>{city.rain.description}</div>}
+    {city.snow && <div>{city.snow.description}</div>}
   </div>
 );
 

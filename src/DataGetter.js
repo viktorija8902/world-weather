@@ -31,21 +31,21 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
       if (citiesWeatherData && citiesWeatherData.length > 0) {
         const sortedWeatherData = sortBy(citiesWeatherData, "name");
         const rainIdsStartWith = 5;
+        const snowIdsStartWith = 6;
         return {
           cities: sortedWeatherData.map(city => {
-            const rain = city.weather.find(condition => condition.id.toString().startsWith(rainIdsStartWith));
-            const rainDescription = rain ? {description: rain.description} : null;
             const windSpeed = metersPerSecondToKmPerHour(city.wind.speed);
             return  {
               id: city.id,
               name: city.name,
               coord: city.coord,
-              wind: { 
+              wind: {
                 speed: windSpeed.toFixed(2),
                 type: getWindType(windSpeed),
               },
               clouds: city.clouds,
-              rain: rainDescription,
+              rain: getConditionDescription(city, rainIdsStartWith),
+              snow: getConditionDescription(city, snowIdsStartWith),
               temperature: city.main.temp,
             }
           }),
@@ -56,7 +56,7 @@ export const dataGetter = ({ lonTopLeft, latBottomLeft, lonBottomRight, latTopRi
     })
 }
 
-function sortBy(data, key) {
+const sortBy = (data, key) => {
   let arrayCopy = [...data];
   arrayCopy.sort((a, b) => {
     if (a[key] < b[key]) return -1;
@@ -64,4 +64,9 @@ function sortBy(data, key) {
     return 0;
   });
   return arrayCopy;
+}
+
+const getConditionDescription = (city, conditionId) => {
+  const condition = city.weather.find(condition => condition.id.toString().startsWith(conditionId));
+  return condition ? {description: condition.description} : null;
 }

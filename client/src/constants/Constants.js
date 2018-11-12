@@ -1,5 +1,6 @@
 export const WEATHER_BUTTON = {
   RAINING: "RAINING",
+  SNOWING: "SNOWING",
   CLOUDY: "CLOUDY",
   RESET: "RESET",
 }

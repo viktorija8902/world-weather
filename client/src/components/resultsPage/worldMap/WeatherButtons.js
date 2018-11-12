@@ -8,7 +8,7 @@ const WeatherButtons = ({windTypes, clickedButton, onWeatherButtonClick}) => {
 
   const handleButtonClick = buttonId => onWeatherButtonClick(buttonId);
 
-  const weather = [WEATHER_BUTTON.RAINING, WEATHER_BUTTON.CLOUDY, ...windTypes, WEATHER_BUTTON.RESET];
+  const weather = [WEATHER_BUTTON.RAINING, WEATHER_BUTTON.SNOWING, WEATHER_BUTTON.CLOUDY, ...windTypes, WEATHER_BUTTON.RESET];
   const weatherButtons = weather.map(weatherType => {
     return <Button
             key={weatherType}

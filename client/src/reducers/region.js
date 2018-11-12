@@ -18,16 +18,16 @@ const region = (state = initialState, action) => {
       })
     case 'LOAD_DATA':
       const cities = [...action.cityData.cities];
-      const rainCities = new Set(cities.filter(city => city.rain !== null).map(city => city.id));
       const cloudCities = new Set(cities.filter(city => city.clouds.today > 0).map(city => city.id));
-      const windCitiesMap = cities.reduce( 
+      const windCitiesMap = cities.reduce(
         (windMap,city) => {
           (windMap.has(city.wind.type)) ? windMap.get(city.wind.type).add(city.id) : windMap.set(city.wind.type, new Set([city.id]));
           return windMap;
         }, new Map()
       );
       return Object.assign({}, state, {
-        rainCities: rainCities,
+        rainCities: filterCitiesWithCondition(cities, "rain"),
+        snowCities: filterCitiesWithCondition(cities, "snow"),
         cloudCities: cloudCities,
         windCitiesMap: windCitiesMap,
         cities: cities,
@@ -54,6 +54,10 @@ const region = (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const filterCitiesWithCondition = (cities, condition) => {
+  return new Set(cities.filter(city => city[condition] !== null).map(city => city.id));
 }
 
 export default region;
