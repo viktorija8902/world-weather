@@ -43,6 +43,8 @@ class ResultsPage extends Component {
       citiesWithSpecialCondition = windCities;
     } else if (clickedButton === WEATHER_BUTTON.RAINING) {
       citiesWithSpecialCondition = this.props.rainCities;
+    } else if (clickedButton === WEATHER_BUTTON.SNOWING) {
+      citiesWithSpecialCondition = this.props.snowCities;
     } else if (clickedButton === WEATHER_BUTTON.CLOUDY) {
       citiesWithSpecialCondition = this.props.cloudCities;
     } else if (clickedButton === WEATHER_BUTTON.RESET) {
@@ -110,6 +112,7 @@ const mapStateToProps = state => ({
   errorInCustomSearch: state.region.errorInCustomSearch,
   cloudCities: state.region.cloudCities,
   rainCities: state.region.rainCities,
+  snowCities: state.region.snowCities,
   windCitiesMap: state.region.windCitiesMap,
 })
 

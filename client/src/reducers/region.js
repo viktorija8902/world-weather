@@ -19,6 +19,7 @@ const region = (state = initialState, action) => {
     case 'LOAD_DATA':
       const cities = [...action.cityData.cities];
       const rainCities = new Set(cities.filter(city => city.rain !== null).map(city => city.id));
+      const snowCities = new Set(cities.filter(city => city.snow !== null).map(city => city.id));
       const cloudCities = new Set(cities.filter(city => city.clouds.today > 0).map(city => city.id));
       const windCitiesMap = cities.reduce( 
         (windMap,city) => {
@@ -28,6 +29,7 @@ const region = (state = initialState, action) => {
       );
       return Object.assign({}, state, {
         rainCities: rainCities,
+        snowCities: snowCities,
         cloudCities: cloudCities,
         windCitiesMap: windCitiesMap,
         cities: cities,
