@@ -68,7 +68,7 @@ class ResultsPage extends Component {
 
   render() {
     let results;
-    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, cloudCities, windCitiesMap} = this.props;
+    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, snowCities, cloudCities, windCitiesMap} = this.props;
     if (noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
     } else if (errorInCustomSearch) {
@@ -86,6 +86,7 @@ class ResultsPage extends Component {
           citiesGroupedByWind={windCitiesMap}
           numberOfCities={cities.length}
           numberOfCitiesWithRain={rainCities.size}
+          numberOfCitiesWithSnow={snowCities.size}
           numberOfCitiesWithClouds={cloudCities.size}
         />
         <Wind windTypes={windTypes} windData={cities} clickedWindButton={this.state.clickedWeatherButton}/>
