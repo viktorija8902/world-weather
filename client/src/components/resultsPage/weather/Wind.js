@@ -2,25 +2,23 @@ import React, { Component } from 'react';
 import City from "../../generalComponents/City";
 
 class Wind extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      highlightedCities: [],
-    }
-    this.colors = {
-      LIGHT_WINDS: "#41d3f4",
-      MODERATE_WINDS: "#37acc6",
-      STRONG_WIND_SMALL_CRAFT_WARNING: "#e07841",
-      GALE_WARNING: "#f46e42",
-      STORM_WARNING:  "#9e3a06",
-      HURRICANE_FORCE_WIND_WARNING: "#9241f4",
-    }
+  state = { 
+    highlightedCities: [],
+  }
+  colors = {
+    LIGHT_WINDS: "#41d3f4",
+    MODERATE_WINDS: "#37acc6",
+    STRONG_WIND_SMALL_CRAFT_WARNING: "#e07841",
+    GALE_WARNING: "#f46e42",
+    STORM_WARNING:  "#9e3a06",
+    HURRICANE_FORCE_WIND_WARNING: "#9241f4",
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
+      const { windData, clickedWindButton } = this.props;
       this.setState({
-        highlightedCities: this.getHighlightedCities(this.props.windData, this.props.clickedWindButton),
+        highlightedCities: this.getHighlightedCities(windData, clickedWindButton),
       });
     }
   }
@@ -30,8 +28,9 @@ class Wind extends Component {
   }
 
   render() {
-    const highlightColor = this.colors[this.props.clickedWindButton];
-    const windCities = this.props.windData.map(city => {
+    const { clickedWindButton, windData } = this.props;
+    const highlightColor = this.colors[clickedWindButton];
+    const windCities = windData.map(city => {
       const isHighlighted = this.state.highlightedCities.find(c => c.id === city.id);
       return <City 
         key={city.id}

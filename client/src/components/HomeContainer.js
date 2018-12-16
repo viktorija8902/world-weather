@@ -7,10 +7,10 @@ import ResultsPage from "./resultsPage/ResultsPage";
 import Footer from './Footer';
 
 const Home = (props) => {
-  const {cities, error} = props;
+  const { cities, error } = props;
   let page = null;
   if (cities.length === 0) {
-    page = <div>Select region.</div>
+    page = <div>Select region. It might take a while until Heroku dyno wakes up...</div>
   } else if (cities.length > 0) {
     page = <ResultsPage cities={cities}/>
   } else if (error) {
@@ -40,6 +40,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(
-    mapStateToProps,
-    undefined
-)(Home)
+  mapStateToProps
+)(Home);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { getCustomWeatherData } from '../../actions/actionCreators';
@@ -12,15 +12,10 @@ import WeatherButtons from "./worldMap/WeatherButtons";
 import Summary from "./Summary";
 
 
-class ResultsPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      citiesWithSpecialCondition: new Set(),
-      clickedWeatherButton: null,
-    }
-    this.handleCoordSelect = this.handleCoordSelect.bind(this);
-    this.handleWeatherButtonClick = this.handleWeatherButtonClick.bind(this);
+class ResultsPage extends PureComponent {
+  state = {
+    citiesWithSpecialCondition: new Set(),
+    clickedWeatherButton: null,
   }
 
   componentDidUpdate(prevProps) {
@@ -29,7 +24,7 @@ class ResultsPage extends Component {
     }
   }
 
-  handleWeatherButtonClick(button) {
+  handleWeatherButtonClick = (button) => {
     this.highlightCities(button);
     this.setState({
       clickedWeatherButton: button,
@@ -37,16 +32,17 @@ class ResultsPage extends Component {
   }
 
   highlightCities(clickedButton) {
+    const { windCitiesMap, rainCities, snowCities, cloudCities } = this.props;
     let citiesWithSpecialCondition;
-    const windCities = this.props.windCitiesMap.get(clickedButton);
+    const windCities = windCitiesMap.get(clickedButton);
     if (windCities) {
       citiesWithSpecialCondition = windCities;
     } else if (clickedButton === WEATHER_BUTTON.RAINING) {
-      citiesWithSpecialCondition = this.props.rainCities;
+      citiesWithSpecialCondition = rainCities;
     } else if (clickedButton === WEATHER_BUTTON.SNOWING) {
-      citiesWithSpecialCondition = this.props.snowCities;
+      citiesWithSpecialCondition = snowCities;
     } else if (clickedButton === WEATHER_BUTTON.CLOUDY) {
-      citiesWithSpecialCondition = this.props.cloudCities;
+      citiesWithSpecialCondition = cloudCities;
     } else if (clickedButton === WEATHER_BUTTON.RESET) {
       citiesWithSpecialCondition = new Set();
     } else {
@@ -57,7 +53,7 @@ class ResultsPage extends Component {
     });
   }
 
-  handleCoordSelect(coord) {
+  handleCoordSelect = (coord) => {
     this.props.getCustomWeatherData({
       lonTopLeft: coord[0].Lon,
       latBottomLeft: coord[1].Lat,

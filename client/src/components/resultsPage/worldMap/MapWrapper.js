@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
@@ -26,24 +26,19 @@ const CityPopup = ({ city }) => (
 
 const sumReducer = (a, b) => a + b;
 
-class MapWrapper extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      coordinatesOfPoints: [],
-      numberOfPointsSelected: 0,
-      clickedCityId: null,
-      zoom: 3.0,
-    }
-    this.handleViewPortChange = this.handleViewPortChange.bind(this);
-    this.handlePointSelection = this.handlePointSelection.bind(this);
+class MapWrapper extends PureComponent {
+  state = {
+    coordinatesOfPoints: [],
+    numberOfPointsSelected: 0,
+    clickedCityId: null,
+    zoom: 3.0,
   }
 
   static getDerivedStateFromProps(props, state){
-    if (JSON.stringify(props.cities)===JSON.stringify(state.cities)){
+    const { cities } = props;
+    if (JSON.stringify(cities)===JSON.stringify(state.cities)){
       return null;
     } else {
-      const {cities} = props;
       const averageLat = cities.map(city => city.coord.Lat).reduce(sumReducer)/cities.length;
       const averageLon = cities.map(city => city.coord.Lon).reduce(sumReducer)/cities.length;
       return {
@@ -54,7 +49,7 @@ class MapWrapper extends Component {
       }
   }
 
-  handleViewPortChange(viewport) {
+  handleViewPortChange = (viewport) => {
     this.setState({
       zoom: viewport.zoom,
       latitude: viewport.latitude,
@@ -62,7 +57,7 @@ class MapWrapper extends Component {
     })
   }
 
-  handlePointSelection(e) {
+  handlePointSelection = (e) => {
     const numberOfPointsSelected = this.state.numberOfPointsSelected + 1;
     const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
     if (numberOfPointsSelected < 4) {
@@ -100,17 +95,17 @@ class MapWrapper extends Component {
   getUserSelectedPoints(numberOfPoints, coordinatesOfPoints) {
     let usersSelectedPoints;
     if (numberOfPoints > 0) {
-      usersSelectedPoints = coordinatesOfPoints.map(coord => {
-        return <Marker key={`${coord.Lat}-${coord.Lon}`} latitude={coord.Lat} longitude={coord.Lon}>
-                 <CityMarker markersCss={"coord-marker"}/>
-               </Marker>
-      })
+      usersSelectedPoints = coordinatesOfPoints.map(coord => (
+        <Marker key={`${coord.Lat}-${coord.Lon}`} latitude={coord.Lat} longitude={coord.Lon}>
+          <CityMarker markersCss={"coord-marker"}/>
+        </Marker>
+      ));
     }
     return usersSelectedPoints;
   }
 
-  createPopup(city) {
-    return <Popup 
+  createPopup = (city) => (
+    <Popup 
       latitude={city.coord.Lat}
       longitude={city.coord.Lon}
       closeButton={true}
@@ -118,21 +113,23 @@ class MapWrapper extends Component {
     >
       <CityPopup city={city}/>
     </Popup>
-  }
+  )
 
   render() {
-    const markers = this.addMarkers(this.props.cities, this.props.citiesWithSpecialCondition);
-    const usersSelectedPoints = this.getUserSelectedPoints(this.state.numberOfPointsSelected, this.state.coordinatesOfPoints);
+    const { cities, citiesWithSpecialCondition } = this.props;
+    const { numberOfPointsSelected, coordinatesOfPoints, clickedCityId, latitude, longitude, zoom } = this.state;
+    const markers = this.addMarkers(cities, citiesWithSpecialCondition);
+    const usersSelectedPoints = this.getUserSelectedPoints(numberOfPointsSelected, coordinatesOfPoints);
     let popup;
-    if (this.state.clickedCityId) {
-      const popupAmongCities = this.props.cities.find(city => city.id === this.state.clickedCityId);
+    if (clickedCityId) {
+      const popupAmongCities = cities.find(city => city.id === clickedCityId);
       popup = popupAmongCities ? this.createPopup(popupAmongCities) : null;
     }
 
     return (
       <React.Fragment>
-        {this.state.numberOfPointsSelected <= 4 && 
-          <SelectedCoordinates coordinates={this.state.coordinatesOfPoints} />
+        {numberOfPointsSelected <= 4 && 
+          <SelectedCoordinates coordinates={coordinatesOfPoints} />
         }
         <div style={{height: 450}}>
           <AutoSizer>
@@ -140,9 +137,9 @@ class MapWrapper extends Component {
               <ReactMapGL
                 width={width}
                 height={height}
-                latitude={this.state.latitude}
-                longitude={this.state.longitude}
-                zoom={this.state.zoom}
+                latitude={latitude}
+                longitude={longitude}
+                zoom={zoom}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={this.handleViewPortChange}
                 mapStyle="mapbox://styles/mapbox/light-v9?optimize=true"

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const Button = ({onButtonClick, isClicked, id, name, highlightColor}) => {
   const handleClick = e => onButtonClick(e.target.id);
   const cssClass = isClicked ? "clicked-btn" : "";

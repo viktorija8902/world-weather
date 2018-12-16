@@ -9,15 +9,15 @@ const WeatherButtons = ({windTypes, clickedButton, onWeatherButtonClick}) => {
   const handleButtonClick = buttonId => onWeatherButtonClick(buttonId);
 
   const weather = [WEATHER_BUTTON.RAINING, WEATHER_BUTTON.SNOWING, WEATHER_BUTTON.CLOUDY, ...windTypes, WEATHER_BUTTON.RESET];
-  const weatherButtons = weather.map(weatherType => {
-    return <Button
-            key={weatherType}
-            id={weatherType}
-            onButtonClick={handleButtonClick}
-            name={formatName(weatherType)}
-            isClicked={clickedButton === weatherType}
-          />
-  });
+  const weatherButtons = weather.map(weatherType => (
+    <Button
+      key={weatherType}
+      id={weatherType}
+      onButtonClick={handleButtonClick}
+      name={formatName(weatherType)}
+      isClicked={clickedButton === weatherType}
+    />
+  ));
   return (
     <div className="weather-buttons">
       {weatherButtons}

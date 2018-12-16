@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import RegionPart from "./RegionPart";
 
-class Region extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { clickedRegionPart: "" };
-    this.handleRegionClick = this.handleRegionClick.bind(this);
-    this.handleRegionPartClick = this.handleRegionPartClick.bind(this);
-  }
+class Region extends PureComponent {
+  state = {
+    clickedRegionPart: "",
+  };
 
-  handleRegionClick(e) {
+  handleRegionClick = (e) => {
     this.setState({
       clickedRegionPart: "" 
     });
     this.props.onRegionClick(e.target.id)
   }
 
-  handleRegionPartClick(name) {
+  handleRegionPartClick = (name) => {
     this.setState({
       clickedRegionPart: name 
     });
@@ -24,21 +21,22 @@ class Region extends Component {
   }
 
   render() {
-    const subregions = this.props.region.parts.map(part => {
-      return <RegionPart 
-                key={part.name}
-                regionPart={part}
-                onRegionPartClick={this.handleRegionPartClick}
-                isClicked={this.state.clickedRegionPart === part.name }/> 
-    });
-    const cssSelectedClass = this.props.isClicked ? "selected-region" : "";
+    const { region, isClicked } = this.props;
+    const subregions = region.parts.map(part => (
+      <RegionPart 
+        key={part.name}
+        regionPart={part}
+        onRegionPartClick={this.handleRegionPartClick}
+        isClicked={this.state.clickedRegionPart === part.name }/> 
+    ));
+    const cssSelectedClass = isClicked ? "selected-region" : "";
     
     return (
       <div className="region-wrapper">
-        <div className={`region ${cssSelectedClass}`} id={this.props.region.main.name} onClick={this.handleRegionClick}>
-          {this.props.region.main.name.toUpperCase()}
+        <div className={`region ${cssSelectedClass}`} id={region.main.name} onClick={this.handleRegionClick}>
+          {region.main.name.toUpperCase()}
         </div>
-        {this.props.isClicked && <div>{subregions}</div>}
+        {isClicked && <div>{subregions}</div>}
       </div>
     );
   }
