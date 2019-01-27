@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
@@ -12,6 +13,11 @@ const CityMarker = ({ text, markersCss, onMarkerClick }) => (
     <div className="city-name">{text}</div>
   </div>
 );
+CityMarker.propTypes = {
+  text: PropTypes.string,
+  markersCss: PropTypes.string.isRequired,
+  onMarkerClick: PropTypes.func,
+};
 
 const CityPopup = ({ city }) => (
   <div className="city-popup" >
@@ -23,6 +29,9 @@ const CityPopup = ({ city }) => (
     {city.snow && <div>{city.snow.description}</div>}
   </div>
 );
+CityPopup.propTypes = {
+  city: PropTypes.object.isRequired,
+};
 
 const sumReducer = (a, b) => a + b;
 
@@ -49,7 +58,7 @@ class MapWrapper extends PureComponent {
       }
   }
 
-  handleViewPortChange = (viewport) => {
+  handleViewPortChange = viewport => {
     this.setState({
       zoom: viewport.zoom,
       latitude: viewport.latitude,
@@ -57,7 +66,7 @@ class MapWrapper extends PureComponent {
     })
   }
 
-  handlePointSelection = (e) => {
+  handlePointSelection = e => {
     const numberOfPointsSelected = this.state.numberOfPointsSelected + 1;
     const updatedCoords = this.state.coordinatesOfPoints.concat({Lon: e.lngLat[0], Lat: e.lngLat[1]});
     if (numberOfPointsSelected < 4) {
@@ -79,8 +88,8 @@ class MapWrapper extends PureComponent {
     }
   }
 
-  addMarkers(cities, citiesWithSpecialCondition) {
-    return cities.map(city => {
+  addMarkers = (cities, citiesWithSpecialCondition) => (
+    cities.map(city => {
       const colorOfSpecialCondition = citiesWithSpecialCondition.has(city.id) ? "special-condition" : "";
       return <Marker key={city.id} id={city.id} latitude={city.coord.Lat} longitude={city.coord.Lon}>
               <CityMarker 
@@ -89,10 +98,10 @@ class MapWrapper extends PureComponent {
                 onMarkerClick={() => this.setState({clickedCityId: city.id})}
               />
             </Marker>
-    });
-  }
+    })
+  )
 
-  getUserSelectedPoints(numberOfPoints, coordinatesOfPoints) {
+  getUserSelectedPoints = (numberOfPoints, coordinatesOfPoints) => {
     let usersSelectedPoints;
     if (numberOfPoints > 0) {
       usersSelectedPoints = coordinatesOfPoints.map(coord => (
@@ -104,7 +113,7 @@ class MapWrapper extends PureComponent {
     return usersSelectedPoints;
   }
 
-  createPopup = (city) => (
+  createPopup = city => (
     <Popup 
       latitude={city.coord.Lat}
       longitude={city.coord.Lon}
@@ -155,6 +164,10 @@ class MapWrapper extends PureComponent {
       </React.Fragment>
     );
   }
+}
+MapWrapper.propTypes = {
+  cities: PropTypes.array.isRequired,
+  citiesWithSpecialCondition: PropTypes.object.isRequired,
 }
 
 export default MapWrapper;

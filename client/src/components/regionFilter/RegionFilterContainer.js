@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectRegion, getWeatherData } from '../../actions/actionCreators';
@@ -10,18 +11,18 @@ class RegionFilter extends PureComponent {
     selectedRegion: "",
   };
  
-  handleClick = (name) => {
+  handleClick = name => {
     this.setState({
       selectedRegion: name,
     });
     this.updateData(name);
   }
 
-  handlePlaceSelection = (name) => {
+  handlePlaceSelection = name => {
     this.updateData(name);
   }
 
-  updateData(name) {
+  updateData = name => {
     const { selectRegion, getWeatherData } = this.props;
     selectRegion(name);
     getWeatherData(name);
@@ -46,13 +47,20 @@ class RegionFilter extends PureComponent {
     );
   }
 }
+RegionFilter.propTypes = {
+  // from parent:
+  regionList: PropTypes.array.isRequired,
+  // actions from store
+  selectRegion: PropTypes.func.isRequired,
+  getWeatherData: PropTypes.func.isRequired,
+}
 
 const mapDispatchToProps = dispatch => ({
-    selectRegion: selectedRegion => dispatch(selectRegion(selectedRegion)),
-    getWeatherData: selectedRegion => dispatch(getWeatherData(selectedRegion))
+  selectRegion: selectedRegion => dispatch(selectRegion(selectedRegion)),
+  getWeatherData: selectedRegion => dispatch(getWeatherData(selectedRegion))
 });
 
 export default connect(
-    undefined,
-    mapDispatchToProps
+  undefined,
+  mapDispatchToProps
 )(RegionFilter);

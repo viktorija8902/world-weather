@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Summary = ({windTypes, citiesGroupedByWind, numberOfCities, numberOfCitiesWithRain, numberOfCitiesWithSnow, numberOfCitiesWithClouds}) => {
+const Summary = ({ windTypes, citiesGroupedByWind, numberOfCities, numberOfCitiesWithRain, numberOfCitiesWithSnow, numberOfCitiesWithClouds }) => {
   const windSummary = windTypes.map(windType => {
     const numberOfCitiesWithWindType = citiesGroupedByWind.get(windType).size;
     return <div key={windType}>{windType} in {(numberOfCitiesWithWindType*100/numberOfCities).toFixed(2)}% of the selected cities.</div>
@@ -17,6 +18,14 @@ const Summary = ({windTypes, citiesGroupedByWind, numberOfCities, numberOfCities
       </div>
     </React.Fragment>
   );
-}
+};
+Summary.propTypes = {
+  windTypes: PropTypes.array.isRequired,
+  citiesGroupedByWind: PropTypes.object.isRequired,
+  numberOfCities: PropTypes.number.isRequired,
+  numberOfCitiesWithRain: PropTypes.number.isRequired,
+  numberOfCitiesWithSnow: PropTypes.number.isRequired,
+  numberOfCitiesWithClouds: PropTypes.number.isRequired,
+};
 
 export default Summary;

@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
+
 import Chart from "../Chart";
 
-const Temperature = ({temperatureData}) => {
-  const preparedForChart = temperatureData.map((city) => ({city: city.name, data: city.temperature }));
+const Temperature = ({ temperatureData }) => {
+  const preparedForChart = temperatureData.map(city => ({ city: city.name, data: city.temperature }));
 
   return (
     <React.Fragment>
@@ -10,6 +12,9 @@ const Temperature = ({temperatureData}) => {
       <Chart cityWeather={preparedForChart} unit="&#8451;"/>
     </React.Fragment>
   );
-}
+};
+Temperature.propTypes = {
+  temperatureData: PropTypes.array.isRequired
+};
 
 export default Temperature;

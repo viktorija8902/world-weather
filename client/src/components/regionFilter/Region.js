@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
 import RegionPart from "./RegionPart";
 
 class Region extends PureComponent {
@@ -6,14 +8,14 @@ class Region extends PureComponent {
     clickedRegionPart: "",
   };
 
-  handleRegionClick = (e) => {
+  handleRegionClick = e => {
     this.setState({
       clickedRegionPart: "" 
     });
     this.props.onRegionClick(e.target.id)
   }
 
-  handleRegionPartClick = (name) => {
+  handleRegionPartClick = name => {
     this.setState({
       clickedRegionPart: name 
     });
@@ -40,6 +42,10 @@ class Region extends PureComponent {
       </div>
     );
   }
-}
+};
+Region.propTypes = {
+  region: PropTypes.object.isRequired,
+  isClicked: PropTypes.bool.isRequired,
+};
 
 export default Region;

@@ -1,8 +1,10 @@
-import React from 'react';
-import { VictoryChart, VictoryBar, VictoryAxis } from 'victory';
+import React from "react";
+import PropTypes from "prop-types";
 
-//TODO fix axis label
-const Chart = ({cityWeather, unit}) => {
+import { VictoryChart, VictoryBar, VictoryAxis } from "victory";
+
+// TODO fix axis label
+const Chart = ({ cityWeather, unit }) => {
   const dataOnBar = cityWeather.map(city => city.data);
   const chartHeight = cityWeather.length * 15;
 
@@ -19,7 +21,7 @@ const Chart = ({cityWeather, unit}) => {
         <VictoryAxis
           dependentAxis
           style={{
-            tickLabels: {fontSize: 8}
+            tickLabels: { fontSize: 8 }
           }}
           offsetX={70}
         />
@@ -31,12 +33,16 @@ const Chart = ({cityWeather, unit}) => {
           labels={dataOnBar}
           style={{
             data: { fill: "#c43a31" },
-            labels: { fontSize: 8, padding: 1 },
+            labels: { fontSize: 8, padding: 1 }
           }}
         />
       </VictoryChart>
     </div>
   );
-}
+};
+Chart.propTypes = {
+  cityWeather: PropTypes.array.isRequired,
+  unit: PropTypes.string.isRequired
+};
 
 export default Chart;

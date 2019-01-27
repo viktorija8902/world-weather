@@ -4,8 +4,8 @@ let initialState = {
   rainCities: new Set(),
   cloudCities: new Set(),
   noDataCustomSearch: false,
-  error: null,
-  errorInCustomSearch: null,
+  error: "",
+  errorInCustomSearch: "",
 }
 
 const region = (state = initialState, action) => {
@@ -13,8 +13,8 @@ const region = (state = initialState, action) => {
     case 'SELECT_REGION':
       return Object.assign({}, state, {
         selectedRegion: action.selectedRegion,
-        error: null,
-        errorInCustomSearch: null,
+        error: "",
+        errorInCustomSearch: "",
       })
     case 'LOAD_DATA':
       const cities = [...action.cityData.cities];
@@ -32,23 +32,23 @@ const region = (state = initialState, action) => {
         windCitiesMap: windCitiesMap,
         cities: cities,
         noDataCustomSearch: false,
-        error: null,
-        errorInCustomSearch: null,
+        error: "",
+        errorInCustomSearch: "",
       })
     case 'SHOW_ERROR':
       return Object.assign({}, state, {
         error: action.error,
-        errorInCustomSearch: null,
+        errorInCustomSearch: "",
       })
     case 'NO_RESULTS_CUSTOM_SEARCH':
       return Object.assign({}, state, {
         noDataCustomSearch: true,
-        error: null,
-        errorInCustomSearch: null,
+        error: "",
+        errorInCustomSearch: "",
       })
     case 'ERROR_IN_CUSTOM_SEARCH':
       return Object.assign({}, state, {
-        error: null,
+        error: "",
         errorInCustomSearch: action.error,
       });
     default:
