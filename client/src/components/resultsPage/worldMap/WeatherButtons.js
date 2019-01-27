@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { WEATHER_BUTTON } from '../../../constants/Constants';
 import Button from "../../generalComponents/Button";
 
-const WeatherButtons = ({windTypes, clickedButton, onWeatherButtonClick}) => {
+const WeatherButtons = ({ windTypes, clickedButton, onWeatherButtonClick }) => {
   const regex = /_/gi;
-  const formatName = (name) => `${name.charAt(0)}${name.substr(1).toLowerCase()}`.replace(regex, " ");
+  const formatName = name => `${name.charAt(0)}${name.substr(1).toLowerCase()}`.replace(regex, " ");
 
   const handleButtonClick = buttonId => onWeatherButtonClick(buttonId);
 
@@ -23,6 +25,11 @@ const WeatherButtons = ({windTypes, clickedButton, onWeatherButtonClick}) => {
       {weatherButtons}
     </div>
   );
-}
+};
+WeatherButtons.propTypes = {
+  windTypes: PropTypes.array.isRequired,
+  clickedButton: PropTypes.string.isRequired,
+  onWeatherButtonClick: PropTypes.func.isRequired,
+};
 
 export default WeatherButtons;

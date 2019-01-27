@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import notSelected from '../../../images/not-selected.png';
 import selected from '../../../images/selected.png';
 
-const SelectedCoordinates = ({coordinates}) => {
+const SelectedCoordinates = ({ coordinates }) => {
   const notSelectedIcon = <img className="selection-icon" src={notSelected} alt="corner not selected"></img>
   const selectedIcon = <img className="selection-icon" src={selected} alt="corner selected"></img>
   return (
@@ -16,6 +18,9 @@ const SelectedCoordinates = ({coordinates}) => {
       </div>
     </React.Fragment>
   )
-}
+};
+SelectedCoordinates.propTypes = {
+  coordinates: PropTypes.array.isRequired,
+};
 
 export default SelectedCoordinates;

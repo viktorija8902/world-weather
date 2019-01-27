@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getCustomWeatherData } from '../../actions/actionCreators';
@@ -15,11 +16,11 @@ import Summary from "./Summary";
 class ResultsPage extends PureComponent {
   state = {
     citiesWithSpecialCondition: new Set(),
-    clickedWeatherButton: null,
+    clickedWeatherButton: "",
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.clickedWeatherButton && prevProps !== this.props) {
+    if (this.state.clickedWeatherButton !== "" && prevProps !== this.props) {
       this.highlightCities(this.state.clickedWeatherButton);
     }
   }
@@ -64,10 +65,10 @@ class ResultsPage extends PureComponent {
 
   render() {
     let results;
-    const {noDataCustomSearch, errorInCustomSearch, cities, rainCities, snowCities, cloudCities, windCitiesMap} = this.props;
+    const { noDataCustomSearch, errorInCustomSearch, cities, rainCities, snowCities, cloudCities, windCitiesMap } = this.props;
     if (noDataCustomSearch) {
       results = <div>No data found. Try different points.</div>
-    } else if (errorInCustomSearch) {
+    } else if (errorInCustomSearch !== "") {
       results = <div>{errorInCustomSearch}</div>
     } else {
       const windTypes = [...windCitiesMap.keys()].sort();
@@ -102,7 +103,19 @@ class ResultsPage extends PureComponent {
       </React.Fragment>
     );
   }
-}
+};
+ResultsPage.propTypes = {
+  // from redux store:
+  noDataCustomSearch: PropTypes.bool.isRequired,
+  errorInCustomSearch: PropTypes.string.isRequired,
+  cities: PropTypes.array.isRequired,
+  rainCities: PropTypes.object.isRequired,
+  snowCities: PropTypes.object.isRequired,
+  cloudCities: PropTypes.object.isRequired,
+  windCitiesMap: PropTypes.object.isRequired,
+  // actions
+  getCustomWeatherData: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   noDataCustomSearch: state.region.noDataCustomSearch,
@@ -111,7 +124,7 @@ const mapStateToProps = state => ({
   rainCities: state.region.rainCities,
   snowCities: state.region.snowCities,
   windCitiesMap: state.region.windCitiesMap,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getCustomWeatherData: coordinates => dispatch(getCustomWeatherData(coordinates))

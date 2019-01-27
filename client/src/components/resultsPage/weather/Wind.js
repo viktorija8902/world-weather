@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import City from "../../generalComponents/City";
 
 class Wind extends Component {
@@ -38,7 +40,7 @@ class Wind extends Component {
         param={city.wind.speed}
         unit="km/h"
         cssClass="wind-city"
-        specialStyle={{backgroundColor: isHighlighted ? highlightColor : ""}}
+        specialStyle={{ backgroundColor: isHighlighted ? highlightColor : "" }}
       />
     })
   
@@ -51,6 +53,10 @@ class Wind extends Component {
       </React.Fragment>
     );
   }
+}
+Wind.propTypes = {
+  clickedWindButton: PropTypes.string.isRequired,
+  windData: PropTypes.array.isRequired,
 }
 
 export default Wind;
