@@ -1,51 +1,42 @@
-import React, { PureComponent } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectRegion, getWeatherData } from '../../actions/actionCreators';
 import Region from './Region';
 
-
-class RegionFilter extends PureComponent {
-  state = { 
-    selectedRegion: "",
-  };
+const RegionFilter = ({ selectRegion, getWeatherData, regionList }) => {
+  const [selectedRegion, setRegion] = useState("");
  
-  handleClick = name => {
-    this.setState({
-      selectedRegion: name,
-    });
-    this.updateData(name);
-  }
+  const handleClick = name => {
+    setRegion(name)
+    updateData(name);
+  };
 
-  handlePlaceSelection = name => {
-    this.updateData(name);
-  }
+  const handlePlaceSelection = name => {
+    updateData(name);
+  };
 
-  updateData = name => {
-    const { selectRegion, getWeatherData } = this.props;
+  const updateData = name => {
     selectRegion(name);
     getWeatherData(name);
-  }
+  };
 
-  render() {
-    const { regionList } = this.props;
-    const regions = regionList.map(region => (
-      <Region 
-        key={region.main.name} 
-        region={region} 
-        onPlaceSelection={this.handlePlaceSelection}
-        onRegionClick={this.handleClick}
-        isClicked={this.state.selectedRegion === region.main.name}
-      />
-    ));
+  const regions = regionList.map(region => (
+    <Region 
+      key={region.main.name} 
+      region={region} 
+      onPlaceSelection={handlePlaceSelection}
+      onRegionClick={handleClick}
+      isClicked={selectedRegion === region.main.name}
+    />
+  ));
 
-    return (
-      <div className="region-filters">
-        {regions}
-      </div>
-    );
-  }
+  return (
+    <div className="region-filters">
+      {regions}
+    </div>
+  );
 }
 RegionFilter.propTypes = {
   // from parent:
@@ -53,7 +44,7 @@ RegionFilter.propTypes = {
   // actions from store
   selectRegion: PropTypes.func.isRequired,
   getWeatherData: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   selectRegion: selectedRegion => dispatch(selectRegion(selectedRegion)),

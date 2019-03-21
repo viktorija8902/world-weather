@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,49 +13,42 @@ import WeatherButtons from "./worldMap/WeatherButtons";
 import Summary from "./Summary";
 
 
-class ResultsPage extends PureComponent {
-  state = {
-    citiesWithSpecialCondition: new Set(),
-    clickedWeatherButton: "",
-  }
+const ResultsPage = ({ windCitiesMap, rainCities, snowCities, cloudCities, getCustomWeatherData, noDataCustomSearch, errorInCustomSearch, cities }) => {
+  const [ citiesWithSpecialCondition, setCitiesWithSpecialConditions ] = useState(new Set());
+  const [ clickedWeatherButton, setClickedWeatherButton ] = useState("");
 
-  componentDidUpdate(prevProps) {
-    if (this.state.clickedWeatherButton !== "" && prevProps !== this.props) {
-      this.highlightCities(this.state.clickedWeatherButton);
+  useEffect(() => {
+    if (clickedWeatherButton !== "") {
+      highlightCities(clickedWeatherButton);
     }
+  });
+
+  const handleWeatherButtonClick = button => {
+    highlightCities(button);
+    setClickedWeatherButton(button);
   }
 
-  handleWeatherButtonClick = (button) => {
-    this.highlightCities(button);
-    this.setState({
-      clickedWeatherButton: button,
-    });
-  }
-
-  highlightCities(clickedButton) {
-    const { windCitiesMap, rainCities, snowCities, cloudCities } = this.props;
-    let citiesWithSpecialCondition;
+  const highlightCities = clickedButton => {
+    let citiesWithCondition;
     const windCities = windCitiesMap.get(clickedButton);
     if (windCities) {
-      citiesWithSpecialCondition = windCities;
+      citiesWithCondition = windCities;
     } else if (clickedButton === WEATHER_BUTTON.RAINING) {
-      citiesWithSpecialCondition = rainCities;
+      citiesWithCondition = rainCities;
     } else if (clickedButton === WEATHER_BUTTON.SNOWING) {
-      citiesWithSpecialCondition = snowCities;
+      citiesWithCondition = snowCities;
     } else if (clickedButton === WEATHER_BUTTON.CLOUDY) {
-      citiesWithSpecialCondition = cloudCities;
+      citiesWithCondition = cloudCities;
     } else if (clickedButton === WEATHER_BUTTON.RESET) {
-      citiesWithSpecialCondition = new Set();
+      citiesWithCondition = new Set();
     } else {
-      citiesWithSpecialCondition = new Set();
+      citiesWithCondition = new Set();
     }
-    this.setState({
-      citiesWithSpecialCondition: citiesWithSpecialCondition,
-    });
+    setCitiesWithSpecialConditions(citiesWithCondition)
   }
 
-  handleCoordSelect = (coord) => {
-    this.props.getCustomWeatherData({
+  const handleCoordSelect = coord => {
+    getCustomWeatherData({
       lonTopLeft: coord[0].Lon,
       latBottomLeft: coord[1].Lat,
       lonBottomRight: coord[2].Lon,
@@ -63,46 +56,43 @@ class ResultsPage extends PureComponent {
     });
   }
 
-  render() {
-    let results;
-    const { noDataCustomSearch, errorInCustomSearch, cities, rainCities, snowCities, cloudCities, windCitiesMap } = this.props;
-    if (noDataCustomSearch) {
-      results = <div>No data found. Try different points.</div>
-    } else if (errorInCustomSearch !== "") {
-      results = <div>{errorInCustomSearch}</div>
-    } else {
-      const windTypes = [...windCitiesMap.keys()].sort();
-      results = <React.Fragment>
-        <WeatherButtons
-          windTypes={windTypes}
-          onWeatherButtonClick={this.handleWeatherButtonClick}
-          clickedButton={this.state.clickedWeatherButton}
-        />
-        <Summary
-          windTypes={windTypes}
-          citiesGroupedByWind={windCitiesMap}
-          numberOfCities={cities.length}
-          numberOfCitiesWithRain={rainCities.size}
-          numberOfCitiesWithSnow={snowCities.size}
-          numberOfCitiesWithClouds={cloudCities.size}
-        />
-        <Wind windTypes={windTypes} windData={cities} clickedWindButton={this.state.clickedWeatherButton}/>
-        <Clouds cloudData={cities} />
-        <Temperature temperatureData={cities} />
-        <Rain rainCities={cities} />
-      </React.Fragment>
-    }
-    return (
-      <React.Fragment>
-        <MapWrapper 
-          cities={cities}
-          citiesWithSpecialCondition={this.state.citiesWithSpecialCondition}
-          onCustomSelect={this.handleCoordSelect}
-        />
-        {results}
-      </React.Fragment>
-    );
+  let results;
+  if (noDataCustomSearch) {
+    results = <div>No data found. Try different points.</div>
+  } else if (errorInCustomSearch !== "") {
+    results = <div>{errorInCustomSearch}</div>
+  } else {
+    const windTypes = [...windCitiesMap.keys()].sort();
+    results = <React.Fragment>
+      <WeatherButtons
+        windTypes={windTypes}
+        onWeatherButtonClick={handleWeatherButtonClick}
+        clickedButton={clickedWeatherButton}
+      />
+      <Summary
+        windTypes={windTypes}
+        citiesGroupedByWind={windCitiesMap}
+        numberOfCities={cities.length}
+        numberOfCitiesWithRain={rainCities.size}
+        numberOfCitiesWithSnow={snowCities.size}
+        numberOfCitiesWithClouds={cloudCities.size}
+      />
+      <Wind windTypes={windTypes} windData={cities} clickedWindButton={clickedWeatherButton}/>
+      <Clouds cloudData={cities} />
+      <Temperature temperatureData={cities} />
+      <Rain rainCities={cities} />
+    </React.Fragment>
   }
+  return (
+    <React.Fragment>
+      <MapWrapper 
+        cities={cities}
+        citiesWithSpecialCondition={citiesWithSpecialCondition}
+        onCustomSelect={handleCoordSelect}
+      />
+      {results}
+    </React.Fragment>
+  );
 };
 ResultsPage.propTypes = {
   // from redux store:
