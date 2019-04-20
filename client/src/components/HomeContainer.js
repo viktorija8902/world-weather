@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { regionList } from "../data/Regions";
 import RegionFilter from "../components/regionFilter/RegionFilterContainer";
 import ResultsPage from "./resultsPage/ResultsPage";
+import Header from "./Header";
 import Footer from './Footer';
 
 const Home = props => {
@@ -19,19 +20,16 @@ const Home = props => {
   }
 
   return (
-    <div className="home">
-      <div className="content">
-        <React.StrictMode>
+    <React.Fragment>
+      <Header/>
+      <React.StrictMode>
+        <div className="content">
           <RegionFilter regionList={regionList}/>
-        </React.StrictMode>
-        <React.StrictMode>
-          <div className="results">
-            {page}
-          </div>
-        </React.StrictMode>
-      </div>
+          <main role="main" className="results">{page}</main>
+        </div>
+      </React.StrictMode>
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }
 Home.propTypes = {

@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 
 const RegionPart = ({ regionPart, isClicked, onRegionPartClick }) => {
   const handleClick = e => onRegionPartClick(e.target.id);
-  const cssSelectedClass = isClicked ? "selected-region-part" : "";
-
-  return (
-    <div className={`region-part ${cssSelectedClass}`} id={regionPart.name} onClick={handleClick}>
+  const clickedItem = (
+    <li role="menuitem" aria-current="page" className="region-part selected-region-part" id={regionPart.name} onClick={handleClick}>
       {regionPart.name}
-    </div>
+    </li>
+  );
+  const notClickedItem = (
+    <li role="menuitem" className="region-part" id={regionPart.name} onClick={handleClick}>
+      {regionPart.name}
+    </li>
+  );
+  return (
+    <React.Fragment>{isClicked ? clickedItem : notClickedItem}</React.Fragment>
   );
 };
 RegionPart.propTypes = {
