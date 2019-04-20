@@ -11,7 +11,7 @@ const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
     onRegionClick(e.target.id)
   }
 
-  const  handleRegionPartClick = name => {
+  const handleRegionPartClick = name => {
     setRegionPart(name);
     onPlaceSelection(name);
   }
@@ -23,17 +23,29 @@ const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
       onRegionPartClick={handleRegionPartClick}
       isClicked={clickedRegionPart === part.name }/> 
   ));
-  const cssSelectedClass = isClicked ? "selected-region" : "";
   
-  return (
-    <div className="region-wrapper">
-      <div className={`region ${cssSelectedClass}`} id={region.main.name} onClick={handleRegionClick}>
+  const clickedMenuItem = (
+    <React.Fragment>
+      <li aria-current="page" role="menuitem" aria-haspopup="true" className="region selected-region" id={region.main.name} onClick={handleRegionClick}>
         {region.main.name.toUpperCase()}
-      </div>
-      {isClicked && <div>{subregions}</div>}
-    </div>
+      </li>
+      <ul role="menu">{subregions}</ul>
+    </React.Fragment>
+  );
+
+  const notClickedMenuItem = (
+    <li role="menuitem" aria-haspopup="true" className="region" id={region.main.name}  onClick={handleRegionClick}>
+      {region.main.name.toUpperCase()}
+    </li>
+  );
+
+  return (
+    <ul role="menubar" className="region-wrapper">
+      {isClicked ? clickedMenuItem : notClickedMenuItem}
+    </ul>
   );
 };
+
 Region.propTypes = {
   region: PropTypes.object.isRequired,
   isClicked: PropTypes.bool.isRequired,

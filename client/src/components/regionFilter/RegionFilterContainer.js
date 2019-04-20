@@ -33,9 +33,9 @@ const RegionFilter = ({ selectRegion, getWeatherData, regionList }) => {
   ));
 
   return (
-    <div className="region-filters">
+    <nav aria-label="Main navigatoin" className="region-filters">
       {regions}
-    </div>
+    </nav>
   );
 }
 RegionFilter.propTypes = {
