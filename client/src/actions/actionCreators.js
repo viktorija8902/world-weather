@@ -10,14 +10,14 @@ export const selectRegion = (selectedRegion) => {
 export const getWeatherData = selectedRegion => dispatch => {
   fetchData(`/api/weather/${selectedRegion}`)
     .then(resp => {
-      if (resp.cities.length > 0) {
+      if (resp.cities && resp.cities.length > 0) {
         dispatch(loadData(resp));
       } else {
         dispatch(showError(MESSAGE.ERROR));
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
       dispatch(showError(MESSAGE.ERROR));
     });
 }
@@ -25,16 +25,16 @@ export const getWeatherData = selectedRegion => dispatch => {
 export const getCustomWeatherData = coordinates => dispatch => {
   fetchData(`/api/weather/custom-coords/${coordinates.lonTopLeft},${coordinates.latBottomLeft},${coordinates.lonBottomRight},${coordinates.latTopRight}`)
     .then(resp => {
-      if (resp.cities.length > 0) {
+      if (resp.cities && resp.cities.length > 0) {
         dispatch(loadData(resp));
-      } else if (resp.cities.length === 0) {
+      } else if (resp.cities && resp.cities.length === 0) {
         dispatch(loadNoResultsCustomSearch());
       } else {
         dispatch(errorInCustomSearch(MESSAGE.ERROR));
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
       dispatch(errorInCustomSearch(MESSAGE.ERROR));
     });
 }

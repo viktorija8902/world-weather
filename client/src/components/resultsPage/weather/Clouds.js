@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 import Chart from "../Chart";
@@ -7,10 +7,10 @@ const Cloud = ({ cloudData }) => {
   const preparedForChart = cloudData.map((city) => ({ city: city.name, data: city.clouds.today }));
 
   return (
-    <React.Fragment>
+    <Fragment>
       <h1>Cloud coverage (%)</h1>
-      <Chart cityWeather={preparedForChart} unit="%"/>
-    </React.Fragment>
+      <Chart cityWeather={preparedForChart} unit="%" />
+    </Fragment>
   );
 };
 Cloud.propTypes = {
