@@ -1,5 +1,5 @@
 //TODO change structure
-export const regionList = [
+export const REGION_LIST = [
   {
     main: { name: "usa" },
     parts: [
@@ -26,4 +26,38 @@ export const regionList = [
     main: { name: "new zealand" },
     parts: []
   },
+];
+
+export const CUSTOM_LIST = [
+  {
+    main: { name: "worst weather" },
+    parts: [
+      { name: "the drake passage" },
+        // coord: }
+    ],
+  },
+  // {
+  //   main: { name: "deepest ocean places" },
+  //   parts: [],
+  // },
+  // {
+  //   main: { name: "largest fish" },
+  //   parts: [],
+  // },
+  // {
+  //   main: { name: "most fish" },
+  //   parts: [],
+  // },
+  // {
+  //   main: { name: "most ships" },
+  //   parts: [],
+  // },
+  // {
+  //   main: { name: "biggest waves" },
+  //   parts: [],
+  // },
+  // {
+  //   main: { name: "calmest waters" },
+  //   parts: [],
+  // }
 ];

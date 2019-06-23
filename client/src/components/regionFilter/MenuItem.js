@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import RegionPart from "./RegionPart";
+import MenuSubItem from "./MenuSubItem";
 
-const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
+const MenuItem = ({ onRegionClick, onPlaceSelection, item, isClicked }) => {
   const [ clickedRegionPart, setRegionPart ] = useState("");
 
   const handleRegionClick = e => {
@@ -16,8 +16,8 @@ const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
     onPlaceSelection(name);
   }
 
-  const subregions = region.parts.map(part => (
-    <RegionPart 
+  const subregions = item.parts.map(part => (
+    <MenuSubItem 
       key={part.name}
       regionPart={part}
       onRegionPartClick={handleRegionPartClick}
@@ -25,17 +25,19 @@ const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
   ));
   
   const clickedMenuItem = (
-    <React.Fragment>
-      <li aria-current="page" role="menuitem" aria-haspopup="true" className="region selected-region" id={region.main.name} onClick={handleRegionClick}>
-        {region.main.name.toUpperCase()}
+    <Fragment>
+      <li 
+        aria-current="page" role="menuitem" aria-haspopup="true" className="region selected-region" 
+        id={item.main.name} onClick={handleRegionClick}>
+        {item.main.name.toUpperCase()}
       </li>
       <ul role="menu">{subregions}</ul>
-    </React.Fragment>
+    </Fragment>
   );
 
   const notClickedMenuItem = (
-    <li role="menuitem" aria-haspopup="true" className="region" id={region.main.name}  onClick={handleRegionClick}>
-      {region.main.name.toUpperCase()}
+    <li role="menuitem" aria-haspopup="true" className="region" id={item.main.name} onClick={handleRegionClick}>
+      {item.main.name.toUpperCase()}
     </li>
   );
 
@@ -46,9 +48,9 @@ const Region = ({ onRegionClick, onPlaceSelection, region, isClicked }) => {
   );
 };
 
-Region.propTypes = {
-  region: PropTypes.object.isRequired,
+MenuItem.propTypes = {
+  item: PropTypes.object.isRequired,
   isClicked: PropTypes.bool.isRequired,
 };
 
-export default Region;
+export default MenuItem;

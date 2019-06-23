@@ -3,35 +3,11 @@ import PropTypes from 'prop-types';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+import {fromJS} from 'immutable';
 
+import { CityMarker, CityPopup } from "./City";
 import SelectedCoordinates from './SelectedCoordinates';
 
-
-const CityMarker = ({ text, markersCss, onMarkerClick }) => (
-  <div className="city-marker-wrapper" onClick={onMarkerClick} >
-    <div className={markersCss}></div>
-    <div className="city-name">{text}</div>
-  </div>
-);
-CityMarker.propTypes = {
-  text: PropTypes.string,
-  markersCss: PropTypes.string.isRequired,
-  onMarkerClick: PropTypes.func,
-};
-
-const CityPopup = ({ city }) => (
-  <div className="city-popup" >
-    <div>{city.name}</div>
-    <div>temperature: {city.temperature}&#8451;</div>
-    <div>wind: {city.wind.speed}km/h</div>
-    <div>cloud coverage: {city.clouds.today}%</div>
-    {city.rain && <div>{city.rain.description}</div>}
-    {city.snow && <div>{city.snow.description}</div>}
-  </div>
-);
-CityPopup.propTypes = {
-  city: PropTypes.object.isRequired,
-};
 
 const sumReducer = (a, b) => a + b;
 

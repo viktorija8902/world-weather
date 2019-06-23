@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { selectRegion, getWeatherData } from '../../actions/actionCreators';
-import Region from './Region';
+import MenuItem from './MenuItem';
+import { REGION_LIST, CUSTOM_LIST } from "../../data/Regions";
 
-const RegionFilter = ({ selectRegion, getWeatherData, regionList }) => {
+const Menu = ({ selectRegion, getWeatherData }) => {
   const [selectedRegion, setRegion] = useState("");
  
   const handleClick = name => {
@@ -22,25 +23,40 @@ const RegionFilter = ({ selectRegion, getWeatherData, regionList }) => {
     getWeatherData(name);
   };
 
-  const regions = regionList.map(region => (
-    <Region 
-      key={region.main.name} 
-      region={region} 
-      onPlaceSelection={handlePlaceSelection}
-      onRegionClick={handleClick}
-      isClicked={selectedRegion === region.main.name}
-    />
-  ));
+  const handleDepthItemClick = name => {
+    selectRegion(name);
+    console.log("soon..")
+  };
+
+  const getMenuItems = () => {
+    const regionList = REGION_LIST.map(item => (
+      <MenuItem 
+        key={item.main.name} 
+        item={item} 
+        onPlaceSelection={handlePlaceSelection}
+        onRegionClick={handleClick}
+        isClicked={selectedRegion === item.main.name}
+      />
+    ));
+    const customList = CUSTOM_LIST.map(item => (
+      <MenuItem 
+        key={item.main.name} 
+        item={item}
+        onPlaceSelection={(name) => selectRegion(name)}
+        onRegionClick={handleDepthItemClick}
+        isClicked={selectedRegion === item.main.name}
+      />
+    ));
+    return [...regionList, ...customList];
+  };
 
   return (
     <nav aria-label="Main navigatoin" className="region-filters">
-      {regions}
+      {getMenuItems()}
     </nav>
   );
 }
-RegionFilter.propTypes = {
-  // from parent:
-  regionList: PropTypes.array.isRequired,
+Menu.propTypes = {
   // actions from store
   selectRegion: PropTypes.func.isRequired,
   getWeatherData: PropTypes.func.isRequired,
@@ -54,4 +70,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   undefined,
   mapDispatchToProps
-)(RegionFilter);
+)(Menu);

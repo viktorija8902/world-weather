@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
-import { regionList } from "../data/Regions";
-import RegionFilter from "../components/regionFilter/RegionFilterContainer";
+import Menu from "../components/regionFilter/Menu";
 import ResultsPage from "./resultsPage/ResultsPage";
 import Header from "./Header";
 import Footer from './Footer';
@@ -24,7 +23,7 @@ const Home = props => {
       <Header/>
       <React.StrictMode>
         <div className="content">
-          <RegionFilter regionList={regionList}/>
+          <Menu />
           <main role="main" className="results">{page}</main>
         </div>
       </React.StrictMode>
